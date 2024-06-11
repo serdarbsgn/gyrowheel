@@ -11,4 +11,5 @@ WARNING: This is a development server. Do not use it in a production deployment.
 
 Then you should write http://192.168.1.36:5000 to the text box inside the phone app, then touch confirm.  
 Now your computer should be able to get inputs and simulate a controller in your games,  
+If you want to use USB mode, you must enable USB Debugging,  
 I think you wouldn't use this in any other game than a racing game, so keep in mind that.

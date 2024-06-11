@@ -1,6 +1,5 @@
 from . import app,gamepad
 from flask import request
-
 @app.route('/',methods = ['POST'])
 def gyro_inputs():
     simulate_gamepad(request.json)
