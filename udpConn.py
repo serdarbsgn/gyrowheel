@@ -7,8 +7,8 @@ import json
 
 
 def simulate_gamepad(inputs):
-    gamepad.left_trigger_float(value_float=int(inputs["buttonAPressed"]))
-    gamepad.right_trigger_float(value_float=int(inputs["buttonBPressed"]))
+    gamepad.left_trigger_float(value_float=int(inputs["LT"]))
+    gamepad.right_trigger_float(value_float=int(inputs["RT"]))
     inputs["pitch"] = -inputs["pitch"]
     simulate_joystick_press(inputs["pitch"])
     gamepad.update()
@@ -36,9 +36,8 @@ def start_server(IP):
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp_socket.bind((HOST, PORT))
     print(f"UDP server started on {IP}:{PORT}")
-    skip = False
     while True:
-        data, addr = udp_socket.recvfrom(128)
+        data, addr = udp_socket.recvfrom(48)
         try:
             json_data = json.loads(data)
             simulate_gamepad(json_data)

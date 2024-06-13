@@ -6,8 +6,8 @@ def gyro_inputs():
     return "",200
 
 def simulate_gamepad(inputs):
-    gamepad.left_trigger_float(value_float=int(inputs["buttonAPressed"]))
-    gamepad.right_trigger_float(value_float=int(inputs["buttonBPressed"]))
+    gamepad.left_trigger_float(value_float=int(inputs["LT"]))
+    gamepad.right_trigger_float(value_float=int(inputs["RT"]))
     inputs["pitch"] = -inputs["pitch"]
     simulate_joystick_press(inputs["pitch"])
     gamepad.update()
