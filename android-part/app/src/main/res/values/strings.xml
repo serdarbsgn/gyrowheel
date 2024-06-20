@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">GyroWheel</string>
+    <string name="brakeText">Brake</string>
+    <string name="accelerateText">Accelerate</string>
+    <string name="toggle_brake_buttonText">Toggle Brake Button</string>
+    <string name="toggle_accelerate_buttonText">Toggle Accelerate Button</string>
+    <string name="button_Y">Y</string>
+    <string name="button_X">X</string>
+    <string name="button_B">B</string>
+    <string name="button_A">A</string>
+    <string name="button_RB">RB</string>
+    <string name="button_RT">RT</string>
+    <string name="button_LB">LB</string>
+    <string name="button_LT">LT</string>
+    <string name="button_R3">R3</string>
+    <string name="button_L3">L3</string>
+    <string name="button_Start">Start</string>
+    <string name="button_Back">Back</string>
+    <string name="network_udp_all_buttons">Network/UDP All buttons</string>
+    <string name="network_udp">Network/UDP</string>
+    <string name="enter_ip_address">Enter IP Address</string>
+    <string name="http_192_168_1_36_5000">http://192.168.1.36:5000</string>
+    <string name="tcp_adb_or_network">TCP/ADB or Network</string>
+    <string name="enter_socket_ip_address">Enter Socket/IP Address</string>
+    <string name="_192_168_1_36">192.168.1.36</string>
+    <string name="usb">USB</string>
+    <string name="tcp_with_all_buttons">TCP w all buttons</string>
+    <string name="ArrowUL">˂˄</string>
+    <string name="buttonAU">˄</string>
+    <string name="buttonAUR">˄˃</string>
+    <string name="buttonAL">˂</string>
+    <string name="buttonAR">˃</string>
+    <string name="buttonADL">˂˅</string>
+    <string name="buttonADR">˅˃</string>
+    <string name="buttonAD">˅</string>
+</resources>
