@@ -5,14 +5,14 @@ import json
 gamepad = vg.VX360Gamepad()
 
 def simulate_gamepad(inputs):
-    gamepad.left_trigger_float(value_float=int(inputs["LT"]))
-    gamepad.right_trigger_float(value_float=int(inputs["RT"]))
-    inputs["pitch"] = -inputs["pitch"]
-    simulate_joystick_press(inputs["pitch"])
+    gamepad.left_trigger_float(value_float=inputs["LT"])
+    gamepad.right_trigger_float(value_float=inputs["RT"])
+    inputs["SP"] = -inputs["SP"]
+    simulate_joystick_press(inputs["SP"],inputs["SR"])
     gamepad.update()
 
-def simulate_joystick_press(l_x_analog_value):
-    gamepad.left_joystick(x_value= l_x_analog_value, y_value=0)
+def simulate_joystick_press(l_x_analog_value,l_y_analog_value):
+    gamepad.left_joystick(x_value= l_x_analog_value, y_value=l_y_analog_value)
 
 def read_file_from_phone(file_path):
     try:
