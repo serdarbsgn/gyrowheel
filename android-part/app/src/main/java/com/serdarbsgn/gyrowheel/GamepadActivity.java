@@ -1,44 +1,40 @@
 package com.serdarbsgn.gyrowheel;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
+import android.bluetooth.BluetoothAdapter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.view.MotionEvent;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
+import java.util.Map;
 
 
 public class GamepadActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
-    private Sensor rotationVectorSensor;
     private SensorEventListener rotationVectorListener;
-    private boolean LB,LT,L3,RB,RT,R3,BC,ST,Y,X,B,A,AU,AL,AR,AD;
-    private String ipAddress;
+    HashMap<Integer, Integer> buttons;
+    int ALX,ALY,ARX,ARY;
     private String socketAddress;
-    private USBHelper usbHelper;
+    private boolean useBluetooth;
     private UDPOverInternet socketClient;
-    private  TCPSocketOverADB tcpSocketOverADB;
+    private BluetoothConn bluetoothConn;
+    private BluetoothAdapter bluetoothAdapter;
 
-    @SuppressLint("ClickableViewAccessibility")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); This makes onCreate run twice.
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_gamepad);
         if (getSupportActionBar() != null) {
@@ -47,28 +43,38 @@ public class GamepadActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // Get the IP address passed from MainActivity
-        ipAddress = getIntent().getStringExtra("IP_ADDRESS");
         socketAddress = getIntent().getStringExtra("SOCKET_IP");
-        if(ipAddress==null && socketAddress==null){
-            usbHelper = new USBHelper(getApplicationContext());
-        }
+        useBluetooth = getIntent().getBooleanExtra("USE_BLUETOOTH",false);
         // Initialize the SensorManager
-        if(socketAddress!=null) {
+        if (!useBluetooth) {
             socketClient = new UDPOverInternet(socketAddress, 12345);
+        }else{
+            initBluetooth();
         }
-        if(Objects.equals(ipAddress, "127.0.0.1")){
-            tcpSocketOverADB = new TCPSocketOverADB(ipAddress,12346);
-        }
+        // LB,LT,L3,RB,RT,R3,BC,ST,Y,X,B,A;
+        // Set up buttons and their touch listeners
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initSensors();
+        initButtons();
+    }
+    private void initBluetooth(){
+        bluetoothConn = BluetoothConn.getInstance();
+    }
+    private void initSensors(){
+
         // Get the rotation vector sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        Sensor rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
         // Check if the rotation vector sensor is available
         if (rotationVectorSensor == null) {
             Log.e("RotationSensor", "Rotation Vector Sensor not available");
             return;
         }
-
+        buttons = getIntegerIntegerHashMap();
         // Create a SensorEventListener to listen for rotation vector data
         rotationVectorListener = new SensorEventListener() {
             @Override
@@ -88,97 +94,49 @@ public class GamepadActivity extends AppCompatActivity {
                     float roll = orientationAngles[2];    // Rotation around the Y axis
 
                     // Create a JSON object to hold the sensor data and button states
-
-                    int temPitch=0;
-//                    int tempAzimuth=0;
-                    int tempRoll=0;
-                    if (pitch>0) {
-                        temPitch= Math.min(Math.round(pitch * 32767), 32767);
-                    }
-                    else{
-                        temPitch = Math.max(Math.round(pitch * 32767), -32767);
-                    }
-                    tempRoll = 32767 - Math.abs(Math.round(roll * 21844));
-//                    long currentTimeMillis = System.currentTimeMillis();
-
-                    if(ipAddress!=null){
-                        if(Objects.equals(ipAddress, "127.0.0.1")){
-                            String sensorData = String.format(Locale.US,
-                                    "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-                                    tempRoll,
-                                    temPitch,
-                                    LB ? 1 : 0,
-                                    LT ? 1 : 0,
-                                    L3 ? 1 : 0,
-                                    RB ? 1 : 0,
-                                    RT ? 1 : 0,
-                                    R3 ? 1 : 0,
-                                    BC ? 1 : 0,
-                                    ST ? 1 : 0,
-                                    Y ? 1 : 0,
-                                    X ? 1 : 0,
-                                    B ? 1 : 0,
-                                    A ? 1 : 0,
-                                    AU ? 1 : 0,
-                                    AL ? 1 : 0,
-                                    AR ? 1 : 0,
-                                    AD ? 1 : 0
-                            );
-                            tcpSocketOverADB.sendData(sensorData);
-                        }else{
-                            JSONObject data = new JSONObject();
-                            try {
-                                data.put("SR", tempRoll);
-                                data.put("SP", temPitch);
-                                data.put("LB", LB ? 1 : 0);
-                                data.put("LT", LT ? 1 : 0);
-                                data.put("L3", L3 ? 1 : 0);
-                                data.put("RB", RB ? 1 : 0);
-                                data.put("RT", RT ? 1 : 0);
-                                data.put("R3", R3 ? 1 : 0);
-                                data.put("BC", BC ? 1 : 0);
-                                data.put("ST", ST ? 1 : 0);
-                                data.put("Y", Y ? 1 : 0);
-                                data.put("X", X ? 1 : 0);
-                                data.put("B", B ? 1 : 0);
-                                data.put("A", A ? 1 : 0);
-                                data.put("AU",AU ? 1 : 0);
-                                data.put("AL",AL ? 1 : 0);
-                                data.put("AR",AR ? 1 : 0);
-                                data.put("AD",AD ? 1 : 0);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            TCPOverADB.sendPostRequest(ipAddress, data);
-                        }
-                    }else {
-                        String sensorData = String.format(Locale.US,
-                                "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-                                tempRoll,
-                                temPitch,
-                                LB ? 1 : 0,
-                                LT ? 1 : 0,
-                                L3 ? 1 : 0,
-                                RB ? 1 : 0,
-                                RT ? 1 : 0,
-                                R3 ? 1 : 0,
-                                BC ? 1 : 0,
-                                ST ? 1 : 0,
-                                Y ? 1 : 0,
-                                X ? 1 : 0,
-                                B ? 1 : 0,
-                                A ? 1 : 0,
-                                AU ? 1 : 0,
-                                AL ? 1 : 0,
-                                AR ? 1 : 0,
-                                AD ? 1 : 0
-                        );
-                        if (socketAddress != null) {
-                            socketClient.sendData(sensorData);
+                    int temPitch = 0;
+                    //int tempAzimuth=0;
+                    int tempRoll = 0;
+                    if (ALX == 0 && ALY == 0) {
+                        if (pitch > 0) {
+                            temPitch = -Math.min(Math.round(pitch * 32767), 32767);
                         } else {
-                            usbHelper.sendInputOverADB(sensorData);
+                            temPitch = -Math.max(Math.round(pitch * 32767), -32767);
                         }
+                        tempRoll = 32767 - Math.abs(Math.round(roll * 21844));
+//                    long currentTimeMillis = System.currentTimeMillis();
+                    } else {
+                        temPitch = ALX;
+                        tempRoll = -ALY;
+                    }
+
+
+                    String sensorData = String.format(Locale.US,
+                            "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+                            tempRoll,
+                            temPitch,
+                            buttons.get(R.id.buttonLB),
+                            buttons.get(R.id.buttonLT),
+                            buttons.get(R.id.buttonL3),
+                            buttons.get(R.id.buttonRB),
+                            buttons.get(R.id.buttonRT),
+                            buttons.get(R.id.buttonR3),
+                            buttons.get(R.id.buttonBack),
+                            buttons.get(R.id.buttonStart),
+                            buttons.get(R.id.buttonY),
+                            buttons.get(R.id.buttonX),
+                            buttons.get(R.id.buttonB),
+                            buttons.get(R.id.buttonA),
+                            buttons.get(R.id.buttonAU),
+                            buttons.get(R.id.buttonAL),
+                            buttons.get(R.id.buttonAR),
+                            buttons.get(R.id.buttonAD),
+                            ARX, ARY
+                    );
+                    if(!useBluetooth){
+                        socketClient.sendData(sensorData);
+                    }else if (bluetoothConn!=null){
+                        bluetoothConn.sendData(sensorData.getBytes());
                     }
                 }
 
@@ -192,295 +150,172 @@ public class GamepadActivity extends AppCompatActivity {
 
         // Register the listener
         sensorManager.registerListener(rotationVectorListener, rotationVectorSensor, SensorManager.SENSOR_DELAY_FASTEST);
-        // LB,LT,L3,RB,RT,R3,BC,ST,Y,X,B,A;
-        // Set up buttons and their touch listeners
-        Button buttonLB = findViewById(R.id.buttonLB);
-        Button buttonLT = findViewById(R.id.buttonLT);
-        Button buttonL3 = findViewById(R.id.buttonL3);
+    }
+    private void initButtons(){
+        for (Map.Entry<Integer, Integer> button : buttons.entrySet()) {
+            findViewById(button.getKey()).setOnTouchListener((v, event) -> {
+                findViewById(button.getKey()).performClick();
+                button.setValue(Math.min(1, Math.abs(event.getAction() - 1)));
+                return true;
+            });
+        }
+        findViewById(R.id.leftAnalog).setOnTouchListener(new View.OnTouchListener() {
+            private float startX, startY; // To store initial touch coordinates
 
-        Button buttonRB = findViewById(R.id.buttonRB);
-        Button buttonRT = findViewById(R.id.buttonRT);
-        Button buttonR3 = findViewById(R.id.buttonR3);
-
-        Button buttonBC = findViewById(R.id.buttonBack);
-        Button buttonST = findViewById(R.id.buttonStart);
-
-        Button buttonY = findViewById(R.id.buttonY);
-        Button buttonX = findViewById(R.id.buttonX);
-        Button buttonB = findViewById(R.id.buttonB);
-        Button buttonA = findViewById(R.id.buttonA);
-
-        Button buttonAU = findViewById(R.id.buttonAU);
-        Button buttonAL = findViewById(R.id.buttonAL);
-        Button buttonAR = findViewById(R.id.buttonAR);
-        Button buttonAD = findViewById(R.id.buttonAD);
-
-        Button buttonAUL = findViewById(R.id.buttonAUL);
-        Button buttonAUR = findViewById(R.id.buttonAUR);
-        Button buttonADL = findViewById(R.id.buttonADL);
-        Button buttonADR = findViewById(R.id.buttonADR);
-
-        buttonLB.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    LB = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    LB = false;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startX = event.getX(); // Record initial X coordinate
+                        startY = event.getY(); // Record initial Y coordinate
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float currentX = event.getX();
+                        float currentY = event.getY();
+
+                        // Calculate the difference from start position
+                        float diffX = currentX - startX;
+                        float diffY = currentY - startY;
+                        if (diffX > 0) {
+                            ALX = Math.min(Math.round(diffX * 165), 32767);
+                        } else {
+                            ALX = Math.max(Math.round(diffX * 165), -32767);
+                        }
+                        if (diffY > 0) {
+                            ALY = Math.min(Math.round(diffY * 165), 32767);
+                        } else {
+                            ALY = Math.max(Math.round(diffY * 165), -32767);
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        ALX = 0;
+                        ALY = 0;
+                        break;
                 }
+                return true; // Consume the touch event
+            }
+        });
+
+        findViewById(R.id.rightAnalog).setOnTouchListener(new View.OnTouchListener() {
+            private float startX, startY; // To store initial touch coordinates
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startX = event.getX(); // Record initial X coordinate
+                        startY = event.getY(); // Record initial Y coordinate
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float currentX = event.getX();
+                        float currentY = event.getY();
+
+                        // Calculate the difference from start position
+                        float diffX = currentX - startX;
+                        float diffY = currentY - startY;
+                        if (diffX > 0) {
+                            ARX = Math.min(Math.round(diffX * 327), 32767);
+                        } else {
+                            ARX = Math.max(Math.round(diffX * 327), -32767);
+                        }
+                        if (diffY > 0) {
+                            ARY = Math.min(Math.round(diffY * 327), 32767);
+                        } else {
+                            ARY = Math.max(Math.round(diffY * 327), -32767);
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        ARX = 0;
+                        ARY = 0;
+                        break;
+                }
+                return true; // Consume the touch event
+            }
+        });
+
+        findViewById(R.id.buttonAUL).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                buttons.put(R.id.buttonAU, Math.abs(event.getAction() - 1));
+                buttons.put(R.id.buttonAL, Math.abs(event.getAction() - 1));
                 return true; // To consume the event
             }
         });
 
-        buttonLT.setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.buttonAUR).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    LT = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    LT = false;
-                }
+                buttons.put(R.id.buttonAU, Math.abs(event.getAction() - 1));
+                buttons.put(R.id.buttonAR, Math.abs(event.getAction() - 1));
                 return true; // To consume the event
             }
         });
 
-        buttonL3.setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.buttonADL).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    L3 = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    L3 = false;
-                }
+                buttons.put(R.id.buttonAD, Math.abs(event.getAction() - 1));
+                buttons.put(R.id.buttonAL, Math.abs(event.getAction() - 1));
                 return true; // To consume the event
             }
         });
 
-        buttonRB.setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.buttonADR).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    RB = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    RB = false;
-                }
+                buttons.put(R.id.buttonAD, Math.abs(event.getAction() - 1));
+                buttons.put(R.id.buttonAR, Math.abs(event.getAction() - 1));
                 return true; // To consume the event
             }
         });
-        buttonRT.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    RT = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    RT = false;
-                }
-                return true; // To consume the event
-            }
-        });
-        buttonR3.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    R3 = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    R3 = false;
-                }
-                return true; // To consume the event
-            }
-        });
+    }
+    private @NonNull HashMap<Integer, Integer> getIntegerIntegerHashMap() {
+        HashMap<Integer,Integer> buttons = new HashMap<>();
 
+        buttons.put(R.id.buttonLB,0);
+        buttons.put(R.id.buttonLT,0);
+        buttons.put(R.id.buttonL3,0);
 
+        buttons.put(R.id.buttonRB,0);
+        buttons.put(R.id.buttonRT,0);
+        buttons.put(R.id.buttonR3,0);
 
-        buttonBC.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    BC = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    BC = false;
-                }
-                return true; // To consume the event
-            }
-        });
-        buttonST.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    ST = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ST = false;
-                }
-                return true; // To consume the event
-            }
-        });
+        buttons.put(R.id.buttonBack,0);
+        buttons.put(R.id.buttonStart,0);
 
+        buttons.put(R.id.buttonY,0);
+        buttons.put(R.id.buttonX,0);
+        buttons.put(R.id.buttonB,0);
+        buttons.put(R.id.buttonA,0);
 
-        buttonY.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    Y = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Y = false;
-                }
-                return true; // To consume the event
-            }
-        });
+        buttons.put(R.id.buttonAU,0);
+        buttons.put(R.id.buttonAL,0);
+        buttons.put(R.id.buttonAR,0);
+        buttons.put(R.id.buttonAD,0);
+        return buttons;
+    }
 
-        buttonX.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    X = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    X = false;
-                }
-                return true; // To consume the event
-            }
-        });
-        buttonB.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    B = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    B = false;
-                }
-                return true; // To consume the event
-            }
-        });
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 
-        buttonA.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    A = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    A = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonAU.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AU = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AU = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonAL.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AL = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AL = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonAR.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AR = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AR = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonAD.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AD = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AD = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonAUL.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AU = true;
-                    AL = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AU = false;
-                    AL = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonAUR.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AU = true;
-                    AR = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AU = false;
-                    AR = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonADL.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AD = true;
-                    AL = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AD = false;
-                    AL = false;
-                }
-                return true; // To consume the event
-            }
-        });
-
-        buttonADR.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    AD = true;
-                    AR = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    AD = false;
-                    AR = false;
-                }
-                return true; // To consume the event
-            }
-        });
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // Unregister the sensor listener
-        if(ipAddress==null && socketAddress == null){
-            usbHelper.closeFile();
-        }
         if(socketAddress!=null){
             socketClient.close();
         }
-        if(Objects.equals(ipAddress, "127.0.0.1")){
-            tcpSocketOverADB.close();
-        }
+        if(sensorManager != null){
         sensorManager.unregisterListener(rotationVectorListener);
+        }
+        if (bluetoothConn!=null){
+            bluetoothConn.sendData("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0".getBytes());
+        }
     }
 }

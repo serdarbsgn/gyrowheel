@@ -19,10 +19,10 @@
     <string name="network_udp_all_buttons">Network/UDP All buttons</string>
     <string name="network_udp">Network/UDP</string>
     <string name="enter_ip_address">Enter IP Address</string>
-    <string name="http_192_168_1_36_5000">http://192.168.1.36:5000</string>
+    <string name="http_192_168_1_36_5000">http://192.168.1.37:5000</string>
     <string name="tcp_adb_or_network">TCP/ADB or Network</string>
     <string name="enter_socket_ip_address">Enter Socket/IP Address</string>
-    <string name="_192_168_1_36">192.168.1.36</string>
+    <string name="_192_168_1_36">192.168.1.37</string>
     <string name="usb">USB</string>
     <string name="tcp_with_all_buttons">TCP w all buttons</string>
     <string name="ArrowUL">˂˄</string>
@@ -33,4 +33,11 @@
     <string name="buttonADL">˂˅</string>
     <string name="buttonADR">˅˃</string>
     <string name="buttonAD">˅</string>
+    <string name="bluetooth_connection">Bluetooth</string>
+    <string name="no_bluetooth">Bluetooth unavailable</string>
+    <string name="enter_bluetooth_mac_adress">Enter Bluetooth Mac Adress</string>
+    <string name="e8_48_b8_c8_20_00">E8:48:B8:C8:20:00</string>
+    <string name="search_computers_on_bluetooth">Search Computers on Bluetooth</string>
+    <string name="bluetooth_all_buttons">Bluetooth All buttons</string>
+    <string name="connect_to_mac_adress">Connect to MAC adress</string>
 </resources>

@@ -1,63 +1,74 @@
 package com.serdarbsgn.gyrowheel;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-
-import android.os.Bundle;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.view.MotionEvent;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
-import java.util.Objects;
 
 
 public class GyroWheelActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
-    private Sensor rotationVectorSensor;
     private SensorEventListener rotationVectorListener;
     private boolean isButtonAPressed = false;
     private boolean isButtonBPressed = false;
-    private String ipAddress;
     private String socketAddress;
-    private USBHelper usbHelper;
     private UDPOverInternet socketClient;
-    private  TCPSocketOverADB tcpSocketOverADB;
 
+    private boolean useBluetooth;
+    private BluetoothConn bluetoothConn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_gyrowheel);
-
-        // Get the IP address passed from MainActivity
-        ipAddress = getIntent().getStringExtra("IP_ADDRESS");
         socketAddress = getIntent().getStringExtra("SOCKET_IP");
-        if(ipAddress==null && socketAddress==null){
-            usbHelper = new USBHelper(getApplicationContext());
-        }
+        useBluetooth = getIntent().getBooleanExtra("USE_BLUETOOTH",false);
         // Initialize the SensorManager
-        if(socketAddress!=null) {
+        if (!useBluetooth) {
             socketClient = new UDPOverInternet(socketAddress, 12345);
+        }else{
+            initBluetooth();
         }
-        if(Objects.equals(ipAddress, "127.0.0.1")){
-            tcpSocketOverADB = new TCPSocketOverADB(ipAddress,12346);
-        }
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initSensors();
+        initButtons();
+    }
+
+    private void initBluetooth(){
+        bluetoothConn = BluetoothConn.getInstance();
+    }
+    private void initSensors(){
+        socketAddress = getIntent().getStringExtra("SOCKET_IP");
+        // Initialize the SensorManager
+        socketClient = new UDPOverInternet(socketAddress, 12345);
         // Get the rotation vector sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        Sensor rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
         // Check if the rotation vector sensor is available
         if (rotationVectorSensor == null) {
@@ -89,37 +100,20 @@ public class GyroWheelActivity extends AppCompatActivity {
 //                    int tempAzimuth=0; this is not being utilised yet.
                     int tempRoll=0;
                     if (pitch>0) {
-                        temPitch= Math.min(Math.round(pitch * 32767), 32767);
+                        temPitch= -Math.min(Math.round(pitch * 32767), 32767);
                     }
                     else{
-                        temPitch = Math.max(Math.round(pitch * 32767), -32767);
+                        temPitch = -Math.max(Math.round(pitch * 32767), -32767);
                     }
                     tempRoll = 32767 - Math.abs(Math.round(roll * 21844));
 
-                    if(ipAddress!=null){
-                        if(Objects.equals(ipAddress, "127.0.0.1")){
-                            String sensorData = String.format(Locale.US, "%d,%d,%d,%d", tempRoll,temPitch,  isButtonAPressed ? 1 : 0, isButtonBPressed ? 1 : 0);
-                            tcpSocketOverADB.sendData(sensorData);
-                        }else{
-                        JSONObject data = new JSONObject();
-                        try {
-                            data.put("SR",tempRoll);
-                            data.put("SP", temPitch);
-                            data.put("LT", isButtonAPressed ? 1 : 0);
-                            data.put("RT", isButtonBPressed ? 1 : 0);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        TCPOverADB.sendPostRequest(ipAddress, data);
-                        }
-                    }else {
-                        String sensorData = String.format(Locale.US, "%d,%d,%d,%d", tempRoll,temPitch,  isButtonAPressed ? 1 : 0, isButtonBPressed ? 1 : 0);
-                        if (socketAddress != null) {
-                            socketClient.sendData(sensorData);
-                        } else {
-                            usbHelper.sendInputOverADB(sensorData);
-                        }
+                    String sensorData = String.format(Locale.US, "%d,%d,%d,%d", tempRoll,temPitch,  isButtonAPressed ? 1 : 0, isButtonBPressed ? 1 : 0);
+                    if(!useBluetooth){
+                        socketClient.sendData(sensorData);
+                    }else if (bluetoothConn!=null){
+                        bluetoothConn.sendData(sensorData.getBytes());
                     }
+
                 }
 
             }
@@ -133,6 +127,9 @@ public class GyroWheelActivity extends AppCompatActivity {
         // Register the listener
         sensorManager.registerListener(rotationVectorListener, rotationVectorSensor, SensorManager.SENSOR_DELAY_FASTEST);
 
+    }
+
+    private void initButtons(){
         // Set up buttons and their touch listeners
         Button buttonA = findViewById(R.id.buttonA);
         Button buttonB = findViewById(R.id.buttonB);
@@ -155,6 +152,7 @@ public class GyroWheelActivity extends AppCompatActivity {
                 isButtonBPressed = isChecked;
             }
         });
+
         buttonA.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -178,22 +176,29 @@ public class GyroWheelActivity extends AppCompatActivity {
                 return true; // To consume the event
             }
         });
-
     }
 
-    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
     protected void onDestroy() {
         super.onDestroy();
         // Unregister the sensor listener
-        if(ipAddress==null && socketAddress == null){
-            usbHelper.closeFile();
-        }
         if(socketAddress!=null){
             socketClient.close();
         }
-        if(Objects.equals(ipAddress, "127.0.0.1")){
-            tcpSocketOverADB.close();
+        if(sensorManager != null){
+            sensorManager.unregisterListener(rotationVectorListener);
         }
-        sensorManager.unregisterListener(rotationVectorListener);
+        if (bluetoothConn!=null){
+            bluetoothConn.sendData("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0".getBytes());
+        }
     }
 }

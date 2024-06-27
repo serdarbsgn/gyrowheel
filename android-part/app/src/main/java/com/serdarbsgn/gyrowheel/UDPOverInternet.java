@@ -2,6 +2,7 @@ package com.serdarbsgn.gyrowheel;
 
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -39,10 +40,11 @@ public class UDPOverInternet {
         byte[] dataBytes = data.getBytes();
         handler.post(() -> {
             try {
+
                 DatagramPacket packet = new DatagramPacket(dataBytes, dataBytes.length, serverAddress, serverPort);
                 udpSocket.send(packet);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
+
             }
         });
     }
