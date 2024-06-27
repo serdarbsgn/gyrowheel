@@ -40,3 +40,4 @@ I think you wouldn't use this in any other game than a racing game, so keep in m
 I'm thinking of improving this further, to fully emulate a controller at some point.   
 It has all the buttons of an XBOX 360 controller now.   
 Apk should run on devices that are Android 8 or above.
+Currently working on Bluetooth Low Energy mode.
