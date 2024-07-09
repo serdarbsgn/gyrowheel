@@ -1,5 +1,6 @@
 package com.serdarbsgn.gyrowheel;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -9,7 +10,8 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-
+import java.util.UUID;
+@SuppressLint("MissingPermission")
 public class BluetoothConn {
 
     private static final String TAG = "BluetoothConn";
@@ -20,14 +22,12 @@ public class BluetoothConn {
     private final Handler handler;
     private final HandlerThread handlerThread;
 
-    // Private constructor to prevent direct instantiation
     private BluetoothConn() {
         handlerThread = new HandlerThread("BluetoothThread");
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
     }
 
-    // Public method to provide access to the instance
     public static synchronized BluetoothConn getInstance() {
         if (instance == null) {
             instance = new BluetoothConn();
@@ -48,12 +48,17 @@ public class BluetoothConn {
         });
     }
 
+
     public void connect(BluetoothDevice device) {
+        boolean useUuid = GlobalSettings.getInstance().isBlcModeUuid();
         handler.post(() -> {
             try {
-                Method m = device.getClass().getMethod("createRfcommSocket", int.class);
-                bluetoothSocket = (BluetoothSocket) m.invoke(device, 10); // Use channel 10 or your preferred channel
-
+                if (useUuid) {
+                    bluetoothSocket = device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+                } else {
+                    Method m = device.getClass().getMethod("createRfcommSocket", int.class);
+                    bluetoothSocket = (BluetoothSocket) m.invoke(device, 10);
+                }
                 bluetoothAdapter.cancelDiscovery();
 
                 bluetoothSocket.connect();

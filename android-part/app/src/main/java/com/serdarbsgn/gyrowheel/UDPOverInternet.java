@@ -2,7 +2,6 @@ package com.serdarbsgn.gyrowheel;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.util.Log;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

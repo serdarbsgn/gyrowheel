@@ -47,11 +47,23 @@
         android:inputType="text"
         android:text="@string/e8_48_b8_c8_20_00" />
 
-    <Button
-        android:id="@+id/bluetoothConnectMAC"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="@string/connect_to_mac_adress" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bluetoothConnectMAC"
+            android:layout_width="286dp"
+            android:layout_height="64dp"
+            android:text="@string/connect_to_mac_adress" />
+
+        <Switch
+            android:id="@+id/switchForwardedSocket"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/forwarded_socket" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -83,7 +95,32 @@
     <ListView
         android:id="@+id/listViewDevices"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="187dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/editLayout"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_layout" />
+
+        <Switch
+            android:id="@+id/useCustomLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/use_custom_layout" />
+    </LinearLayout>
+
+    <!--Button
+        android:id="@+id/bluetoothLe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bluetooth_le" /-->
 
 
 </LinearLayout>

@@ -34,10 +34,16 @@
     <string name="buttonADR">˅˃</string>
     <string name="buttonAD">˅</string>
     <string name="bluetooth_connection">Bluetooth</string>
-    <string name="no_bluetooth">Bluetooth unavailable</string>
+    <string name="no_bluetooth">Bluetooth UNAVAILABLE</string>
     <string name="enter_bluetooth_mac_adress">Enter Bluetooth Mac Adress</string>
     <string name="e8_48_b8_c8_20_00">E8:48:B8:C8:20:00</string>
     <string name="search_computers_on_bluetooth">Search Computers on Bluetooth</string>
     <string name="bluetooth_all_buttons">Bluetooth All buttons</string>
     <string name="connect_to_mac_adress">Connect to MAC adress</string>
+    <string name="bluetooth_le">Bluetooth Le</string>
+    <string name="forwarded_socket">Forwarded Socket</string>
+    <string name="disable_sensor">Disable Sensor</string>
+    <string name="button_a">Button A</string>
+    <string name="edit_layout">EDIT Layout</string>
+    <string name="use_custom_layout">Use Custom Layout</string>
 </resources>

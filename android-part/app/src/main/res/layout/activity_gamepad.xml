@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="134dp"
             android:scaleType="fitCenter"
-            app:srcCompat="?android:attr/listChoiceIndicatorSingle" />
+            app:srcCompat="@drawable/circle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -175,6 +175,16 @@
                 android:text="@string/button_R3" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="162dp" />
+
+        <Switch
+            android:id="@+id/switchSensor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/disable_sensor" />
+
 
     </LinearLayout>
 
@@ -247,7 +257,7 @@
             android:id="@+id/rightAnalog"
             android:layout_width="match_parent"
             android:layout_height="129dp"
-            app:srcCompat="?android:attr/listChoiceIndicatorSingle" />
+            app:srcCompat="@drawable/circle" />
 
     </LinearLayout>
 

@@ -1,7 +1,9 @@
 package com.serdarbsgn.gyrowheel;
 
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
-
+@SuppressLint("MissingPermission")
 public class MainActivity extends AppCompatActivity {
 
     private BluetoothConn bluetoothConn;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSION_BT_CONNECT = 2;
     private ArrayAdapter<String> devicesArrayAdapter;
     private ArrayList<BluetoothDevice> devicesList;
+    private Boolean useEditedLayout = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +65,16 @@ public class MainActivity extends AppCompatActivity {
             String ipAddress = editTextSocketIp.getText().toString();
             Intent intent = new Intent(MainActivity.this, GamepadActivity.class);
             intent.putExtra("SOCKET_IP", ipAddress);
+            intent.putExtra("CUSTOM_LAYOUT", useEditedLayout);
             startActivity(intent);
         });
 
         final EditText editTextBluetoothMac = findViewById(R.id.editTextBluetoothMAC);
+        Switch forwardedSocket = findViewById(R.id.switchForwardedSocket);
+        forwardedSocket.setOnCheckedChangeListener((buttonView, isChecked) -> GlobalSettings.getInstance().setBlcModeUuid(isChecked));
+        Switch useCustomLayout = findViewById(R.id.useCustomLayout);
+        useCustomLayout.setOnCheckedChangeListener((buttonView, isChecked) -> useEditedLayout = isChecked);
+
         Button buttonBtConnect = findViewById(R.id.bluetoothConnectMAC);
         buttonBtConnect.setOnClickListener(v -> {
             String macAddress = editTextBluetoothMac.getText().toString();
@@ -81,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         buttonBtGP.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, GamepadActivity.class);
             intent.putExtra("USE_BLUETOOTH", true);
+            intent.putExtra("CUSTOM_LAYOUT", useEditedLayout);
             startActivity(intent);
         });
         buttonBtGW.setEnabled(false);
@@ -88,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.bluetoothShowComputers).setOnClickListener(v -> {
             requestBluetoothPermissions(null,"Scan");
+        });
+        Button edit = findViewById(R.id.editLayout);
+        edit.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, EditableActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -120,7 +136,10 @@ public class MainActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "Requesting BLUETOOTH_CONNECT and BLUETOOTH_SCAN permission");
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.BLUETOOTH_CONNECT,android.Manifest.permission.BLUETOOTH_SCAN}, REQUEST_PERMISSION_BT_CONNECT);
+                ActivityCompat.requestPermissions(this, new String[]{
+                        android.Manifest.permission.BLUETOOTH_CONNECT,
+                        android.Manifest.permission.BLUETOOTH_SCAN
+                }, REQUEST_PERMISSION_BT_CONNECT);
             }else {
                 handleBluetoothAction(macAddress, type);
             }
@@ -165,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (device != null) {
+                if (device != null && device.getBluetoothClass().getMajorDeviceClass() == BluetoothClass.Device.Major.COMPUTER){
                     devicesList.add(device);
                     devicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                     devicesArrayAdapter.notifyDataSetChanged();
