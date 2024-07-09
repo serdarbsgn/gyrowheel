@@ -10,7 +10,10 @@ Then you should write 192.168.1.36 to first text field
 
 
 The second best option should be the bluetooth mode, it requires user to give permissions for bluetooth and a bluetooth enabled computer(obviously).    
-It requires to know the MAC adress of your PC, and you can use built in tools to scan for computers around and connect to yours, while script is active.    
+It requires to know the MAC adress of your PC, and you can use built in tools to scan for computers around and connect to yours, while script is active on your computer.    
+
+Switch labelled as Forwarded socket is to connect using android's built in high level connect function, in windows, search for "Other Bluetooth Options" and navigate to,     
+COM tab, and add an Incoming COM port, and enter the value of the COM port that windows assigns,(My computer defaults to COM10, so if left blank script looks for COM10)  
 
 , if you choose flask the server to listen for phone, and note the ip address that is not 127.0.0.1  
 Lets assume in terminal you see this,  
@@ -38,6 +41,10 @@ then run the third option in run.bat file.
 I think you wouldn't use this in any other game than a racing game, so keep in mind that.   
   
 I'm thinking of improving this further, to fully emulate a controller at some point.   
-It has all the buttons of an XBOX 360 controller now.   
-Apk should run on devices that are Android 8 or above.
-Currently working on Bluetooth Low Energy mode.
+It has all the buttons of an XBOX 360 controller now.      
+Apk should run on devices that are Android 8 or above.   
+
+Currently working on Bluetooth Low Energy mode. This I couldn't manage, connection attempt between Windows and Android BLE GATT server fails and i couldn't fix it.   
+
+At the bottom of the screen, there's an edit layout button to let you drag and drop buttons to wherever you please even outside if you don't want to use those,   
+Then use the switch next to the edit button to use your layout of buttons in gamepad mode.   

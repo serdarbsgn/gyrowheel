@@ -5,9 +5,10 @@ echo 1. Start Network(Flask) app
 echo 2. Start USB app
 echo 3. Start ABD/TCP reverse proxy app
 echo 4. Start Bluetooth Classic app
-echo 5. Just press enter to start Network/UDP app
-
-set /p choice="Enter your choice (1/2/3/4/anything): "
+echo 5. Start Bluetooth Classic app with Forwarded port
+echo 6. Just press enter to start Network/UDP app
+echo I effectively "removed" first 3 options on android side, so please use the remaining methods.
+set /p choice="Enter your choice (1/2/3/4/5/anything): "
 call venv\Scripts\activate
 
 if "%choice%"=="1" (
@@ -22,6 +23,9 @@ if "%choice%"=="1" (
 )else if "%choice%"=="4" (
     echo Start Bluetooth app
     python blcConn.py 
+)else if "%choice%"=="5" (
+    echo Start Bluetooth app with Forwarded port
+    python blcConnFwd.py
 )else (
 	echo Start Network/UDP app
     python udpConn.py

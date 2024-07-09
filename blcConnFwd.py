@@ -7,9 +7,13 @@ from simulate_gamepad import simulate_gamepad
 gamepad = vg.VX360Gamepad()
 
 # Serial port configuration
-com_port = 'COM10'
+
 baud_rate = 115200
 
+com_port = 'COM10'
+user_input = input("Enter the COM port (press Enter to default to 'COM10'): ")
+if user_input.strip() != "":
+    com_port = user_input
 input_queue = queue.Queue(maxsize=2)
 
 def serial_listener():
