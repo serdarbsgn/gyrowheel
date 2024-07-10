@@ -93,6 +93,8 @@ public class GamepadActivity extends AppCompatActivity {
                         FrameLayout.LayoutParams.WRAP_CONTENT);
                 params.leftMargin = position.get(0);
                 params.topMargin = position.get(1);
+                button.setScaleX((float) position.get(2) /100);
+                button.setScaleY((float) position.get(2) /100);
                 button.setLayoutParams(params);
             }
         }
@@ -210,14 +212,14 @@ public class GamepadActivity extends AppCompatActivity {
                         float diffX = currentX - startX;
                         float diffY = currentY - startY;
                         if (diffX > 0) {
-                            ALX = Math.min(Math.round(diffX * 165), 32767);
+                            ALX = Math.min(Math.round(diffX * 327), 32767);
                         } else {
-                            ALX = Math.max(Math.round(diffX * 165), -32767);
+                            ALX = Math.max(Math.round(diffX * 327), -32767);
                         }
                         if (diffY > 0) {
-                            ALY = Math.min(Math.round(diffY * 165), 32767);
+                            ALY = Math.min(Math.round(diffY * 327), 32767);
                         } else {
-                            ALY = Math.max(Math.round(diffY * 165), -32767);
+                            ALY = Math.max(Math.round(diffY * 327), -32767);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -349,50 +351,53 @@ public class GamepadActivity extends AppCompatActivity {
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 3) {
+                if (parts.length == 4) {  // Expecting key, x, y, size
                     Integer key = Integer.parseInt(parts[0]);
                     Integer x = Integer.parseInt(parts[1]);
                     Integer y = Integer.parseInt(parts[2]);
-                    buttons.put(key, new ArrayList<>(Arrays.asList(x, y)));
+                    Integer size = Integer.parseInt(parts[3]);
+                    buttons.put(key, new ArrayList<>(Arrays.asList(x, y, size)));
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this,"Use Edit Layout button to set a layout first.",Toast.LENGTH_SHORT).show();
         }
 
         return buttons;
     }
+
     private @NonNull HashMap<Integer, ArrayList<Integer>> getIntegerIntegerArrayHashMap() {
-        HashMap<Integer,ArrayList<Integer>> buttons = new HashMap<>();
+        HashMap<Integer, ArrayList<Integer>> buttons = new HashMap<>();
 
-        buttons.put(R.id.buttonLB, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonLT, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonL3, new ArrayList<>(Arrays.asList(0, 0)));
+        buttons.put(R.id.buttonLB, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonLT, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonL3, new ArrayList<>(Arrays.asList(0, 0, 100)));
 
-        buttons.put(R.id.buttonRB, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonRT, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonR3, new ArrayList<>(Arrays.asList(0, 0)));
+        buttons.put(R.id.buttonRB, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonRT, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonR3, new ArrayList<>(Arrays.asList(0, 0, 100)));
 
-        buttons.put(R.id.buttonBack, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonStart, new ArrayList<>(Arrays.asList(0, 0)));
+        buttons.put(R.id.buttonBack, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonStart, new ArrayList<>(Arrays.asList(0, 0, 100)));
 
-        buttons.put(R.id.buttonY, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonX, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonB, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonA, new ArrayList<>(Arrays.asList(0, 0)));
+        buttons.put(R.id.buttonY, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonX, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonB, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonA, new ArrayList<>(Arrays.asList(0, 0, 100)));
 
-        buttons.put(R.id.buttonAU, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonAL, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonAR, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonAD, new ArrayList<>(Arrays.asList(0, 0)));
+        buttons.put(R.id.buttonAU, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonAL, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonAR, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonAD, new ArrayList<>(Arrays.asList(0, 0, 100)));
 
-        buttons.put(R.id.buttonAUL, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonAUR, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonADL, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.buttonADR, new ArrayList<>(Arrays.asList(0, 0)));
+        buttons.put(R.id.buttonAUL, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonAUR, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonADL, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonADR, new ArrayList<>(Arrays.asList(0, 0, 100)));
 
-        buttons.put(R.id.rightAnalog, new ArrayList<>(Arrays.asList(0, 0)));
-        buttons.put(R.id.leftAnalog, new ArrayList<>(Arrays.asList(0, 0)));
+        buttons.put(R.id.rightAnalog, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.leftAnalog, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(0, 0, 100)));
 
         return buttons;
     }
