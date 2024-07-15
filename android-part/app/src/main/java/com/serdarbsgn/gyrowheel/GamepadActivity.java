@@ -67,6 +67,7 @@ public class GamepadActivity extends AppCompatActivity {
         }else{
             initBluetooth();
         }
+        buttons = getIntegerIntegerHashMap();
     }
     @Override
     protected void onStart() {
@@ -111,7 +112,6 @@ public class GamepadActivity extends AppCompatActivity {
             Log.e("RotationSensor", "Rotation Vector Sensor not available");
             return;
         }
-        buttons = getIntegerIntegerHashMap();
         // Create a SensorEventListener to listen for rotation vector data
         rotationVectorListener = new SensorEventListener() {
             @Override

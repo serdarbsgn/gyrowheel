@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
         android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <!--uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" / Needed for BLE for not implemented.-->
+    <!--uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" / Needed for BLE not implemented.-->
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
         android:usesPermissionFlags="neverForLocation"
         tools:targetApi="s" />
@@ -25,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GyroWheel"
         >
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="APPLICATION_ID"/>
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

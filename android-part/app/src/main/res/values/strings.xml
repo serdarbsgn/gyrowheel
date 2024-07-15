@@ -46,4 +46,7 @@
     <string name="button_a">Button A</string>
     <string name="edit_layout">EDIT Layout</string>
     <string name="use_custom_layout">Use Custom Layout</string>
+    <string name="privacy_policy">PRIVACY POLICY</string>
+    <string name="see_ad_amp_support_me"><![CDATA[See ad&support me]]></string>
+    <string name="show_bluetooth_computers">Show Bluetooth Computers</string>
 </resources>

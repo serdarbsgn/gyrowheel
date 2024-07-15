@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,13 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -36,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> devicesArrayAdapter;
     private ArrayList<BluetoothDevice> devicesList;
     private Boolean useEditedLayout = false;
+    private RewardedAd rewardedAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +87,13 @@ public class MainActivity extends AppCompatActivity {
         Button buttonBtConnect = findViewById(R.id.bluetoothConnectMAC);
         buttonBtConnect.setOnClickListener(v -> {
             String macAddress = editTextBluetoothMac.getText().toString();
-            requestBluetoothPermissions(macAddress,"Connect");
+            if (MACAddressValidator.isValidMACAddress(macAddress)) {
+                requestBluetoothPermissions(macAddress, "Connect");
+            } else {
+                // Handle invalid MAC address input (e.g., show an error message)
+                Toast.makeText(getApplicationContext(), "Invalid MAC address", Toast.LENGTH_SHORT).show();
+            }
         });
-
         Button buttonBtGW = findViewById(R.id.bluetooth);
         buttonBtGW.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, GyroWheelActivity.class);
@@ -105,8 +118,42 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, EditableActivity.class);
             startActivity(intent);
         });
-    }
 
+        Button buttonPrivacy = findViewById(R.id.buttonPrivacyPolicy);
+        buttonPrivacy.setOnClickListener(v -> {
+            String url = "https://serdarbisgin.com.tr/privacy-policy-for-gyrowheel-app";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        });
+        Button buttonSupport = findViewById(R.id.buttonSupportMe);
+        MobileAds.initialize(this, initializationStatus -> {});
+        loadRewardedAd();
+        buttonSupport.setOnClickListener(v -> {
+            if (rewardedAd != null) {
+                rewardedAd.show(MainActivity.this, rewardItem -> {
+                    Toast.makeText(MainActivity.this, "Thank you for your support!", Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                Toast.makeText(MainActivity.this, "Ad is not ready yet,press the button again.", Toast.LENGTH_SHORT).show();
+            }
+            loadRewardedAd();
+        });
+    }
+    private void loadRewardedAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(this, "AD_UNIT_ID", adRequest, new RewardedAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull RewardedAd ad) {
+                rewardedAd = ad;
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                rewardedAd = null;
+            }
+        });
+    }
     private void initializeBluetoothConnection(String macAddress) {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter.isDiscovering()) {
@@ -140,17 +187,19 @@ public class MainActivity extends AppCompatActivity {
                         android.Manifest.permission.BLUETOOTH_CONNECT,
                         android.Manifest.permission.BLUETOOTH_SCAN
                 }, REQUEST_PERMISSION_BT_CONNECT);
+                Toast.makeText(this,"Click the button again after giving the permission",Toast.LENGTH_SHORT).show();
             }else {
                 handleBluetoothAction(macAddress, type);
             }
         } else {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED ||
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "Requesting BLUETOOTH and BLUETOOTH_ADMIN permissions");
                 ActivityCompat.requestPermissions(this, new String[]{
                         android.Manifest.permission.BLUETOOTH,
                         android.Manifest.permission.BLUETOOTH_ADMIN
                 }, REQUEST_PERMISSION_BT);
+                Toast.makeText(this,"Click the button again after giving the permission",Toast.LENGTH_SHORT).show();
             } else {
                 handleBluetoothAction(macAddress, type);
             }

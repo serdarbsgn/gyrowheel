@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/editTextSocketIp"
         android:layout_width="match_parent"
-        android:layout_height="106dp"
+        android:layout_height="70dp"
         android:hint="@string/enter_socket_ip_address"
         android:inputType="text"
         android:text="@string/_192_168_1_36" />
@@ -15,12 +15,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="89dp"
+        android:layout_height="72dp"
         android:orientation="horizontal">
 
         <Button
@@ -42,7 +42,7 @@
     <EditText
         android:id="@+id/editTextBluetoothMAC"
         android:layout_width="match_parent"
-        android:layout_height="106dp"
+        android:layout_height="60dp"
         android:hint="@string/enter_bluetooth_mac_adress"
         android:inputType="text"
         android:text="@string/e8_48_b8_c8_20_00" />
@@ -90,22 +90,22 @@
         android:id="@+id/bluetoothShowComputers"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:text="Show Bluetooth Computers" />
+        android:text="@string/show_bluetooth_computers" />
 
     <ListView
         android:id="@+id/listViewDevices"
         android:layout_width="match_parent"
-        android:layout_height="187dp" />
+        android:layout_height="171dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="66dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/editLayout"
             android:layout_width="210dp"
-            android:layout_height="wrap_content"
+            android:layout_height="61dp"
             android:text="@string/edit_layout" />
 
         <Switch
@@ -114,7 +114,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/use_custom_layout" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonPrivacyPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/privacy_policy" />
+
+    <Button
+        android:id="@+id/buttonSupportMe"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:text="@string/see_ad_amp_support_me" />
 
     <!--Button
         android:id="@+id/bluetoothLe"

@@ -29,8 +29,7 @@ public class UDPOverInternet {
             try {
                 udpSocket = new DatagramSocket();
                 serverAddress = InetAddress.getByName(serverIp);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         });
     }
