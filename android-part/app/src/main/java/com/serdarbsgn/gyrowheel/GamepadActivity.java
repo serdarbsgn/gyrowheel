@@ -416,6 +416,7 @@ public class GamepadActivity extends AppCompatActivity {
         super.onDestroy();
         //If using Network mode, close the socket.
         if(socketAddress!=null){
+            socketClient.sendData("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
             socketClient.close();
         }
         // Unregister the sensor listener

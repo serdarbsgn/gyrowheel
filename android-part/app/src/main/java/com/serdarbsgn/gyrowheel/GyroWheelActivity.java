@@ -185,6 +185,7 @@ public class GyroWheelActivity extends AppCompatActivity {
         super.onDestroy();
         // Unregister the sensor listener
         if(socketAddress!=null){
+            socketClient.sendData("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
             socketClient.close();
         }
         if(sensorManager != null){

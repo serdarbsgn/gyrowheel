@@ -16,8 +16,8 @@
     <string name="button_L3">L3</string>
     <string name="button_Start">Start</string>
     <string name="button_Back">Back</string>
-    <string name="network_udp_all_buttons">Network/UDP All buttons</string>
-    <string name="network_udp">Network/UDP</string>
+    <string name="network_udp_all_buttons">Gamepad Mode</string>
+    <string name="network_udp">GyroWheel Mode</string>
     <string name="enter_ip_address">Enter IP Address</string>
     <string name="http_192_168_1_36_5000">http://192.168.1.37:5000</string>
     <string name="tcp_adb_or_network">TCP/ADB or Network</string>
@@ -33,12 +33,12 @@
     <string name="buttonADL">˂˅</string>
     <string name="buttonADR">˅˃</string>
     <string name="buttonAD">˅</string>
-    <string name="bluetooth_connection">Bluetooth</string>
+    <string name="bluetooth_connection">GyroWheel Mode</string>
     <string name="no_bluetooth">Bluetooth UNAVAILABLE</string>
     <string name="enter_bluetooth_mac_adress">Enter Bluetooth Mac Adress</string>
     <string name="e8_48_b8_c8_20_00">E8:48:B8:C8:20:00</string>
     <string name="search_computers_on_bluetooth">Search Computers on Bluetooth</string>
-    <string name="bluetooth_all_buttons">Bluetooth All buttons</string>
+    <string name="bluetooth_all_buttons">Gamepad Mode</string>
     <string name="connect_to_mac_adress">Connect to MAC adress</string>
     <string name="bluetooth_le">Bluetooth Le</string>
     <string name="forwarded_socket">Forwarded Socket</string>
@@ -49,4 +49,6 @@
     <string name="privacy_policy">PRIVACY POLICY</string>
     <string name="see_ad_amp_support_me"><![CDATA[See ad&support me]]></string>
     <string name="show_bluetooth_computers">Show Bluetooth Computers</string>
+    <string name="use_network">Use Network</string>
+    <string name="use_bluetooth">Use Bluetooth</string>
 </resources>
