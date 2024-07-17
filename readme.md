@@ -1,14 +1,15 @@
 Needs a computer that has python3 installed, [Install python here](https://www.python.org/downloads/) then you can use install.bat to install necessary libraries.  
 Install apk to your phone, then connect your computer and phone to the same network.(Not necessary for Bluetooth mode.)    
 
-
+![alt text](https://raw.githubusercontent.com/serdarbsgn/gyrowheel/main/readme-photos/run-bat.png "run-bat")  
 Use run.bat to select run options    
 
-To use Network/UDP mode, write the IP that terminal displays,   
-UDP server started on 192.168.1.42:12345   
-
+![alt text](https://raw.githubusercontent.com/serdarbsgn/gyrowheel/main/readme-photos/run-udp-mode.png "udp-mode")  
+To use Network/UDP mode, write the IP that terminal displays to your phone.,   
+Above example is showing 192.168.1.42:12345   
+![alt text](https://github.com/serdarbsgn/gyrowheel/blob/main/readme-photos/udp-mode-enter-ip.jpg "udp-mode-enter-ip-on-phone")  
 Then you should select the "USE NETWORK" option and   
-You should write 192.168.1.36 to first text field   
+You should write 192.168.1.42 to first text field   
 After correctly entering the ip displayed on your pc to the field   
 Use GyroWheel Mode or Gamepad Mode  
 When using Gamepad mode, you can edit the layout of the buttons using EDIT LAYOUT BUTTON, dragging and dropping them or pinching them to make them scale.  
