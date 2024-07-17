@@ -34,6 +34,9 @@ Then use the switch next to the edit button to use your layout of buttons in gam
 There was multiple other methods of connection that i removed because they were fiddly and slow, good learning experience though.  
 
 Currently working on Bluetooth Low Energy mode. I couldn't manage it, connection attempt between Windows and Android BLE GATT server fails and i couldn't fix it.   
+# GyroWheel 
+
+<Virtual Gamepad for Windows using an Android device>
 
 ## License  
 
