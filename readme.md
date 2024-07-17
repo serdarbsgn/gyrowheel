@@ -37,13 +37,17 @@ Currently working on Bluetooth Low Energy mode. I couldn't manage it, connection
 
 ## License  
 
-This project is licensed under the GNU General Public License (GPL) version 3 or later. See the [LICENSE](LICENSE) file for details.  
+This project is licensed under the GNU General Public License version 3 (GPLv3). You can redistribute it and/or modify it under the terms of the GNU GPLv3.See the [LICENSE](LICENSE) file for details.  
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.  
+
+You should have received a copy of the GNU General Public License along with this program. If not, see [https://www.gnu.org/licenses/](https://www.gnu.org/licenses/).  
 
 ## Third-Party Licenses  
 
 This project uses the following libraries:  
 
-- **vgamepad**: Licensed under the MIT License. See [LICENSES/vgamepad_LICENSE](LICENSES/vgamepad_LICENSE).  
-- **pyserial**: Licensed under the BSD License. See [LICENSES/pyserial_LICENSE](LICENSES/pyserial_LICENSE).  
+- **vgamepad**: Licensed under the MIT License. See [LICENSES/vgamepad-LICENSE](LICENSES/vgamepad-LICENSE).  
+- **pyserial**: Licensed under the BSD License. See [LICENSES/pyserial-LICENSE](LICENSES/pyserial-LICENSE).  
 
 The full license texts for these libraries are included in the `LICENSES` directory of this repository.  
