@@ -1,13 +1,13 @@
 Needs a computer that has python3 installed, [Install python here](https://www.python.org/downloads/) then you can use install.bat to install necessary libraries.  
 Install apk to your phone, then connect your computer and phone to the same network.(Not necessary for Bluetooth mode.)    
 
-![alt text](https://raw.githubusercontent.com/serdarbsgn/gyrowheel/main/readme-photos/run-bat.png "run-bat")  
+![alt text](readme-photos/run-bat.png "run-bat")  
 Use run.bat to select run options    
 
-![alt text](https://raw.githubusercontent.com/serdarbsgn/gyrowheel/main/readme-photos/run-udp-mode.png "udp-mode")  
+![alt text](/readme-photos/run-udp-mode.png "udp-mode")  
 To use Network/UDP mode, write the IP that terminal displays to your phone.,   
 Above example is showing 192.168.1.42:12345   
-![alt text](https://github.com/serdarbsgn/gyrowheel/blob/main/readme-photos/udp-mode-enter-ip.jpg "udp-mode-enter-ip-on-phone")  
+![alt text](/udp-mode-enter-ip.jpg "udp-mode-enter-ip-on-phone")  
 Then you should select the "USE NETWORK" option and   
 You should write 192.168.1.42 to first text field   
 After correctly entering the ip displayed on your pc to the field   
@@ -34,3 +34,16 @@ Then use the switch next to the edit button to use your layout of buttons in gam
 There was multiple other methods of connection that i removed because they were fiddly and slow, good learning experience though.  
 
 Currently working on Bluetooth Low Energy mode. I couldn't manage it, connection attempt between Windows and Android BLE GATT server fails and i couldn't fix it.   
+
+## License  
+
+This project is licensed under the GNU General Public License (GPL) version 3 or later. See the [LICENSE](LICENSE) file for details.  
+
+## Third-Party Licenses  
+
+This project uses the following libraries:  
+
+- **vgamepad**: Licensed under the MIT License. See [LICENSES/vgamepad_LICENSE](LICENSES/vgamepad_LICENSE).  
+- **pyserial**: Licensed under the BSD License. See [LICENSES/pyserial_LICENSE](LICENSES/pyserial_LICENSE).  
+
+The full license texts for these libraries are included in the `LICENSES` directory of this repository.  
