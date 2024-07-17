@@ -10,8 +10,8 @@ android {
         applicationId = "com.serdarbsgn.gyrowheel"
         minSdk = 26
         targetSdk = 34
-        versionCode = 10
-        versionName = "1.01123"
+        versionCode = 14
+        versionName = "1.012"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.gms:play-services-ads:23.2.0")
+    implementation(libs.play.services.ads)
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)

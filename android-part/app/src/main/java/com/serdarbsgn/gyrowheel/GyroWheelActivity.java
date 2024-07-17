@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -65,7 +66,9 @@ public class GyroWheelActivity extends AppCompatActivity {
 
         // Check if the rotation vector sensor is available
         if (rotationVectorSensor == null) {
+            Toast.makeText(this, "This mode relies solely on Rotation sensors which your device doesn't have.", Toast.LENGTH_SHORT).show();
             Log.e("RotationSensor", "Rotation Vector Sensor not available");
+            finish();
             return;
         }
 

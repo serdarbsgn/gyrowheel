@@ -5,6 +5,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,7 +42,8 @@ public class GamepadActivity extends AppCompatActivity {
     private BluetoothConn bluetoothConn;
     private boolean useSensor = true;
     HashMap<Integer, ArrayList<Integer>> buttonPlacement;
-
+    private Handler handler;
+    private Runnable dataSender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +112,48 @@ public class GamepadActivity extends AppCompatActivity {
 
         // Check if the rotation vector sensor is available
         if (rotationVectorSensor == null) {
+            Toast.makeText(this, "Rotation Sensor is not available.", Toast.LENGTH_SHORT).show();
+            Switch switchSensor = findViewById(R.id.switchSensor);
+            switchSensor.setEnabled(false);
+            switchSensor.setChecked(true);
             Log.e("RotationSensor", "Rotation Vector Sensor not available");
+            handler = new Handler(Looper.getMainLooper());
+            dataSender = new Runnable() {
+                @Override
+                public void run() {
+                    String sensorData = String.format(Locale.US,
+                            "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+                            -ALY,
+                            ALX,
+                            buttons.get(R.id.buttonLB),
+                            buttons.get(R.id.buttonLT),
+                            buttons.get(R.id.buttonL3),
+                            buttons.get(R.id.buttonRB),
+                            buttons.get(R.id.buttonRT),
+                            buttons.get(R.id.buttonR3),
+                            buttons.get(R.id.buttonBack),
+                            buttons.get(R.id.buttonStart),
+                            buttons.get(R.id.buttonY),
+                            buttons.get(R.id.buttonX),
+                            buttons.get(R.id.buttonB),
+                            buttons.get(R.id.buttonA),
+                            buttons.get(R.id.buttonAU),
+                            buttons.get(R.id.buttonAL),
+                            buttons.get(R.id.buttonAR),
+                            buttons.get(R.id.buttonAD),
+                            ARX, ARY
+                    );
+                    if (!useBluetooth) {
+                        socketClient.sendData(sensorData);
+                    } else if (bluetoothConn != null) {
+                        bluetoothConn.sendData(sensorData.getBytes());
+                    }
+                    handler.postDelayed(this, 5); // 5 milliseconds delay
+                }
+            };
+            handler.post(dataSender);
             return;
         }
-        // Create a SensorEventListener to listen for rotation vector data
         rotationVectorListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -121,17 +162,17 @@ public class GamepadActivity extends AppCompatActivity {
                     //int tempAzimuth=0;
                     int tempRoll = 0;
                     if (ALX == 0 && ALY == 0 && useSensor) {
-                    // Convert the rotation-vector to a 4x4 matrix.
-                    float[] rotationMatrix = new float[9];
-                    SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
+                        // Convert the rotation-vector to a 4x4 matrix.
+                        float[] rotationMatrix = new float[9];
+                        SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
 
-                    // Calculate orientation angles.
-                    float[] orientationAngles = new float[3];
-                    SensorManager.getOrientation(rotationMatrix, orientationAngles);
+                        // Calculate orientation angles.
+                        float[] orientationAngles = new float[3];
+                        SensorManager.getOrientation(rotationMatrix, orientationAngles);
 
-                    float azimuth = orientationAngles[0]; // Rotation around the Z axis
-                    float pitch = orientationAngles[1];   // Rotation around the X axis
-                    float roll = orientationAngles[2];    // Rotation around the Y axis
+                        float azimuth = orientationAngles[0]; // Rotation around the Z axis
+                        float pitch = orientationAngles[1];   // Rotation around the X axis
+                        float roll = orientationAngles[2];    // Rotation around the Y axis
 
                         if (pitch > 0) {
                             temPitch = -Math.min(Math.round(pitch * 32767), 32767);
@@ -168,9 +209,9 @@ public class GamepadActivity extends AppCompatActivity {
                             buttons.get(R.id.buttonAD),
                             ARX, ARY
                     );
-                    if(!useBluetooth){
+                    if (!useBluetooth) {
                         socketClient.sendData(sensorData);
-                    }else if (bluetoothConn!=null){
+                    } else if (bluetoothConn != null) {
                         bluetoothConn.sendData(sensorData.getBytes());
                     }
                 }
@@ -185,6 +226,7 @@ public class GamepadActivity extends AppCompatActivity {
 
         // Register the listener
         sensorManager.registerListener(rotationVectorListener, rotationVectorSensor, SensorManager.SENSOR_DELAY_FASTEST);
+
     }
     private void initButtons(){
         for (Map.Entry<Integer, Integer> button : buttons.entrySet()) {
@@ -343,7 +385,7 @@ public class GamepadActivity extends AppCompatActivity {
     }
 
     private HashMap<Integer, ArrayList<Integer>> loadButtonPositions() {
-        HashMap<Integer, ArrayList<Integer>> buttons = getIntegerIntegerArrayHashMap();
+        HashMap<Integer, ArrayList<Integer>> buttons = EditableActivity.getIntegerIntegerArrayHashMap();
 
         try (FileInputStream fis = openFileInput("button_positions.txt")) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
@@ -366,41 +408,6 @@ public class GamepadActivity extends AppCompatActivity {
         return buttons;
     }
 
-    private @NonNull HashMap<Integer, ArrayList<Integer>> getIntegerIntegerArrayHashMap() {
-        HashMap<Integer, ArrayList<Integer>> buttons = new HashMap<>();
-
-        buttons.put(R.id.buttonLB, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonLT, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonL3, new ArrayList<>(Arrays.asList(0, 0, 100)));
-
-        buttons.put(R.id.buttonRB, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonRT, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonR3, new ArrayList<>(Arrays.asList(0, 0, 100)));
-
-        buttons.put(R.id.buttonBack, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonStart, new ArrayList<>(Arrays.asList(0, 0, 100)));
-
-        buttons.put(R.id.buttonY, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonX, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonB, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonA, new ArrayList<>(Arrays.asList(0, 0, 100)));
-
-        buttons.put(R.id.buttonAU, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonAL, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonAR, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonAD, new ArrayList<>(Arrays.asList(0, 0, 100)));
-
-        buttons.put(R.id.buttonAUL, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonAUR, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonADL, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.buttonADR, new ArrayList<>(Arrays.asList(0, 0, 100)));
-
-        buttons.put(R.id.rightAnalog, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.leftAnalog, new ArrayList<>(Arrays.asList(0, 0, 100)));
-        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(0, 0, 100)));
-
-        return buttons;
-    }
     protected void onPause() {
         super.onPause();
         finish();
@@ -426,6 +433,9 @@ public class GamepadActivity extends AppCompatActivity {
         if (bluetoothConn!=null){
             //To return the state of controller to neutral on all buttons, for convenience.
             bluetoothConn.sendData("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0".getBytes());
+        }
+        if (handler != null && dataSender != null) {
+            handler.removeCallbacks(dataSender);
         }
     }
 }

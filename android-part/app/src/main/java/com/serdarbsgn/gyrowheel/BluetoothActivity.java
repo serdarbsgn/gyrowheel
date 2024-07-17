@@ -1,5 +1,6 @@
 package com.serdarbsgn.gyrowheel;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
@@ -38,7 +39,7 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_bluetooth);
+        setContentView(R.layout.activity_bluetooth);
         devicesArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         devicesList = new ArrayList<>();
 
@@ -115,28 +116,30 @@ public class BluetoothActivity extends AppCompatActivity {
         Toast.makeText(this, "Buttons will become available on successful connection.", Toast.LENGTH_SHORT).show();
     }
 
-    private void requestBluetoothPermissions(String macAddress,String type) {
+    private void requestBluetoothPermissions(String macAddress, String type) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED &&
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "Requesting BLUETOOTH_CONNECT and BLUETOOTH_SCAN permission");
                 ActivityCompat.requestPermissions(this, new String[]{
                         android.Manifest.permission.BLUETOOTH_CONNECT,
                         android.Manifest.permission.BLUETOOTH_SCAN
                 }, REQUEST_PERMISSION_BT_CONNECT);
-                Toast.makeText(this,"Click the button again after giving the permission",Toast.LENGTH_SHORT).show();
-            }else {
+                Toast.makeText(this, "Click the button again after giving the permission", Toast.LENGTH_SHORT).show();
+            } else {
                 handleBluetoothAction(macAddress, type);
             }
         } else {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "Requesting BLUETOOTH and BLUETOOTH_ADMIN permissions");
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "Requesting BLUETOOTH, BLUETOOTH_ADMIN and ACCESS_COARSE_LOCATION permissions");
                 ActivityCompat.requestPermissions(this, new String[]{
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
                         android.Manifest.permission.BLUETOOTH,
                         android.Manifest.permission.BLUETOOTH_ADMIN
                 }, REQUEST_PERMISSION_BT);
-                Toast.makeText(this,"Click the button again after giving the permission",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Click the button again after giving the permission", Toast.LENGTH_SHORT).show();
             } else {
                 handleBluetoothAction(macAddress, type);
             }

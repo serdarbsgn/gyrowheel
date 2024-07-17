@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="222dp"
-        app:srcCompat="@mipmap/ic_launcher_foreground" />
-
-    <Button
-        android:id="@+id/useNetwork"
+    <EditText
+        android:id="@+id/editTextSocketIp"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="@string/use_network" />
+        android:hint="@string/enter_socket_ip_address"
+        android:inputType="text"
+        android:text="@string/_192_168_1_36" />
 
     <Button
-        android:id="@+id/useBluetooth"
+        android:id="@+id/networkUdp"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="@string/use_bluetooth" />
+        android:layout_weight="1"
+        android:text="@string/network_udp" />
+
+    <Button
+        android:id="@+id/networkUdpAllButtons"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:text="@string/network_udp_all_buttons" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="70dp" />
 
     <Button
-        android:id="@+id/buttonPrivacyPolicy"
+        android:id="@+id/editLayout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="@string/privacy_policy" />
+        android:text="@string/edit_layout" />
 
-    <Button
-        android:id="@+id/buttonSupportMe"
+    <Switch
+        android:id="@+id/useCustomLayout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="@string/see_ad_amp_support_me" />
+        android:layout_weight="1"
+        android:text="@string/use_custom_layout" />
 </LinearLayout>
