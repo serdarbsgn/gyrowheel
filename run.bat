@@ -11,7 +11,7 @@ if "%choice%"=="1" (
     echo Start Bluetooth app
     python blcConn.py 
 )else if "%choice%"=="2" (
-    echo Start Bluetooth app with Forwarded port(Forwarded socket switch on.)
+    echo Start Bluetooth app with Forwarded port(Forwarded socket switch on^)
     python blcConnFwd.py
 )else (
 	echo Start Network/UDP app
