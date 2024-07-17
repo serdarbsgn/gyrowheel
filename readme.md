@@ -1,10 +1,11 @@
-Needs a computer that has python3 installed, then you can use install.bat to install necessary libraries.  
+Needs a computer that has python3 installed, [Install python here](https://www.python.org/downloads/) then you can use install.bat to install necessary libraries.  
 Install apk to your phone, then connect your computer and phone to the same network.(Not necessary for Bluetooth mode.)    
+
 
 Use run.bat to select run options    
 
-To use Network/UDP mode, write the IP that terminal displays,  
-UDP server started on 192.168.1.36:12345   
+To use Network/UDP mode, write the IP that terminal displays,   
+UDP server started on 192.168.1.42:12345   
 
 Then you should select the "USE NETWORK" option and   
 You should write 192.168.1.36 to first text field   
@@ -25,9 +26,10 @@ Then follow the same steps above, selecting the Start Bluetooth Classic app with
 
 Now your computer should be able to get inputs and simulate a controller in your games,  
 
-There was multiple other methods of connection that i removed because they were fiddly and slow, good learning experience though.  
 
 At the bottom of the screen, there's an edit layout button to let you drag and drop buttons to wherever you please even outside if you don't want to use those,   
 Then use the switch next to the edit button to use your layout of buttons in gamepad mode.   
+
+There was multiple other methods of connection that i removed because they were fiddly and slow, good learning experience though.  
 
 Currently working on Bluetooth Low Energy mode. I couldn't manage it, connection attempt between Windows and Android BLE GATT server fails and i couldn't fix it.   
