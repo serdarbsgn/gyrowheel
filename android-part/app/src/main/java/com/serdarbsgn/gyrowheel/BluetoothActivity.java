@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class BluetoothActivity extends AppCompatActivity {
     private ArrayAdapter<String> devicesArrayAdapter;
     private ArrayList<BluetoothDevice> devicesList;
     private Boolean useEditedLayout = false;
+    private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
+    private static final String KEY_MAC_ADDRESS = "MAC_ADDRESS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,9 @@ public class BluetoothActivity extends AppCompatActivity {
         });
 
         final EditText editTextBluetoothMac = findViewById(R.id.editTextBluetoothMAC);
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String savedMACAddress = sharedPreferences.getString(KEY_MAC_ADDRESS, editTextBluetoothMac.getText().toString());
+        editTextBluetoothMac.setText(savedMACAddress);
         Switch forwardedSocket = findViewById(R.id.switchForwardedSocket);
         forwardedSocket.setOnCheckedChangeListener((buttonView, isChecked) -> GlobalSettings.getInstance().setBlcModeUuid(isChecked));
         Switch useCustomLayout = findViewById(R.id.useCustomLayout);
@@ -60,6 +66,7 @@ public class BluetoothActivity extends AppCompatActivity {
         Button buttonBtConnect = findViewById(R.id.bluetoothConnectMAC);
         buttonBtConnect.setOnClickListener(v -> {
             String macAddress = editTextBluetoothMac.getText().toString();
+            saveMACAddress(macAddress);
             if (MACAddressValidator.isValidMACAddress(macAddress)) {
                 requestBluetoothPermissions(macAddress, "Connect");
             } else {
@@ -189,5 +196,13 @@ public class BluetoothActivity extends AppCompatActivity {
         if (bluetoothConn != null) {
             bluetoothConn.close();
         }
+    }
+
+    private void saveMACAddress(String macAddress) {
+        // Save the IP address to SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_MAC_ADDRESS, macAddress);
+        editor.apply();
     }
 }

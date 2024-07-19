@@ -107,5 +107,6 @@ public class BluetoothConn {
             disconnect();
             handlerThread.quitSafely();
         });
+        instance = null;
     }
 }

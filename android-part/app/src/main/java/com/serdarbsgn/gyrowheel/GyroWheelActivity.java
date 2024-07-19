@@ -5,7 +5,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,14 +23,21 @@ import java.util.Locale;
 public class GyroWheelActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
-    private SensorEventListener rotationVectorListener;
+    private SensorEventListener rotationVectorListener,gravityListener,accelerometerListener;
     private boolean isButtonAPressed = false;
     private boolean isButtonBPressed = false;
     private String socketAddress;
     private UDPOverInternet socketClient;
+    int temPitch, tempRoll;
 
     private boolean useBluetooth;
     private BluetoothConn bluetoothConn;
+    private Handler handler;
+    private Runnable dataSender;
+
+    private static final float ALPHA = 0.4f; // Smoothing factor(Lower is smoother but delayed.)
+    private float filteredX = 0; // Smoothed x value
+    private float filteredY = 0; // Smoothed y value
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,68 +71,111 @@ public class GyroWheelActivity extends AppCompatActivity {
         // Get the rotation vector sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        Sensor gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        // Check if the rotation vector sensor is available
-        if (rotationVectorSensor == null) {
-            Toast.makeText(this, "This mode relies solely on Rotation sensors which your device doesn't have.", Toast.LENGTH_SHORT).show();
-            Log.e("RotationSensor", "Rotation Vector Sensor not available");
-            finish();
-            return;
-        }
+        if (gravitySensor == null) {
+            if (rotationVectorSensor == null) {
+                if (accelerometerSensor == null) {
+                    Toast.makeText(this, "This mode relies solely on Rotation sensors which your device doesn't have any suitable", Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+                }else{
+                    accelerometerListener = new SensorEventListener() {
 
-        // Create a SensorEventListener to listen for rotation vector data
-        rotationVectorListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+                        @Override
+                        public void onSensorChanged(SensorEvent event) {
+                            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                                float x = event.values[1];
+                                float y = event.values[2];
 
-                    // Convert the rotation-vector to a 4x4 matrix.
-                    float[] rotationMatrix = new float[9];
-                    SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
+                                // Apply the low-pass filter
+                                filteredX = ALPHA * x + (1 - ALPHA) * filteredX;
+                                filteredY = ALPHA * y + (1 - ALPHA) * filteredY;
 
-                    // Calculate orientation angles.
-                    float[] orientationAngles = new float[3];
-                    SensorManager.getOrientation(rotationMatrix, orientationAngles);
+                                int axisY = Math.round(filteredX * 3276);
+                                int axisZ = Math.round(filteredY * 3276);
+                                temPitch = (axisY > 0) ? Math.min(axisY, 32767) : Math.max(axisY, -32767);
+                                tempRoll = (axisZ > 0) ? Math.min(axisZ, 32767) : Math.max(axisZ, -32767);
+                            }
+                        }
 
-                    float azimuth = orientationAngles[0]; // Rotation around the Z axis
-                    float pitch = orientationAngles[1];   // Rotation around the X axis
-                    float roll = orientationAngles[2];    // Rotation around the Y axis
+                        @Override
+                        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                        }
+                    };
+                    sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+                }
+            }else{
+                Toast.makeText(this, "Gravity Sensor is not available. Using Rotation Vector Sensor as fallback.", Toast.LENGTH_SHORT).show();
+                // Use rotation vector sensor as a fallback
+                // Create a SensorEventListener to listen for rotation vector data
+                rotationVectorListener = new SensorEventListener() {
+                    @Override
+                    public void onSensorChanged(SensorEvent event) {
+                        if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+                            float[] rotationMatrix = new float[9];
+                            SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
+                            // Calculate orientation angles.
+                            float[] orientationAngles = new float[3];
+                            SensorManager.getOrientation(rotationMatrix, orientationAngles);
 
-                    // Create a string or JSON for different use cases.
+                            int pitch = Math.round(orientationAngles[1] * 32767);   // Rotation around the X axis
+                            int roll = Math.round(orientationAngles[2] * 21844);  // Rotation around the Y axis
 
-                    int temPitch=0;
-//                    int tempAzimuth=0; this is not being utilised yet.
-                    int tempRoll=0;
-                    if (pitch>0) {
-                        temPitch= -Math.min(Math.round(pitch * 32767), 32767);
+                            temPitch = (pitch > 0) ? -Math.min(pitch, 32767) : -Math.max(pitch, -32767);
+                            tempRoll = 32767 - Math.abs(roll);
+
+                        }
+
                     }
-                    else{
-                        temPitch = -Math.max(Math.round(pitch * 32767), -32767);
-                    }
-                    tempRoll = 32767 - Math.abs(Math.round(roll * 21844));
 
-                    String sensorData = String.format(Locale.US, "%d,%d,%d,%d", tempRoll,temPitch,  isButtonAPressed ? 1 : 0, isButtonBPressed ? 1 : 0);
-                    if(!useBluetooth){
-                        socketClient.sendData(sensorData);
-                    }else if (bluetoothConn!=null){
-                        bluetoothConn.sendData(sensorData.getBytes());
+                    @Override
+                    public void onAccuracyChanged(Sensor sensor, int accuracy) {
                     }
+                };
 
+                // Register the listener
+                sensorManager.registerListener(rotationVectorListener, rotationVectorSensor, SensorManager.SENSOR_DELAY_FASTEST);
+            }
+        }else{
+            gravityListener = new SensorEventListener() {
+
+                @Override
+                public void onSensorChanged(SensorEvent event) {
+                    if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
+                        int axisY,axisZ;
+                        axisY = Math.round(event.values[1]* 3276);
+                        axisZ = Math.round(event.values[2]* 3276);
+                        temPitch = (axisY > 0) ? Math.min(axisY, 32767) : Math.max(axisY, -32767);
+                        tempRoll = (axisZ > 0) ? Math.min(axisZ, 32767) : Math.max(axisZ, -32767);
+                    }
                 }
 
-            }
-
+                @Override
+                public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                }
+            };
+            sensorManager.registerListener(gravityListener, gravitySensor, SensorManager.SENSOR_DELAY_GAME);
+        }
+        handler = new Handler(Looper.getMainLooper());
+        dataSender = new Runnable() {
             @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                // You can react to accuracy changes here if needed
+            public void run() {
+                sendData();
+                handler.postDelayed(this, 5); // 5 milliseconds delay}
             }
         };
-
-        // Register the listener
-        sensorManager.registerListener(rotationVectorListener, rotationVectorSensor, SensorManager.SENSOR_DELAY_FASTEST);
-
+        handler.post(dataSender);
     }
-
+    private void sendData(){
+        String sensorData = String.format(Locale.US, "%d,%d,%d,%d", tempRoll,temPitch,  isButtonAPressed ? 1 : 0, isButtonBPressed ? 1 : 0);
+        if(!useBluetooth){
+            socketClient.sendData(sensorData);
+        }else if (bluetoothConn!=null){
+            bluetoothConn.sendData(sensorData.getBytes());
+        }
+    }
     private void initButtons(){
         // Set up buttons and their touch listeners
         Button buttonA = findViewById(R.id.buttonA);
@@ -184,18 +235,26 @@ public class GyroWheelActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Unregister the sensor listener
+        //If using Network mode, close the socket.
         if(socketAddress!=null){
             socketClient.sendData("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
             socketClient.close();
         }
+        // Unregister the sensor listener
         if(sensorManager != null){
             sensorManager.unregisterListener(rotationVectorListener);
+            sensorManager.unregisterListener(gravityListener);
+            sensorManager.unregisterListener(accelerometerListener);
         }
         if (bluetoothConn!=null){
+            //To return the state of controller to neutral on all buttons, for convenience.
             bluetoothConn.sendData("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0".getBytes());
+        }
+        if (handler != null && dataSender != null) {
+            handler.removeCallbacks(dataSender);
         }
     }
 }
