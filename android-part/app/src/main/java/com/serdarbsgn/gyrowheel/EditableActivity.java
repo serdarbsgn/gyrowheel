@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -138,14 +139,15 @@ public class EditableActivity extends AppCompatActivity {
     }
 
     private HashMap<Integer, ArrayList<Integer>> loadButtonPositions() {
-        HashMap<Integer, ArrayList<Integer>> buttons = getIntegerIntegerArrayHashMap();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
+        HashMap<Integer, ArrayList<Integer>> buttons = getIntegerIntegerArrayHashMap(displayMetrics.widthPixels,displayMetrics.heightPixels);
         try (FileInputStream fis = openFileInput("button_positions.txt")) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
             String line;
 
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
                 String[] parts = line.split(",");
                 if (parts.length == 4) {  // Expecting key, x, y, size
                     Integer key = Integer.parseInt(parts[0]);
@@ -162,38 +164,38 @@ public class EditableActivity extends AppCompatActivity {
         return buttons;
     }
 
-    public static @NonNull HashMap<Integer, ArrayList<Integer>> getIntegerIntegerArrayHashMap() {
+    public static @NonNull HashMap<Integer, ArrayList<Integer>> getIntegerIntegerArrayHashMap(int width, int height) {
         HashMap<Integer, ArrayList<Integer>> buttons = new HashMap<>();
 
-        buttons.put(R.id.buttonLB, new ArrayList<>(Arrays.asList(200, 0, 100)));
-        buttons.put(R.id.buttonLT, new ArrayList<>(Arrays.asList(400, 0, 100)));
-        buttons.put(R.id.buttonL3, new ArrayList<>(Arrays.asList(600, 0, 100)));
+        buttons.put(R.id.buttonLB, new ArrayList<>(Arrays.asList(0, 0, 100)));
+        buttons.put(R.id.buttonLT, new ArrayList<>(Arrays.asList(width / 6, 0, 100)));
+        buttons.put(R.id.buttonL3, new ArrayList<>(Arrays.asList(width * 2 / 6, 0, 100)));
 
-        buttons.put(R.id.buttonRB, new ArrayList<>(Arrays.asList(800, 0, 100)));
-        buttons.put(R.id.buttonRT, new ArrayList<>(Arrays.asList(1000, 0, 100)));
-        buttons.put(R.id.buttonR3, new ArrayList<>(Arrays.asList(1200, 0, 100)));
+        buttons.put(R.id.buttonRB, new ArrayList<>(Arrays.asList(width * 3 / 6, 0, 100)));
+        buttons.put(R.id.buttonRT, new ArrayList<>(Arrays.asList(width * 4 / 6, 0, 100)));
+        buttons.put(R.id.buttonR3, new ArrayList<>(Arrays.asList(width * 5 / 6, 0, 100)));
 
-        buttons.put(R.id.buttonBack, new ArrayList<>(Arrays.asList(200, 100, 100)));
-        buttons.put(R.id.buttonStart, new ArrayList<>(Arrays.asList(400, 100, 100)));
+        buttons.put(R.id.buttonBack, new ArrayList<>(Arrays.asList(0, height / 6, 100)));
+        buttons.put(R.id.buttonStart, new ArrayList<>(Arrays.asList(width / 6, height / 6, 100)));
 
-        buttons.put(R.id.buttonY, new ArrayList<>(Arrays.asList(600, 100, 100)));
-        buttons.put(R.id.buttonX, new ArrayList<>(Arrays.asList(800, 100, 100)));
-        buttons.put(R.id.buttonB, new ArrayList<>(Arrays.asList(1000, 100, 100)));
-        buttons.put(R.id.buttonA, new ArrayList<>(Arrays.asList(1200, 100, 100)));
+        buttons.put(R.id.buttonY, new ArrayList<>(Arrays.asList(width * 2 / 6, height / 6, 100)));
+        buttons.put(R.id.buttonX, new ArrayList<>(Arrays.asList(width * 3 / 6, height / 6, 100)));
+        buttons.put(R.id.buttonB, new ArrayList<>(Arrays.asList(width * 4 / 6, height / 6, 100)));
+        buttons.put(R.id.buttonA, new ArrayList<>(Arrays.asList(width * 5 / 6, height / 6, 100)));
 
-        buttons.put(R.id.buttonAU, new ArrayList<>(Arrays.asList(200, 300, 100)));
-        buttons.put(R.id.buttonAL, new ArrayList<>(Arrays.asList(400, 300, 100)));
-        buttons.put(R.id.buttonAR, new ArrayList<>(Arrays.asList(600, 300, 100)));
-        buttons.put(R.id.buttonAD, new ArrayList<>(Arrays.asList(800, 300, 100)));
+        buttons.put(R.id.buttonAU, new ArrayList<>(Arrays.asList(0, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonAL, new ArrayList<>(Arrays.asList(width / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonAR, new ArrayList<>(Arrays.asList(width * 2 / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonAD, new ArrayList<>(Arrays.asList(width * 3 / 6, height * 2 / 6, 100)));
 
-        buttons.put(R.id.buttonAUL, new ArrayList<>(Arrays.asList(1000, 300, 100)));
-        buttons.put(R.id.buttonAUR, new ArrayList<>(Arrays.asList(1200, 300, 100)));
-        buttons.put(R.id.buttonADL, new ArrayList<>(Arrays.asList(1400, 300, 100)));
-        buttons.put(R.id.buttonADR, new ArrayList<>(Arrays.asList(1600, 300, 100)));
+        buttons.put(R.id.buttonAUL, new ArrayList<>(Arrays.asList(width * 3 / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonAUR, new ArrayList<>(Arrays.asList(width * 4 / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonADL, new ArrayList<>(Arrays.asList(width * 5 / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonADR, new ArrayList<>(Arrays.asList(width * 2/ 6, height * 3 / 6, 100)));
 
-        buttons.put(R.id.rightAnalog, new ArrayList<>(Arrays.asList(900, 500, 125)));
-        buttons.put(R.id.leftAnalog, new ArrayList<>(Arrays.asList(150, 500, 200)));
-        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(0, 200, 100)));
+        buttons.put(R.id.rightAnalog, new ArrayList<>(Arrays.asList(width * 4 / 6, height * 7 / 12, 125)));
+        buttons.put(R.id.leftAnalog, new ArrayList<>(Arrays.asList(width  / 12, height * 7 / 12, 200)));
+        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(width * 2 / 6, height * 4 / 6, 100)));
 
         return buttons;
     }

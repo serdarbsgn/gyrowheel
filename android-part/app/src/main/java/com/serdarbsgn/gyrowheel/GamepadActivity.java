@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -408,7 +409,10 @@ public class GamepadActivity extends AppCompatActivity {
     }
 
     private HashMap<Integer, ArrayList<Integer>> loadButtonPositions() {
-        HashMap<Integer, ArrayList<Integer>> buttons = EditableActivity.getIntegerIntegerArrayHashMap();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        HashMap<Integer, ArrayList<Integer>> buttons = EditableActivity.getIntegerIntegerArrayHashMap(displayMetrics.widthPixels,displayMetrics.heightPixels);
 
         try (FileInputStream fis = openFileInput("button_positions.txt")) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
