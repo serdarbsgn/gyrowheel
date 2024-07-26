@@ -1,5 +1,7 @@
 package com.serdarbsgn.gyrowheel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -34,16 +36,21 @@ public class GyroWheelActivity extends AppCompatActivity {
     private BluetoothConn bluetoothConn;
     private Handler handler;
     private Runnable dataSender;
-
+    private int multiplier =25;
     private static final float ALPHA = 0.4f; // Smoothing factor(Lower is smoother but delayed.)
     private float filteredX = 0; // Smoothed x value
     private float filteredY = 0; // Smoothed y value
+    private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
+    private static final String KEY_SENSOR_MULTIPLIER = "SENSOR_MULTIPLIER";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_gyrowheel);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         socketAddress = getIntent().getStringExtra("SOCKET_IP");
         useBluetooth = getIntent().getBooleanExtra("USE_BLUETOOTH",false);
         // Initialize the SensorManager
@@ -65,6 +72,8 @@ public class GyroWheelActivity extends AppCompatActivity {
         bluetoothConn = BluetoothConn.getInstance();
     }
     private void initSensors(){
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        multiplier = sharedPreferences.getInt(KEY_SENSOR_MULTIPLIER, 25);
         socketAddress = getIntent().getStringExtra("SOCKET_IP");
         // Initialize the SensorManager
         socketClient = new UDPOverInternet(socketAddress, 12345);
@@ -93,8 +102,8 @@ public class GyroWheelActivity extends AppCompatActivity {
                                 filteredX = ALPHA * x + (1 - ALPHA) * filteredX;
                                 filteredY = ALPHA * y + (1 - ALPHA) * filteredY;
 
-                                int axisY = Math.round(filteredX * 3276);
-                                int axisZ = Math.round(filteredY * 3276);
+                                int axisY = Math.round(filteredX * 131* multiplier);
+                                int axisZ = Math.round(filteredY * 131* multiplier);
                                 temPitch = (axisY > 0) ? Math.min(axisY, 32767) : Math.max(axisY, -32767);
                                 tempRoll = (axisZ > 0) ? Math.min(axisZ, 32767) : Math.max(axisZ, -32767);
                             }
@@ -120,8 +129,8 @@ public class GyroWheelActivity extends AppCompatActivity {
                             float[] orientationAngles = new float[3];
                             SensorManager.getOrientation(rotationMatrix, orientationAngles);
 
-                            int pitch = Math.round(orientationAngles[1] * 32767);   // Rotation around the X axis
-                            int roll = Math.round(orientationAngles[2] * 21844);  // Rotation around the Y axis
+                            int pitch = Math.round(orientationAngles[1] * 1310* multiplier);   // Rotation around the X axis
+                            int roll = Math.round(orientationAngles[2] * 873* multiplier);  // Rotation around the Y axis
 
                             temPitch = (pitch > 0) ? -Math.min(pitch, 32767) : -Math.max(pitch, -32767);
                             tempRoll = 32767 - Math.abs(roll);
@@ -145,8 +154,8 @@ public class GyroWheelActivity extends AppCompatActivity {
                 public void onSensorChanged(SensorEvent event) {
                     if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
                         int axisY,axisZ;
-                        axisY = Math.round(event.values[1]* 3276);
-                        axisZ = Math.round(event.values[2]* 3276);
+                        axisY = Math.round(event.values[1]* 131* multiplier);
+                        axisZ = Math.round(event.values[2]* 131* multiplier);
                         temPitch = (axisY > 0) ? Math.min(axisY, 32767) : Math.max(axisY, -32767);
                         tempRoll = (axisZ > 0) ? Math.min(axisZ, 32767) : Math.max(axisZ, -32767);
                     }

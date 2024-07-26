@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, BluetoothActivity.class);
             startActivity(intent);
         });
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+        buttonSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
 
         Button buttonPrivacy = findViewById(R.id.buttonPrivacyPolicy);
         buttonPrivacy.setOnClickListener(v -> {

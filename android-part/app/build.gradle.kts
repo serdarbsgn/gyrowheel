@@ -10,8 +10,8 @@ android {
         applicationId = "com.serdarbsgn.gyrowheel"
         minSdk = 26
         targetSdk = 34
-        versionCode = 15
-        versionName = "1.015"
+        versionCode = 19
+        versionName = "1.03"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

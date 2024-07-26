@@ -1,5 +1,7 @@
 package com.serdarbsgn.gyrowheel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -47,9 +49,18 @@ public class GamepadActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable dataSender;
 
-    private static final float ALPHA = 0.4f; // Smoothing factor(Lower is smoother but delayed.)
+    private static float ALPHA = 0.4f; // Smoothing factor(Lower is smoother but delayed.)
     private float filteredX = 0; // Smoothed x value
     private float filteredY = 0; // Smoothed y value
+
+    private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
+    private static final String KEY_SENSOR_MULTIPLIER = "SENSOR_MULTIPLIER";
+    private static final String KEY_TOUCH_MULTIPLIER = "TOUCH_MULTIPLIER";
+    private static final String KEY_SMOOTH_MULTIPLIER = "SMOOTH_MULTIPLIER";
+
+    private int sensorMultiplier =25;
+    private int touchMultiplier =25;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +122,10 @@ public class GamepadActivity extends AppCompatActivity {
     }
 
     private void initSensors(){
-
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        sensorMultiplier = sharedPreferences.getInt(KEY_SENSOR_MULTIPLIER, 25);
+        touchMultiplier = sharedPreferences.getInt(KEY_TOUCH_MULTIPLIER, 25);
+        ALPHA = sharedPreferences.getInt(KEY_SMOOTH_MULTIPLIER,4)/10f;
         // Get the rotation vector sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
@@ -141,8 +155,8 @@ public class GamepadActivity extends AppCompatActivity {
                                 filteredX = ALPHA * x + (1 - ALPHA) * filteredX;
                                 filteredY = ALPHA * y + (1 - ALPHA) * filteredY;
 
-                                int axisY = Math.round(filteredX * 3276);
-                                int axisZ = Math.round(filteredY * 3276);
+                                int axisY = Math.round(filteredX * 131*sensorMultiplier);
+                                int axisZ = Math.round(filteredY * 131*sensorMultiplier);
                                 if (useSensor && ALX == 0 && ALY == 0) {
                                     temPitch = (axisY > 0) ? Math.min(axisY, 32767) : Math.max(axisY, -32767);
                                     tempRoll = (axisZ > 0) ? Math.min(axisZ, 32767) : Math.max(axisZ, -32767);
@@ -170,8 +184,8 @@ public class GamepadActivity extends AppCompatActivity {
                                 float[] orientationAngles = new float[3];
                                 SensorManager.getOrientation(rotationMatrix, orientationAngles);
 
-                                int pitch = Math.round(orientationAngles[1] * 32767);   // Rotation around the X axis
-                                int roll = Math.round(orientationAngles[2] * 21844);  // Rotation around the Y axis
+                                int pitch = Math.round(orientationAngles[1] * 1311*sensorMultiplier);   // Rotation around the X axis
+                                int roll = Math.round(orientationAngles[2] * 874*sensorMultiplier);  // Rotation around the Y axis
 
                                 temPitch = (pitch > 0) ? -Math.min(pitch, 32767) : -Math.max(pitch, -32767);
                                 tempRoll = 32767 - Math.abs(roll);
@@ -192,8 +206,8 @@ public class GamepadActivity extends AppCompatActivity {
                 public void onSensorChanged(SensorEvent event) {
                     if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
                         int axisY,axisZ;
-                        axisY = Math.round(event.values[1]* 3276);
-                        axisZ = Math.round(event.values[2]* 3276);
+                        axisY = Math.round(event.values[1]* 131*sensorMultiplier);
+                        axisZ = Math.round(event.values[2]* 131*sensorMultiplier);
                         if (useSensor && ALX == 0 && ALY == 0) {
                             temPitch = (axisY > 0) ? Math.min(axisY, 32767) : Math.max(axisY, -32767);
                             tempRoll = (axisZ > 0) ? Math.min(axisZ, 32767) : Math.max(axisZ, -32767);
@@ -278,14 +292,14 @@ public class GamepadActivity extends AppCompatActivity {
                         float diffX = currentX - startX;
                         float diffY = currentY - startY;
                         if (diffX > 0) {
-                            ALX = Math.min(Math.round(diffX * 327), 32767);
+                            ALX = Math.min(Math.round(diffX * 13*touchMultiplier), 32767);
                         } else {
-                            ALX = Math.max(Math.round(diffX * 327), -32767);
+                            ALX = Math.max(Math.round(diffX * 13*touchMultiplier), -32767);
                         }
                         if (diffY > 0) {
-                            ALY = Math.min(Math.round(diffY * 327), 32767);
+                            ALY = Math.min(Math.round(diffY * 13*touchMultiplier), 32767);
                         } else {
-                            ALY = Math.max(Math.round(diffY * 327), -32767);
+                            ALY = Math.max(Math.round(diffY * 13*touchMultiplier), -32767);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -314,14 +328,14 @@ public class GamepadActivity extends AppCompatActivity {
                         float diffX = currentX - startX;
                         float diffY = currentY - startY;
                         if (diffX > 0) {
-                            ARX = Math.min(Math.round(diffX * 327), 32767);
+                            ARX = Math.min(Math.round(diffX * 13*touchMultiplier), 32767);
                         } else {
-                            ARX = Math.max(Math.round(diffX * 327), -32767);
+                            ARX = Math.max(Math.round(diffX * 13*touchMultiplier), -32767);
                         }
                         if (diffY > 0) {
-                            ARY = Math.min(Math.round(diffY * 327), 32767);
+                            ARY = Math.min(Math.round(diffY * 13*touchMultiplier), 32767);
                         } else {
-                            ARY = Math.max(Math.round(diffY * 327), -32767);
+                            ARY = Math.max(Math.round(diffY * 13*touchMultiplier), -32767);
                         }
                         break;
                     case MotionEvent.ACTION_UP:

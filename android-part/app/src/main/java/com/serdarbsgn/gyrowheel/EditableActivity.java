@@ -99,7 +99,7 @@ public class EditableActivity extends AppCompatActivity {
                                 float scaleFactor = newDistance / initialDistance;
                                 float newScale = initialScale * scaleFactor;
 
-                                newScale = Math.max(0.5f, Math.min(newScale, 3.0f));
+                                newScale = Math.max(0.5f, Math.min(newScale, 5.0f));
 
                                 v.setScaleX(newScale);
                                 v.setScaleY(newScale);
@@ -188,14 +188,14 @@ public class EditableActivity extends AppCompatActivity {
         buttons.put(R.id.buttonAR, new ArrayList<>(Arrays.asList(width * 2 / 6, height * 2 / 6, 100)));
         buttons.put(R.id.buttonAD, new ArrayList<>(Arrays.asList(width * 3 / 6, height * 2 / 6, 100)));
 
-        buttons.put(R.id.buttonAUL, new ArrayList<>(Arrays.asList(width * 3 / 6, height * 2 / 6, 100)));
-        buttons.put(R.id.buttonAUR, new ArrayList<>(Arrays.asList(width * 4 / 6, height * 2 / 6, 100)));
-        buttons.put(R.id.buttonADL, new ArrayList<>(Arrays.asList(width * 5 / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonAUL, new ArrayList<>(Arrays.asList(width * 4 / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonAUR, new ArrayList<>(Arrays.asList(width * 5 / 6, height * 2 / 6, 100)));
+        buttons.put(R.id.buttonADL, new ArrayList<>(Arrays.asList(width * 3 / 6, height * 3 / 6, 100)));
         buttons.put(R.id.buttonADR, new ArrayList<>(Arrays.asList(width * 2/ 6, height * 3 / 6, 100)));
 
         buttons.put(R.id.rightAnalog, new ArrayList<>(Arrays.asList(width * 4 / 6, height * 7 / 12, 125)));
         buttons.put(R.id.leftAnalog, new ArrayList<>(Arrays.asList(width  / 12, height * 7 / 12, 200)));
-        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(width * 2 / 6, height * 4 / 6, 100)));
+        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(width * 2 / 6, height * 4 / 6, 150)));
 
         return buttons;
     }
