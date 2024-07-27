@@ -1,9 +1,13 @@
 import vgamepad as vg
 
 def simulate_gamepad(gamepad,inputs,full):
-    gamepad.left_trigger_float(value_float=inputs["LT"])
-    gamepad.right_trigger_float(value_float=inputs["RT"])
     gamepad.left_joystick(x_value= inputs["SP"], y_value=inputs["SR"])
+    if inputs["LT"] > 1 or inputs["RT"]>1:
+        gamepad.left_trigger(inputs["LT"])
+        gamepad.right_trigger(inputs["RT"])
+    else:
+        gamepad.left_trigger_float(inputs["LT"])
+        gamepad.right_trigger_float(inputs["RT"])
     if full:
         gamepad.press_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_SHOULDER) if inputs["LB"]==1 else gamepad.release_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_SHOULDER)
         gamepad.press_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_THUMB) if inputs["L3"]==1 else gamepad.release_button(vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_THUMB)
