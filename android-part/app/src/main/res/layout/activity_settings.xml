@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="31dp" />
+        <TextView
+            android:id="@+id/sensorMultiplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:text="@string/sensorMultiplier"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/seekBarSensorMultiplier"
+                android:layout_width="360dp"
+                android:layout_height="52dp"
+                />
+
+            <TextView
+                android:id="@+id/seekBarSensorMultiplierText"
+                android:layout_width="49dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:textSize="30dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sensorMultiplierExplanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sensorMultiplierExplanation" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="31dp" />
+
+        <TextView
+            android:id="@+id/touchMultiplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:text="@string/touchMultiplier"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/seekBarTouchMultiplier"
+                android:layout_width="360dp"
+                android:layout_height="52dp" />
+
+            <TextView
+                android:id="@+id/seekBarTouchMultiplierText"
+                android:layout_width="49dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:textSize="30dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/seekBarTouchMultiplierExplanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seekBarTouchMultiplierExplanation" />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="31dp" />
+
+
+        <TextView
+            android:id="@+id/smoothMultiplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:text="@string/smoothMultiplier"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/seekBarSmoothMultiplier"
+                android:layout_width="360dp"
+                android:layout_height="52dp" />
+
+            <TextView
+                android:id="@+id/seekBarSmoothMultiplierText"
+                android:layout_width="49dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:textSize="30dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/seekBarSmoothMultiplierExplanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seekBarSmoothMultiplierExplanation" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="31dp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchAnalogTrigger"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="@string/switchAnalogTrigger" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="31dp" />
+        <TextView
+            android:id="@+id/triggerMultiplier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:text="@string/triggerMultiplier"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/seekBarTriggerMultiplier"
+                android:layout_width="360dp"
+                android:layout_height="52dp" />
+
+            <TextView
+                android:id="@+id/seekBarTriggerMultiplierText"
+                android:layout_width="49dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:textSize="30dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/seekBarTriggerMultiplierExplanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seekBarTriggerMultiplierExplanation" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="31dp" />
+
+
+    </LinearLayout>
+</ScrollView>

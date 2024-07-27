@@ -70,7 +70,7 @@ public class BluetoothActivity extends AppCompatActivity {
             if (MACAddressValidator.isValidMACAddress(macAddress)) {
                 requestBluetoothPermissions(macAddress, "Connect");
             } else {
-                Toast.makeText(getApplicationContext(), "Invalid MAC address", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.invalid_mac), Toast.LENGTH_SHORT).show();
             }
         });
         Button buttonBtGW = findViewById(R.id.bluetooth);
@@ -120,7 +120,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 findViewById(R.id.bluetoothAllButtons).setEnabled(true);
             });
         }).start();
-        Toast.makeText(this, "Buttons will become available on successful connection.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.button_available_after_conn), Toast.LENGTH_SHORT).show();
     }
 
     private void requestBluetoothPermissions(String macAddress, String type) {
@@ -132,7 +132,7 @@ public class BluetoothActivity extends AppCompatActivity {
                         android.Manifest.permission.BLUETOOTH_CONNECT,
                         android.Manifest.permission.BLUETOOTH_SCAN
                 }, REQUEST_PERMISSION_BT_CONNECT);
-                Toast.makeText(this, "Click the button again after giving the permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,  getString(R.string.click_after_perm), Toast.LENGTH_SHORT).show();
             } else {
                 handleBluetoothAction(macAddress, type);
             }
@@ -146,7 +146,7 @@ public class BluetoothActivity extends AppCompatActivity {
                         android.Manifest.permission.BLUETOOTH,
                         android.Manifest.permission.BLUETOOTH_ADMIN
                 }, REQUEST_PERMISSION_BT);
-                Toast.makeText(this, "Click the button again after giving the permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.click_after_perm), Toast.LENGTH_SHORT).show();
             } else {
                 handleBluetoothAction(macAddress, type);
             }

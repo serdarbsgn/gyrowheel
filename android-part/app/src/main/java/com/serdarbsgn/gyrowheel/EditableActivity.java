@@ -158,7 +158,7 @@ public class EditableActivity extends AppCompatActivity {
                 }
             }
         } catch (IOException e) {
-            Toast.makeText(this,"Drag&drop or pinch buttons to configure layout.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.conf_layout_explain),Toast.LENGTH_SHORT).show();
         }
 
         return buttons;

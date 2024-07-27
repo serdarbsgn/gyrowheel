@@ -7,12 +7,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 public class SettingsActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
     private static final String KEY_SENSOR_MULTIPLIER = "SENSOR_MULTIPLIER";
     private static final String KEY_TOUCH_MULTIPLIER = "TOUCH_MULTIPLIER";
     private static final String KEY_SMOOTH_MULTIPLIER = "SMOOTH_MULTIPLIER";
+    private static final String KEY_TRIGGER_MULTIPLIER = "TRIGGER_MULTIPLIER";
+    private static final String KEY_USE_ANALOG_TRIGGER = "USE_ANALOG_TRIGGER";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,12 +95,48 @@ public class SettingsActivity extends AppCompatActivity {
                 saveMultiplier(KEY_SMOOTH_MULTIPLIER,seekBarSmooth.getProgress());
             }
         });
+
+        SeekBar seekBarTrigger = findViewById(R.id.seekBarTriggerMultiplier);
+        seekBarTrigger.setMin(1);
+        seekBarTrigger.setMax(100);
+        seekBarTrigger.setProgress(20);
+        int savedTriggerMultiplier = sharedPreferences.getInt(KEY_TRIGGER_MULTIPLIER, seekBarTrigger.getProgress());
+        seekBarTrigger.setProgress(savedTriggerMultiplier);
+
+        TextView textViewTrigger = findViewById(R.id.seekBarTriggerMultiplierText);
+        textViewTrigger.setText(String.valueOf(seekBarTrigger.getProgress()));
+
+        seekBarTrigger.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textViewTrigger.setText(String.valueOf(progress));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                saveMultiplier(KEY_TRIGGER_MULTIPLIER,seekBarSmooth.getProgress());
+            }
+        });
+
+        boolean savedAnalogSwitch = sharedPreferences.getBoolean(KEY_USE_ANALOG_TRIGGER, false);
+        SwitchCompat switchAnalogTrigger = findViewById(R.id.switchAnalogTrigger);
+        switchAnalogTrigger.setChecked(savedAnalogSwitch);
+        switchAnalogTrigger.setOnCheckedChangeListener((buttonView, isChecked) -> saveSwitch(KEY_USE_ANALOG_TRIGGER,isChecked));
     }
 
     private void saveMultiplier(String key,int sensorMultiplier) {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(key, sensorMultiplier);
+        editor.apply();
+    }
+
+    private void saveSwitch(String key ,boolean switchValue) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key, switchValue);
         editor.apply();
     }
 }

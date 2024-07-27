@@ -1,42 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">GyroWheel</string>
+    <string name="app_name">GyroWheel</string>
     <string name="brakeText">Brake</string>
     <string name="accelerateText">Accelerate</string>
     <string name="toggle_brake_buttonText">Toggle Brake Button</string>
     <string name="toggle_accelerate_buttonText">Toggle Accelerate Button</string>
-    <string name="button_Y" translatable="false">Y</string>
-    <string name="button_X" translatable="false">X</string>
-    <string name="button_B" translatable="false">B</string>
-    <string name="button_A" translatable="false">A</string>
-    <string name="button_RB" translatable="false">RB</string>
-    <string name="button_RT" translatable="false">RT</string>
-    <string name="button_LB" translatable="false">LB</string>
-    <string name="button_LT" translatable="false">LT</string>
-    <string name="button_R3" translatable="false">R3</string>
-    <string name="button_L3" translatable="false">L3</string>
     <string name="button_Start">Start</string>
     <string name="button_Back">Back</string>
     <string name="network_udp_all_buttons">Gamepad Mode</string>
     <string name="network_udp">GyroWheel Mode</string>
     <string name="enter_ip_address">Enter IP Address</string>
-    <string name="http_192_168_1_36_5000" translatable="false">http://192.168.1.37:5000</string>
-    <string name="_192_168_1_36" translatable="false">192.168.1.37</string>
-    <string name="ArrowUL" translatable="false">˂˄</string>
-    <string name="buttonAU" translatable="false">˄</string>
-    <string name="buttonAUR" translatable="false">˄˃</string>
-    <string name="buttonAL" translatable="false">˂</string>
-    <string name="buttonAR" translatable="false">˃</string>
-    <string name="buttonADL" translatable="false">˂˅</string>
-    <string name="buttonADR" translatable="false">˅˃</string>
-    <string name="buttonAD" translatable="false">˅</string>
-    <string name="bluetooth_connection">GyroWheel Mode</string>
     <string name="enter_bluetooth_mac_adress">Enter Bluetooth Mac Adress</string>
-    <string name="e8_48_b8_c8_20_00" translatable="false">E8:48:B8:C8:20:00</string>
     <string name="search_computers_on_bluetooth">Search Computers on Bluetooth</string>
     <string name="bluetooth_all_buttons">Gamepad Mode</string>
     <string name="connect_to_mac_adress">Connect to MAC adress</string>
     <string name="forwarded_socket">Forwarded Socket</string>
     <string name="disable_sensor">Disable Sensor</string>
+    <string name="bluetooth_connection">GyroWheel Mode</string>
     <string name="edit_layout">EDIT Layout</string>
     <string name="use_custom_layout">Use Custom Layout</string>
     <string name="privacy_policy">PRIVACY POLICY</string>
@@ -49,9 +29,7 @@
     <string name="sensorMultiplier">Adjust the value for sensor multiplier:</string>
     <string name="touchMultiplier">Adjust the value for touch multiplier:</string>
     <string name="seekBarTouchMultiplierExplanation">Be aware that not using default multiplier(25) might result in analog stick to reach highest value sooner or not being able to reach highest value at all. Small movements can be interpreted as a lot, or it can\'t be registered at all.</string>
-    <string name="seekBarSmoothMultiplierExplanation">Smoothing factor(Lower is smoother but delayed, higher is jankier but faster.)</string>
-    <string name="triggerMultiplier">Adjust the value for trigger touch multiplier:</string>
-    <string name="seekBarTriggerMultiplierExplanation">Use this bar to adjust multiplier for trigger buttons. This is only useful when the switch above is turned on</string>
+    <string name="seekBarSmoothMultiplierExplanation">Lowering this will result in smoother output but will make the output delayed. Conversely, making this higher will result in faster output but it will have more jankiness. This setting will only matter if your device lacks precise sensors.</string>
     <string name="smoothMultiplier">Adjust the value for smoothing multiplier:</string>
     <string name="no_rotation_sensor">This mode relies solely on Rotation sensors which your device doesn\'t have any suitable</string>
     <string name="invalid_mac">Invalid MAC address</string>
@@ -67,5 +45,7 @@
     <string name="thank_you">Thank you for your support!</string>
     <string name="ad_not_ready">Ad is not ready yet, please press the button again.</string>
     <string name="ad_loading">Ad is still loading,press the button again after a while.</string>
+    <string name="triggerMultiplier">Adjust the value for trigger touch multiplier:</string>
+    <string name="seekBarTriggerMultiplierExplanation">Use this bar to adjust multiplier for trigger buttons. This is only useful when the switch above is turned on</string>
     <string name="switchAnalogTrigger">Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
 </resources>

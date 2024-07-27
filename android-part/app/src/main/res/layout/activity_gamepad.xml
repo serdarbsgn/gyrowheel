@@ -13,30 +13,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/buttonLB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_LB" />
+            android:layout_height="100dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonLT"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="@string/button_LT" />
-        </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            <Button
+                android:id="@+id/buttonLB"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/button_LB" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/leftAnalog"
             android:layout_width="match_parent"
-            android:layout_height="134dp"
+            android:layout_height="140dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/circle" />
 
@@ -177,7 +176,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="162dp" />
+            android:layout_height="148dp" />
 
         <Switch
             android:id="@+id/switchSensor"
@@ -196,25 +195,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="100dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonRB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="@string/button_RB" />
 
             <Button
                 android:id="@+id/buttonRT"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="@string/button_RT" />
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <Button
             android:id="@+id/buttonY"
@@ -256,7 +253,7 @@
         <ImageView
             android:id="@+id/rightAnalog"
             android:layout_width="match_parent"
-            android:layout_height="129dp"
+            android:layout_height="140dp"
             app:srcCompat="@drawable/circle" />
 
     </LinearLayout>

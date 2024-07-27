@@ -57,9 +57,13 @@ public class GamepadActivity extends AppCompatActivity {
     private static final String KEY_SENSOR_MULTIPLIER = "SENSOR_MULTIPLIER";
     private static final String KEY_TOUCH_MULTIPLIER = "TOUCH_MULTIPLIER";
     private static final String KEY_SMOOTH_MULTIPLIER = "SMOOTH_MULTIPLIER";
+    private static final String KEY_TRIGGER_MULTIPLIER = "TRIGGER_MULTIPLIER";
+    private static final String KEY_USE_ANALOG_TRIGGER = "USE_ANALOG_TRIGGER";
 
     private int sensorMultiplier =25;
     private int touchMultiplier =25;
+    private float triggerMultiplier = 1f;
+    private boolean useAnalogTrigger = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +130,8 @@ public class GamepadActivity extends AppCompatActivity {
         sensorMultiplier = sharedPreferences.getInt(KEY_SENSOR_MULTIPLIER, 25);
         touchMultiplier = sharedPreferences.getInt(KEY_TOUCH_MULTIPLIER, 25);
         ALPHA = sharedPreferences.getInt(KEY_SMOOTH_MULTIPLIER,4)/10f;
+        triggerMultiplier = sharedPreferences.getInt(KEY_TRIGGER_MULTIPLIER,20)/20f;
+        useAnalogTrigger = sharedPreferences.getBoolean(KEY_USE_ANALOG_TRIGGER,false);
         // Get the rotation vector sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
@@ -136,13 +142,13 @@ public class GamepadActivity extends AppCompatActivity {
         if (gravitySensor == null) {
             if (rotationVectorSensor == null) {
                 if(accelerometerSensor == null){
-                    Toast.makeText(this, "No suitable sensor available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.no_sensor), Toast.LENGTH_SHORT).show();
                     Switch switchSensor = findViewById(R.id.switchSensor);
                     switchSensor.setEnabled(false);
                     switchSensor.setChecked(true);
                     Log.e("Sensor", "No suitable sensor available");
                 }else{
-                    Toast.makeText(this, "Gravity and Rotation Vector Sensor is not available. Using Accelerometer as fallback.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.using_accelerometer), Toast.LENGTH_SHORT).show();
                     accelerometerListener = new SensorEventListener() {
 
                         @Override
@@ -171,7 +177,7 @@ public class GamepadActivity extends AppCompatActivity {
                     sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
                 }
             } else {
-                Toast.makeText(this, "Gravity Sensor is not available. Using Rotation Vector Sensor as fallback.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.using_rotation), Toast.LENGTH_SHORT).show();
                 // Use rotation vector sensor as a fallback
                 rotationVectorListener = new SensorEventListener() {
                     @Override
@@ -274,6 +280,53 @@ public class GamepadActivity extends AppCompatActivity {
                 return true;
             });
         }
+        if (useAnalogTrigger) {
+            findViewById(R.id.buttonRT).setOnTouchListener(new View.OnTouchListener() {
+                private float startY; // To store initial touch coordinates
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            startY = event.getY(); // Record initial Y coordinate
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            float currentY = event.getY();
+                            float diffY = currentY - startY;
+                            int tempVal = Math.max(Math.min(Math.round(diffY * triggerMultiplier), 255),0);
+                            if(tempVal == 1){tempVal=2;}
+                            buttons.put(R.id.buttonRT,tempVal);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            buttons.put(R.id.buttonRT,0);
+                            break;
+                    }
+                    return true; // Consume the touch event
+                }
+            });
+            findViewById(R.id.buttonLT).setOnTouchListener(new View.OnTouchListener() {
+                private float startY; // To store initial touch coordinates
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            startY = event.getY(); // Record initial Y coordinate
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            float currentY = event.getY();
+                            float diffY = currentY - startY;
+                            int tempVal = Math.max(Math.min(Math.round(diffY * triggerMultiplier), 255),0);
+                            if(tempVal == 1){tempVal=2;}
+                            buttons.put(R.id.buttonLT,tempVal);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            buttons.put(R.id.buttonLT,0);
+                            break;
+                    }
+                    return true; // Consume the touch event
+                }
+            });
+        }
+
         findViewById(R.id.leftAnalog).setOnTouchListener(new View.OnTouchListener() {
             private float startX, startY; // To store initial touch coordinates
 
@@ -353,9 +406,9 @@ public class GamepadActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 useSensor = !isChecked;
                 if (useSensor) {
-                    Toast.makeText(getApplicationContext(), "Phone rotation sensor data for left analog is enabled.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.enabled_sensor) , Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Phone rotation sensor data for left analog is disabled.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.disabled_sensor) , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -443,7 +496,7 @@ public class GamepadActivity extends AppCompatActivity {
                 }
             }
         } catch (IOException e) {
-            Toast.makeText(this,"Use Edit Layout button to set a layout first.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.use_edit_first),Toast.LENGTH_SHORT).show();
         }
 
         return buttons;

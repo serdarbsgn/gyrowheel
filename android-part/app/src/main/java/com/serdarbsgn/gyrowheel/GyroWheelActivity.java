@@ -26,8 +26,8 @@ public class GyroWheelActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
     private SensorEventListener rotationVectorListener,gravityListener,accelerometerListener;
-    private boolean isButtonAPressed = false;
-    private boolean isButtonBPressed = false;
+    private int isButtonAPressed = 0;
+    private int isButtonBPressed = 0;
     private String socketAddress;
     private UDPOverInternet socketClient;
     int temPitch, tempRoll;
@@ -37,11 +37,17 @@ public class GyroWheelActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable dataSender;
     private int multiplier =25;
-    private static final float ALPHA = 0.4f; // Smoothing factor(Lower is smoother but delayed.)
+    private static float ALPHA = 0.4f; // Smoothing factor(Lower is smoother but delayed.)
     private float filteredX = 0; // Smoothed x value
     private float filteredY = 0; // Smoothed y value
     private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
     private static final String KEY_SENSOR_MULTIPLIER = "SENSOR_MULTIPLIER";
+    private static final String KEY_SMOOTH_MULTIPLIER = "SMOOTH_MULTIPLIER";
+    private static final String KEY_TRIGGER_MULTIPLIER = "TRIGGER_MULTIPLIER";
+    private static final String KEY_USE_ANALOG_TRIGGER = "USE_ANALOG_TRIGGER";
+
+    private float triggerMultiplier = 1f;
+    private boolean useAnalogTrigger = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,10 @@ public class GyroWheelActivity extends AppCompatActivity {
     private void initSensors(){
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         multiplier = sharedPreferences.getInt(KEY_SENSOR_MULTIPLIER, 25);
+        ALPHA = sharedPreferences.getInt(KEY_SMOOTH_MULTIPLIER,4)/10f;
+        triggerMultiplier = sharedPreferences.getInt(KEY_TRIGGER_MULTIPLIER,20)/20f;
+        useAnalogTrigger = sharedPreferences.getBoolean(KEY_USE_ANALOG_TRIGGER,false);
+
         socketAddress = getIntent().getStringExtra("SOCKET_IP");
         // Initialize the SensorManager
         socketClient = new UDPOverInternet(socketAddress, 12345);
@@ -86,7 +96,7 @@ public class GyroWheelActivity extends AppCompatActivity {
         if (gravitySensor == null) {
             if (rotationVectorSensor == null) {
                 if (accelerometerSensor == null) {
-                    Toast.makeText(this, "This mode relies solely on Rotation sensors which your device doesn't have any suitable", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.no_rotation_sensor), Toast.LENGTH_SHORT).show();
                     finish();
                     return;
                 }else{
@@ -116,7 +126,7 @@ public class GyroWheelActivity extends AppCompatActivity {
                     sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
                 }
             }else{
-                Toast.makeText(this, "Gravity Sensor is not available. Using Rotation Vector Sensor as fallback.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.using_rotation), Toast.LENGTH_SHORT).show();
                 // Use rotation vector sensor as a fallback
                 // Create a SensorEventListener to listen for rotation vector data
                 rotationVectorListener = new SensorEventListener() {
@@ -178,7 +188,7 @@ public class GyroWheelActivity extends AppCompatActivity {
         handler.post(dataSender);
     }
     private void sendData(){
-        String sensorData = String.format(Locale.US, "%d,%d,%d,%d", tempRoll,temPitch,  isButtonAPressed ? 1 : 0, isButtonBPressed ? 1 : 0);
+        String sensorData = String.format(Locale.US, "%d,%d,%d,%d", tempRoll,temPitch,  isButtonAPressed , isButtonBPressed);
         if(!useBluetooth){
             socketClient.sendData(sensorData);
         }else if (bluetoothConn!=null){
@@ -197,7 +207,7 @@ public class GyroWheelActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 buttonA.setEnabled(!isChecked); // Disable buttonA if switchA is checked
-                isButtonAPressed = isChecked;
+                isButtonAPressed = isChecked ? 1:0;
             }
         });
 
@@ -205,33 +215,92 @@ public class GyroWheelActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 buttonB.setEnabled(!isChecked); // Disable buttonB if switchB is checked
-                isButtonBPressed = isChecked;
+                isButtonBPressed = isChecked ? 1:0;
             }
         });
 
-        buttonA.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    isButtonAPressed = true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    isButtonAPressed = false;
+        if (useAnalogTrigger) {
+            findViewById(R.id.buttonB).setOnTouchListener(new View.OnTouchListener() {
+                private float startX; // To store initial touch coordinates
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            startX = event.getX(); // Record initial Y coordinate
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            float currentX = event.getX();
+                            float diffX = startX-currentX  ;
+                            int tempVal = Math.max(Math.min(Math.round(diffX * triggerMultiplier), 255),0);
+                            if(tempVal == 1){tempVal=2;}
+                            isButtonBPressed = tempVal;
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            isButtonBPressed = 0;
+                            break;
+                    }
+                    return true; // Consume the touch event
                 }
-                return true; // To consume the event
-            }
-        });
+            });
+            findViewById(R.id.buttonA).setOnTouchListener(new View.OnTouchListener() {
+                private float startX; // To store initial touch coordinates
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            startX = event.getX(); // Record initial Y coordinate
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            float currentX = event.getX();
+                            float diffX = startX-currentX;
+                            int tempVal = Math.max(Math.min(Math.round(diffX * triggerMultiplier), 255),0);
+                            if(tempVal == 1){tempVal=2;}
+                            isButtonAPressed = tempVal;
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            isButtonAPressed = 0;
+                            break;
+                    }
+                    return true; // Consume the touch event
+                }
+            });
+            switchA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    buttonA.setEnabled(!isChecked); // Disable buttonA if switchA is checked
+                    isButtonAPressed = isChecked ? 255:0;
+                }
+            });
 
-        buttonB.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            switchB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    buttonB.setEnabled(!isChecked); // Disable buttonB if switchB is checked
+                    isButtonBPressed = isChecked ? 255:0;
+                }
+            });
+        }
+        else{
+
+            buttonA.setOnTouchListener((v, event) -> {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    isButtonBPressed = true;
+                    isButtonAPressed = 1;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    isButtonBPressed = false;
+                    isButtonAPressed = 0;
                 }
                 return true; // To consume the event
-            }
-        });
+            });
+
+            buttonB.setOnTouchListener((v, event) -> {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    isButtonBPressed = 1;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    isButtonBPressed = 0;
+                }
+                return true; // To consume the event
+            });
+        }
+
     }
 
     protected void onPause() {
