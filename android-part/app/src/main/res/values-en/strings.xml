@@ -48,4 +48,8 @@
     <string name="triggerMultiplier">Adjust the value for trigger touch multiplier:</string>
     <string name="seekBarTriggerMultiplierExplanation">Use this bar to adjust multiplier for trigger buttons. This is only useful when the switch above is turned on</string>
     <string name="switchAnalogTrigger">Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
+    <string name="seekBarTriggerMultiplierExplanationDescription">Slide bar for adjusting Trigger Multiplier</string>
+    <string name="seekBarSmoothMultiplierExplanationDescription">Slide bar for adjusting Smoothening Multiplier</string>
+    <string name="seekBarTouchMultiplierExplanationDescription">Slide bar for adjusting Touch Multiplier</string>
+    <string name="seekBarSensorMultiplierExplanationDescription">Slide bar for adjusting Sensor Multiplier</string>
 </resources>

@@ -48,4 +48,8 @@
     <string name="triggerMultiplier">Tetik çarpan değerini ayarlayın:</string>
     <string name="seekBarTriggerMultiplierExplanation">Tetik butonları için çarpanı ayarlamak amacıyla bu çubuğu kullanın.Bu yalnızca yukarıdaki anahtar açık olduğunda işe yarar.</string>
     <string name="switchAnalogTrigger">Oyun kolu tetikleyicilerinizi analog yapmak için bunu etkinleştirin ve girişi ayarlamak için bunları aşağı doğru çekin.</string>
+    <string name="seekBarTriggerMultiplierExplanationDescription">Tetik Çarpanını ayarlamak için kaydırma çubuğu</string>
+    <string name="seekBarSmoothMultiplierExplanationDescription">Yumuşatma Çarpanını ayarlamak için kaydırma çubuğu</string>
+    <string name="seekBarTouchMultiplierExplanationDescription">Dokunmatik Çarpanını ayarlamak için kaydırma çubuğu</string>
+    <string name="seekBarSensorMultiplierExplanationDescription">Sensör Çarpanını ayarlamak için kaydırma çubuğu</string>
 </resources>

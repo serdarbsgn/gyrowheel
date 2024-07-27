@@ -68,4 +68,8 @@
     <string name="ad_not_ready">Ad is not ready yet, please press the button again.</string>
     <string name="ad_loading">Ad is still loading,press the button again after a while.</string>
     <string name="switchAnalogTrigger">Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
+    <string name="seekBarTriggerMultiplierExplanationDescription">Slide bar for adjusting Trigger Multiplier</string>
+    <string name="seekBarSmoothMultiplierExplanationDescription">Slide bar for adjusting Smoothening Multiplier</string>
+    <string name="seekBarTouchMultiplierExplanationDescription">Slide bar for adjusting Touch Multiplier</string>
+    <string name="seekBarSensorMultiplierExplanationDescription">Slide bar for adjusting Sensor Multiplier</string>
 </resources>
