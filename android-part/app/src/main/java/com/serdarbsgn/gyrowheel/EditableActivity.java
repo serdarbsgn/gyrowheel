@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,9 +44,16 @@ public class EditableActivity extends AppCompatActivity {
 
         buttons = loadButtonPositions();
         initButtons();
+        ImageView rightAnalog = findViewById(R.id.rightAnalog);
+        ImageView leftAnalog = findViewById(R.id.leftAnalog);
 
-        findViewById(R.id.leftAnalog).setBackgroundColor(Color.WHITE);
-        findViewById(R.id.rightAnalog).setBackgroundColor(Color.WHITE);
+        rightAnalog.setBackgroundColor(Color.WHITE);
+        leftAnalog.setBackgroundColor(Color.WHITE);
+        rightAnalog.setImageResource(R.drawable.circle);
+        leftAnalog.setImageResource(R.drawable.circle);
+
+        findViewById(R.id.leftAnalogKnob).setVisibility(View.GONE);
+        findViewById(R.id.rightAnalogKnob).setVisibility(View.GONE);
     }
 
     private void initButtons() {

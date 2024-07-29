@@ -52,4 +52,5 @@
     <string name="seekBarSmoothMultiplierExplanationDescription">Slide bar for adjusting Smoothening Multiplier</string>
     <string name="seekBarTouchMultiplierExplanationDescription">Slide bar for adjusting Touch Multiplier</string>
     <string name="seekBarSensorMultiplierExplanationDescription">Slide bar for adjusting Sensor Multiplier</string>
+    <string name="usage_guide">HOW TO USE</string>
 </resources>

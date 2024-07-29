@@ -46,18 +46,27 @@ public class MainActivity extends AppCompatActivity {
             intent.setData(Uri.parse(url));
             startActivity(intent);
         });
+
+        Button buttonGuide = findViewById(R.id.buttonGuide);
+        buttonGuide.setOnClickListener(v -> {
+            String url = "https://github.com/serdarbsgn/gyrowheel";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        });
+
         Button buttonSupport = findViewById(R.id.buttonSupportMe);
         MobileAds.initialize(this, initializationStatus -> {});
         buttonSupport.setOnClickListener(v -> {
             RewardedAd rewardedAd = GlobalSettings.getInstance().getRewardedAd();
             if (rewardedAd != null) {
                 rewardedAd.show(MainActivity.this, rewardItem -> {
-                    Toast.makeText(MainActivity.this, "Thank you for your support!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.thank_you), Toast.LENGTH_SHORT).show();
                     GlobalSettings.getInstance().setRewardedAd(null);
                     loadRewardedAd();
                 });
             } else {
-                Toast.makeText(MainActivity.this, "Ad is not ready yet, please press the button again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getString(R.string.ad_not_ready), Toast.LENGTH_SHORT).show();
                 loadRewardedAd();
             }
         });
@@ -65,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadRewardedAd() {
         if(GlobalSettings.getInstance().isLoadingAd()){
-            Toast.makeText(MainActivity.this, "Ad is still loading,press the button again after a while.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,getString(R.string.ad_not_ready) , Toast.LENGTH_SHORT).show();
             return;
         }
         GlobalSettings.getInstance().setLoadingAd(true);

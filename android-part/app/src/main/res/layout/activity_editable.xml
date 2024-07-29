@@ -123,17 +123,30 @@
         android:id="@+id/leftAnalog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/circle" />
+        app:srcCompat="@drawable/circle_outer" />
 
     <ImageView
         android:id="@+id/rightAnalog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/circle" />
+        app:srcCompat="@drawable/circle_outer" />
 
     <Switch
         android:id="@+id/switchSensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/disable_sensor" />
+
+    <ImageView
+        android:id="@+id/leftAnalogKnob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/circle_inner" />
+
+    <ImageView
+        android:id="@+id/rightAnalogKnob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/circle_inner"
+        />
 </FrameLayout>

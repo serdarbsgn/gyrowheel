@@ -52,4 +52,5 @@
     <string name="seekBarSmoothMultiplierExplanationDescription">Yumuşatma Çarpanını ayarlamak için kaydırma çubuğu</string>
     <string name="seekBarTouchMultiplierExplanationDescription">Dokunmatik Çarpanını ayarlamak için kaydırma çubuğu</string>
     <string name="seekBarSensorMultiplierExplanationDescription">Sensör Çarpanını ayarlamak için kaydırma çubuğu</string>
+    <string name="usage_guide">Kullanma kılavuzu</string>
 </resources>

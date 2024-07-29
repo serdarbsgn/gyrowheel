@@ -2,6 +2,7 @@ package com.serdarbsgn.gyrowheel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
 
@@ -48,12 +50,19 @@ public class GyroWheelActivity extends AppCompatActivity {
 
     private float triggerMultiplier = 1f;
     private boolean useAnalogTrigger = false;
+    int colorPrimary = 0;
+    int alpha = 0, red = 0, green = 0, blue = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_gyrowheel);
+        colorPrimary = ContextCompat.getColor(this, R.color.button_color);
+        alpha = Color.alpha(colorPrimary);
+        red = Color.red(colorPrimary);
+        green = Color.green(colorPrimary);
+        blue = Color.blue(colorPrimary);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -234,8 +243,11 @@ public class GyroWheelActivity extends AppCompatActivity {
                             int tempVal = Math.max(Math.min(Math.round(diffX * triggerMultiplier), 255),0);
                             if(tempVal == 1){tempVal=2;}
                             isButtonBPressed = tempVal;
+                            int overflow = Math.max(red+tempVal-255,0);
+                            v.setBackgroundColor(Color.argb(alpha,Math.min(red+tempVal,255),green-overflow,blue));
                             break;
                         case MotionEvent.ACTION_UP:
+                            v.setBackgroundColor(colorPrimary);
                             isButtonBPressed = 0;
                             break;
                     }
@@ -256,28 +268,25 @@ public class GyroWheelActivity extends AppCompatActivity {
                             int tempVal = Math.max(Math.min(Math.round(diffX * triggerMultiplier), 255),0);
                             if(tempVal == 1){tempVal=2;}
                             isButtonAPressed = tempVal;
+                            int overflow = Math.max(red+tempVal-255,0);
+                            v.setBackgroundColor(Color.argb(alpha,Math.min(red+tempVal,255),green-overflow,blue));
                             break;
                         case MotionEvent.ACTION_UP:
+                            v.setBackgroundColor(colorPrimary);
                             isButtonAPressed = 0;
                             break;
                     }
                     return true; // Consume the touch event
                 }
             });
-            switchA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    buttonA.setEnabled(!isChecked); // Disable buttonA if switchA is checked
-                    isButtonAPressed = isChecked ? 255:0;
-                }
+            switchA.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                buttonA.setEnabled(!isChecked); // Disable buttonA if switchA is checked
+                isButtonAPressed = isChecked ? 255:0;
             });
 
-            switchB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    buttonB.setEnabled(!isChecked); // Disable buttonB if switchB is checked
-                    isButtonBPressed = isChecked ? 255:0;
-                }
+            switchB.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                buttonB.setEnabled(!isChecked); // Disable buttonB if switchB is checked
+                isButtonBPressed = isChecked ? 255:0;
             });
         }
         else{
