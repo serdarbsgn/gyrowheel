@@ -71,7 +71,7 @@ public class GamepadActivity extends AppCompatActivity {
     int alpha = 0, red = 0, green = 0, blue = 0;
     float leftAnalogScale =1f,leftCenterX,leftCenterY;
     float rightAnalogScale =1f,rightCenterX,rightCenterY;
-
+    float density = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +82,7 @@ public class GamepadActivity extends AppCompatActivity {
         red = Color.red(colorPrimary);
         green = Color.green(colorPrimary);
         blue = Color.blue(colorPrimary);
+        density = this.getResources().getDisplayMetrics().density;
         //If use custom layout switch is on, will try to use custom layout, otherwise use the default layout.
         if (getIntent().getBooleanExtra("CUSTOM_LAYOUT",false)) {
             setContentView(R.layout.activity_editable);
@@ -367,12 +368,14 @@ public class GamepadActivity extends AppCompatActivity {
         }
         leftAnalog.setOnTouchListener(new View.OnTouchListener() {
             private float startX, startY;// To store initial touch coordinates
+            private float boundingBoxRadius = 0;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         leftCenterX = leftAnalog.getLeft();
                         leftCenterY = leftAnalog.getTop();
+                        boundingBoxRadius = density*50*leftAnalogScale;
                         startX = event.getX(); // Record initial X coordinate
                         startY = event.getY(); // Record initial Y coordinate
                         break;
@@ -383,10 +386,6 @@ public class GamepadActivity extends AppCompatActivity {
                         float diffX = (currentX - startX)*leftAnalogScale;
                         float diffY = (currentY - startY)*leftAnalogScale;
                         // To calculate inner knob position.
-                        float innerX = leftCenterX +Math.max(Math.min(diffX,(float) leftAnalog.getWidth() /2*leftAnalogScale),-(float) leftAnalog.getWidth() /2*leftAnalogScale);
-                        float innerY = leftCenterY +Math.max(Math.min(diffY,(float) leftAnalog.getHeight() /2*leftAnalogScale),-(float) leftAnalog.getHeight() /2*leftAnalogScale);
-                        leftAnalogKnobInnerCircle.setX(innerX);
-                        leftAnalogKnobInnerCircle.setY(innerY);
                         if (diffX > 0) {
                             ALX = Math.min(Math.round(diffX * 13*touchMultiplier), 32767);
                         } else {
@@ -397,12 +396,16 @@ public class GamepadActivity extends AppCompatActivity {
                         } else {
                             ALY = Math.max(Math.round(diffY * 13*touchMultiplier), -32767);
                         }
+                        float innerX = leftCenterX +Math.max(Math.min(diffX,boundingBoxRadius),-boundingBoxRadius);
+                        float innerY = leftCenterY +Math.max(Math.min(diffY,boundingBoxRadius),-boundingBoxRadius);
+                        leftAnalogKnobInnerCircle.setX(innerX);
+                        leftAnalogKnobInnerCircle.setY(innerY);
                         break;
                     case MotionEvent.ACTION_UP:
-                        leftAnalogKnobInnerCircle.setX(leftCenterX);
-                        leftAnalogKnobInnerCircle.setY(leftCenterY);
                         ALX = 0;
                         ALY = 0;
+                        leftAnalogKnobInnerCircle.setX(leftCenterX);
+                        leftAnalogKnobInnerCircle.setY(leftCenterY);
                         break;
                 }
                 return true; // Consume the touch event
@@ -410,13 +413,15 @@ public class GamepadActivity extends AppCompatActivity {
         });
 
         rightAnalog.setOnTouchListener(new View.OnTouchListener() {
-            private float startX, startY; // To store initial touch coordinates
+            private float startX, startY;
+            private float boundingBoxRadius = 0;// To store initial touch coordinates
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         rightCenterX = rightAnalog.getLeft();
                         rightCenterY = rightAnalog.getTop();
+                        boundingBoxRadius = density*50*rightAnalogScale;
                         startX = event.getX(); // Record initial X coordinate
                         startY = event.getY(); // Record initial Y coordinate
                         break;
@@ -427,10 +432,6 @@ public class GamepadActivity extends AppCompatActivity {
                         // Calculate the difference from start position
                         float diffX = (currentX - startX)*rightAnalogScale;
                         float diffY = (currentY - startY)*rightAnalogScale;
-                        float innerX = rightCenterX +Math.max(Math.min(diffX,(float) rightAnalog.getWidth() /2),-(float) rightAnalog.getWidth() /2);
-                        float innerY = rightCenterY +Math.max(Math.min(diffY,(float) rightAnalog.getHeight() /2),-(float) rightAnalog.getHeight() /2);
-                        rightAnalogKnobInnerCircle.setX(innerX);
-                        rightAnalogKnobInnerCircle.setY(innerY);
                         if (diffX > 0) {
                             ARX = Math.min(Math.round(diffX * 13*touchMultiplier), 32767);
                         } else {
@@ -441,12 +442,16 @@ public class GamepadActivity extends AppCompatActivity {
                         } else {
                             ARY = Math.max(Math.round(diffY * 13*touchMultiplier), -32767);
                         }
+                        float innerX = rightCenterX +Math.max(Math.min(diffX,boundingBoxRadius),-boundingBoxRadius);
+                        float innerY = rightCenterY +Math.max(Math.min(diffY,boundingBoxRadius),-boundingBoxRadius);
+                        rightAnalogKnobInnerCircle.setX(innerX);
+                        rightAnalogKnobInnerCircle.setY(innerY);
                         break;
                     case MotionEvent.ACTION_UP:
-                        rightAnalogKnobInnerCircle.setX(rightCenterX);
-                        rightAnalogKnobInnerCircle.setY(rightCenterY);
                         ARX = 0;
                         ARY = 0;
+                        rightAnalogKnobInnerCircle.setX(rightCenterX);
+                        rightAnalogKnobInnerCircle.setY(rightCenterY);
                         break;
                 }
                 return true; // Consume the touch event
@@ -471,6 +476,14 @@ public class GamepadActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 buttons.put(R.id.buttonAU, Math.abs(event.getAction() - 1));
                 buttons.put(R.id.buttonAL, Math.abs(event.getAction() - 1));
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha,red,green,blue));
+                        break;
+                }
                 return true; // To consume the event
             }
         });
@@ -480,6 +493,14 @@ public class GamepadActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 buttons.put(R.id.buttonAU, Math.abs(event.getAction() - 1));
                 buttons.put(R.id.buttonAR, Math.abs(event.getAction() - 1));
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha,red,green,blue));
+                        break;
+                }
                 return true; // To consume the event
             }
         });
@@ -489,6 +510,14 @@ public class GamepadActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 buttons.put(R.id.buttonAD, Math.abs(event.getAction() - 1));
                 buttons.put(R.id.buttonAL, Math.abs(event.getAction() - 1));
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha,red,green,blue));
+                        break;
+                }
                 return true; // To consume the event
             }
         });
@@ -498,6 +527,14 @@ public class GamepadActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 buttons.put(R.id.buttonAD, Math.abs(event.getAction() - 1));
                 buttons.put(R.id.buttonAR, Math.abs(event.getAction() - 1));
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha,red,green,blue));
+                        break;
+                }
                 return true; // To consume the event
             }
         });

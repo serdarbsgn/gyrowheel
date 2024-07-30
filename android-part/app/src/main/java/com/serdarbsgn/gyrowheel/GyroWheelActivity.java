@@ -292,19 +292,29 @@ public class GyroWheelActivity extends AppCompatActivity {
         else{
 
             buttonA.setOnTouchListener((v, event) -> {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    isButtonAPressed = 1;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    isButtonAPressed = 0;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        isButtonAPressed = 1;
+                        v.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        isButtonAPressed = 0;
+                        v.setBackgroundColor(Color.argb(alpha,red,green,blue));
+                        break;
                 }
                 return true; // To consume the event
             });
 
             buttonB.setOnTouchListener((v, event) -> {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    isButtonBPressed = 1;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    isButtonBPressed = 0;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        isButtonBPressed = 1;
+                        v.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        isButtonBPressed = 0;
+                        v.setBackgroundColor(Color.argb(alpha,red,green,blue));
+                        break;
                 }
                 return true; // To consume the event
             });
