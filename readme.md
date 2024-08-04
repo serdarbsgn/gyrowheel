@@ -7,7 +7,7 @@ Use run.bat to select run options
 ![alt text](/readme-photos/run-udp-mode.png "udp-mode")  
 To use Network/UDP mode, write the IP that terminal displays to your phone.,   
 Above example is showing 192.168.1.42:12345   
-![alt text](/readme-photos/udp-mode-enter-ip.jpg "udp-mode-enter-ip-on-phone")  
+![alt text](/readme-photos/udp-mode-enter-ip.png "udp-mode-enter-ip-on-phone")  
 Then you should select the "USE NETWORK" option and   
 You should write 192.168.1.42 to first text field   
 After correctly entering the ip displayed on your pc to the field   
