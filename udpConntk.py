@@ -4,8 +4,9 @@ gamepad = vg.VX360Gamepad()
 import socket
 from simulate_gamepad import simulate_gamepad
 import tkinter as tk
-
+s = None
 def get_ip():
+    global s
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.settimeout(0)
     try:
@@ -16,33 +17,31 @@ def get_ip():
     finally:
         s.close()
     return IP
+
 IP = get_ip()
 root = None
 HOST = '0.0.0.0'
 PORT = 12345
 udp_socket = None
 running = False
+processor_thread = None
 
 def start_server():
-    global udp_socket
+    global udp_socket,running
+    running = True
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp_socket.bind((HOST, PORT))
     root.nametowidget("status_label").config(text=f"UDP server started on {IP}:{PORT}")
-    stop_button = tk.Button(root, text="Stop", command=stop_method,name="stop_button")
-    stop_button.pack(pady=10)
+    tk.Label(root, text="This is network mode, use network mode on your android").pack()
+    tk.Label(root, text="You can close this window to close the app").pack()
     processor_thread = threading.Thread(target=processor, daemon=True)
     processor_thread.start()
     root.nametowidget("start_button").destroy()
 
-def stop_method():
-    global running
-    running = False
-    create_gui(True)
-
 def processor():
     while running:
-        data, addr = udp_socket.recvfrom(64)
         try:
+            data, addr = udp_socket.recvfrom(64)
             inputs = data.decode().split(",")
             inputs = [int(input) for input in inputs]
             l_inputs = len(inputs)
@@ -58,9 +57,9 @@ def processor():
                 input_dict = {"SR": inputs[0], "SP": inputs[1], "LT": inputs[2], "RT": inputs[3]}
                 simulate_gamepad(gamepad,input_dict, False)
         except:
-            print("Can't convert to json.")
+            pass
 
-def create_gui(fail=False):
+def create_gui():
     global root
     if not root:
         root = tk.Tk()
@@ -72,8 +71,6 @@ def create_gui(fail=False):
 
     status_label = tk.Label(root, text="Status: Stopped",name="status_label",font=(15))
     status_label.pack(pady=10)
-    if fail:
-        root.nametowidget("stop_button").destroy()
 
 if __name__ == "__main__":
     create_gui()

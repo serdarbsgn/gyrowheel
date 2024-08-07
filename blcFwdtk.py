@@ -43,19 +43,19 @@ def serial_listener():
                             print(f"Error processing data: {data}")
         except serial.SerialException as e:
             if 'FileNotFoundError' in str(e) or 'could not open port' in str(e):
-                stop_method()
+                stop_method(2)
             else:
                 root.nametowidget("status_label").config(f"Serial port error: {e}")
-                stop_method()
+                stop_method(2)
         except Exception as e:
             root.nametowidget("status_label").config(text=e)
-            stop_method()
+            stop_method(2)
 
-def stop_method():
+def stop_method(num = 1):
     global running,com_port,listener_thread,processor_thread
     running = False
     com_port = 'COM10'
-    create_gui(True)
+    create_gui(num)
 
 def processor():
     while running:
@@ -88,14 +88,16 @@ def start_script():
     listener_thread.start()
     processor_thread.start()
     root.nametowidget("start_button").destroy()
+
 # Tkinter GUI
-def create_gui(fail=False):
+def create_gui(fail=0):
     global root
     if not root:
         root = tk.Tk()
         root.minsize(300, 100)
         root.title("GW Bluetooth Port Forward Control")
 
+    tk.Label(root, text="This is bluetooth forwarded port mode, use bluetooth and tick forwarded port mode on your android",name="mode").pack()
     address_label = tk.Label(root, text="Enter the COM port (leave blank to default to 'COM10'):",name="address_entry_explanation")
     address_label.pack(pady=10)
     address_entry = tk.Entry(root,name="address_entry")
@@ -106,9 +108,10 @@ def create_gui(fail=False):
 
     status_label = tk.Label(root, text="Status: Stopped",name="status_label",font=(15))
     status_label.pack(pady=10)
-    if fail:
+    if fail > 0:
         root.nametowidget("stop_button").destroy()
-        root.nametowidget("status_label").config(text="The specified COM port may not exist...")
+        if fail > 1:
+            root.nametowidget("status_label").config(text="The specified COM port may not exist...")
 
 
 if __name__ == '__main__':

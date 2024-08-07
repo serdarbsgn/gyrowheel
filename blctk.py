@@ -74,6 +74,7 @@ def setup_bluetooth_adapter():
     
 def serial_listener():
     root.nametowidget("status_label").config(text=f'Listener started,waiting connection.')
+    tk.Label(root, text="This is bluetooth mode, use bluetooth mode on your android").pack()
     tk.Label(root, text="You can close this window to close the app").pack()
     while running:
         s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
