@@ -12,8 +12,14 @@ baud_rate = 115200
 
 com_port = 'COM10'
 user_input = input("Enter the COM port (press Enter to default to 'COM10'): ")
-if user_input.strip() != "":
-    com_port = user_input
+
+if user_input.upper().strip() != "":
+    try:
+        user_input = int(user_input)
+        com_port = 'COM'+str(user_input)
+    except:
+        com_port = user_input.upper()
+
 input_queue = queue.Queue(maxsize=2)
 
 def serial_listener():
@@ -43,6 +49,7 @@ def serial_listener():
                                 input_queue.put((input_dict, False))  # False indicates GyroWheel mode
                         except Exception as e:
                             print(f"Error processing data: {data}")
+
         except serial.SerialException as e:
             print(f"Serial port error: {e}")
 
