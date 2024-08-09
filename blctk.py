@@ -7,12 +7,13 @@ import re
 import vgamepad as vg
 from simulate_gamepad import simulate_gamepad
 
-running = False
-adapter_addr = ""
-port = 10
-buf_size = 64
-input_queue = queue.Queue(maxsize=2)
-gamepad = vg.VX360Gamepad()
+running = None
+adapter_addr = None
+port = None
+buf_size = None
+input_queue = None
+gamepad = None
+root = None
 
 def setup_bluetooth_adapter():
     result = subprocess.run(["ipconfig", "/all"], capture_output=True)
@@ -155,5 +156,15 @@ def create_gui():
 
     root.mainloop()
 
-if __name__ == '__main__':
+def main():
+    global running,adapter_addr,port,input_queue,gamepad,buf_size
+    running = False
+    adapter_addr = ""
+    port = 10
+    buf_size = 64
+    input_queue = queue.Queue(maxsize=2)
+    gamepad = vg.VX360Gamepad()
     create_gui()
+
+if __name__ == '__main__':
+    main()

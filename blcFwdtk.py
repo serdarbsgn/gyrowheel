@@ -4,16 +4,16 @@ import queue
 import vgamepad as vg
 from simulate_gamepad import simulate_gamepad
 import tkinter as tk
-gamepad = vg.VX360Gamepad()
 
-# Serial port configuration
+gamepad = None
 running = False
-baud_rate = 115200
-com_port = 'COM10'
-input_queue = queue.Queue(maxsize=2)
+baud_rate = None
+com_port = None
+input_queue = None
 listener_thread = None
 processor_thread = None
 root = None
+
 def serial_listener():
     global listener_thread,processor_thread,com_port,running
     while running:
@@ -92,7 +92,7 @@ def start_script():
 # Tkinter GUI
 def create_gui(fail=0):
     global root
-    if not root:
+    if root is None:
         root = tk.Tk()
         root.minsize(300, 100)
         root.title("GW Bluetooth Port Forward Control")
@@ -113,7 +113,15 @@ def create_gui(fail=0):
         if fail > 1:
             root.nametowidget("status_label").config(text="The specified COM port may not exist...")
 
-
-if __name__ == '__main__':
+def main():
+    global gamepad,running,baud_rate,com_port,input_queue
+    gamepad = vg.VX360Gamepad()
+    running = False
+    baud_rate = 115200
+    com_port = 'COM10'
+    input_queue = queue.Queue(maxsize=2)
     create_gui()
     root.mainloop()
+if __name__ == '__main__':
+    main()
+

@@ -1,12 +1,20 @@
 import threading
 import vgamepad as vg
-gamepad = vg.VX360Gamepad()
 import socket
 from simulate_gamepad import simulate_gamepad
 import tkinter as tk
-s = None
+
+
+IP = None
+root = None
+HOST = None
+PORT = None
+udp_socket = None
+running = None
+processor_thread = None
+gamepad = None
+
 def get_ip():
-    global s
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.settimeout(0)
     try:
@@ -18,16 +26,10 @@ def get_ip():
         s.close()
     return IP
 
-IP = get_ip()
-root = None
-HOST = '0.0.0.0'
-PORT = 12345
-udp_socket = None
-running = False
-processor_thread = None
+
 
 def start_server():
-    global udp_socket,running
+    global running,udp_socket
     running = True
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp_socket.bind((HOST, PORT))
@@ -72,8 +74,19 @@ def create_gui():
     status_label = tk.Label(root, text="Status: Stopped",name="status_label",font=(15))
     status_label.pack(pady=10)
 
-if __name__ == "__main__":
+
+
+def main():
+    global IP,HOST,PORT,running,gamepad
+    gamepad = vg.VX360Gamepad()
+    IP = get_ip()
+    HOST = '0.0.0.0'
+    PORT = 12345
+    running = False
     create_gui()
     root.mainloop()
+if __name__ == '__main__':
+    main()
+    
 
 

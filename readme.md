@@ -1,9 +1,20 @@
 Needs a computer that has python3 installed, [Install python here](https://www.python.org/downloads/) then you can use install.bat to install necessary libraries.  
-Install apk to your phone, then connect your computer and phone to the same network.(Not necessary for Bluetooth mode.)    
+Install apk to your phone, then connect your computer and phone to the same network.(Not necessary for Bluetooth mode.)   
+
+If you do want to not dawdle with python installation and techy stuff, you can also use exe files I prepared, you still need to download and install     
+[ViGEm Bus Driver](https://vigembusdriver.com/download/), and use the correct architecture exe file.(If one doesn't work its probably the other, be sure to install ViGEmBus Driver though.)   
+     
+![alt text](readme-photos/runexe.png "runexe")  
+Use the correct Run .exe to select run options 
+
 
 ![alt text](readme-photos/run-bat.png "run-bat")  
 Use run.bat to select run options    
 ## Network Mode Connection
+![alt text](/readme-photos/run-udp-mode-exe.png "udp-mode-exe")  
+To use Network/UDP mode, write the IP that window displays to your phone.,   
+Above example is showing 192.168.1.42:12345 
+
 ![alt text](/readme-photos/run-udp-mode.png "udp-mode")  
 To use Network/UDP mode, write the IP that terminal displays to your phone.,   
 Above example is showing 192.168.1.42:12345   
@@ -14,6 +25,8 @@ After correctly entering the ip displayed on your pc to the field
 Use GyroWheel Mode or Gamepad Mode  
 
 ## Bluetooth Mode Connection
+![alt text](/readme-photos/bluetooth-listening-exe.png "bluetooth-listening")   
+
 ![alt text](/readme-photos/bluetooth-listening.png "bluetooth-listening")   
 I tried to find your computer's bluetooth MAC address and display there,    so you can enter the field on the phone app easily but that might not always work.    
 If it can't detect, or detects more than one bluetooth address, it will prompt you to enter that or choose one.   
@@ -69,4 +82,8 @@ This project uses the following libraries:
 - **vgamepad**: Licensed under the MIT License. See [LICENSES/vgamepad-LICENSE](LICENSES/vgamepad-LICENSE).  
 - **pyserial**: Licensed under the BSD License. See [LICENSES/pyserial-LICENSE](LICENSES/pyserial-LICENSE).  
 
-The full license texts for these libraries are included in the `LICENSES` directory of this repository.  
+Also using this driver:
+
+- **ViGEmBus**: Licensed under the BSD License. See [LICENSES/vigembus-LICENSE]
+
+The full license texts for these libraries are included in the `LICENSES` directory of this repository. It is because of them that I was able to conjure this project so, THANKS!
