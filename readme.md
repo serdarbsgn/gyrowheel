@@ -1,22 +1,23 @@
+
+## Installation
 If you do want to not dawdle with python installation and techy stuff, you can use exe files I prepared here  
 - [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/Runx64.exe)       
 or     
 - [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/Runx86.exe)    
+    
+
 you still need to download and install     
 [ViGEm Bus Driver](https://vigembusdriver.com/download/), and use the correct architecture exe file above for your computer.   
 (If one doesn't work its probably the other, be sure to install ViGEmBus Driver though.)      
 If you don't want to use exe files, read below.   
-    
-Needs a computer that has python3 installed, [Install python here](https://www.python.org/downloads/) then you can use install.bat to install necessary libraries.  
-Install apk to your phone, then connect your computer and phone to the same network.(Not necessary for Bluetooth mode.)   
-
-    
-   
      
-![alt text](readme-photos/runexe.png "runexe")  
-Use the correct Run .exe to select run options 
-
-
+![alt text](readme-photos/runexe.png "runexe")    
+Use the correct Run .exe to select run options   
+## Installation Method II
+Needs a computer that has python3 installed, [Install python here](https://www.python.org/downloads/)   then you can use install.bat to install necessary libraries.  
+Install apk to your phone, then connect your computer and phone to the same network.    
+(Not necessary for Bluetooth mode.)    
+    
 ![alt text](readme-photos/run-bat.png "run-bat")  
 Use run.bat to select run options    
 ## Network Mode Connection
