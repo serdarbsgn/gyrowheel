@@ -40,7 +40,7 @@ public class BluetoothConn {
         handler.post(() -> {
             try {
                 bluetoothAdapter = adapter;
-                bluetoothAdapter.setName("GyroWheel");
+                //bluetoothAdapter.setName("GyroWheel"); No need to change bluetooth name.
                 connect(device);
             } catch (Exception e) {
                 e.printStackTrace();
