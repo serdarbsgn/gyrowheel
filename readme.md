@@ -84,6 +84,6 @@ This project uses the following libraries:
 
 Also using this driver:
 
-- **ViGEmBus**: Licensed under the BSD License. See [LICENSES/vigembus-LICENSE]
+- **ViGEmBus**: Licensed under the BSD License. See [LICENSES/vigembus-LICENSE](LICENSES/vigembus-LICENSE)
 
 The full license texts for these libraries are included in the `LICENSES` directory of this repository. It is because of them that I was able to conjure this project so, THANKS!
