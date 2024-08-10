@@ -4,8 +4,8 @@ For English documentation, please see [readme.md](readme.md).
 
 Python kurulumu ve teknik detaylarla uğraşmak istemiyorsanız, hazırladığım çalıştırılabilir dosyaları kullanabilirsiniz:
 
-- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x64.exe)
-- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x86.exe)
+- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x64.exe)[Virustotal Linki](https://www.virustotal.com/gui/url/d6a5f5f7fa43c6245c6cde0be18843b4d2265081da902dac429cf76cf0185ecb/detection)
+- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x86.exe)[Virustotal Linki](https://www.virustotal.com/gui/url/93cc8c66ca8d2cbb2f09b740dd4444f0430863cb134706647a75bc95a4c2592e/detection)
 
 [ViGEm Bus Driver](https://vigembusdriver.com/download/)'ı da indirip yüklemeniz gerekecek. Bilgisayarınız için doğru mimarideki çalıştırılabilir dosyayı kullanın. (Birisi çalışmazsa, diğerini deneyin. ViGEm Bus Driver'ı yüklediğinizden emin olun.)
 
