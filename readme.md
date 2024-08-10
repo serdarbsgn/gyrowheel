@@ -1,5 +1,5 @@
 # GyroWheel
-Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](README-tr.md).
+Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](readme-tr.md).
 ## Installation
 
 If you prefer to avoid dealing with Python installation and technical details, you can use the executable files I prepared:

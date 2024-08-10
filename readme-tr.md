@@ -1,5 +1,5 @@
 # GyroWheel
-For English documentation, please see [readme.md](README.md).
+For English documentation, please see [readme.md](readme.md).
 ## Kurulum
 
 Python kurulumu ve teknik detaylarla uğraşmak istemiyorsanız, hazırladığım çalıştırılabilir dosyaları kullanabilirsiniz:
