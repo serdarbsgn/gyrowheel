@@ -4,8 +4,8 @@ Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](readme-tr.md
 
 If you prefer to avoid dealing with Python installation and technical details, you can use the executable files I prepared:
 
-- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/Runx64.exe)
-- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/Runx86.exe)
+- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x64.exe)
+- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x86.exe)
 
 You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)
 
