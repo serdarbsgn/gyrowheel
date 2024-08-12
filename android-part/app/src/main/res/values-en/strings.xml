@@ -54,7 +54,11 @@
     <string name="seekBarSensorMultiplierExplanationDescription">Slide bar for adjusting Sensor Multiplier</string>
     <string name="usage_guide">HOW TO USE</string>
     <string name="touchpad">Touchpad</string>
-    <string name="keyboard_mouse"><![CDATA[Keyboard&Mouse]]></string>
-    <string name="left_click">Left Click</string>
-    <string name="right_click">Right Click</string>
+    <string name="keyboard_mouse">Keyboard and Mouse</string>
+    <string name="left_click">Left Mouse</string>
+    <string name="right_click">Right Mouse</string>
+    <string name="open_close_keyboard">Open/Close Keyboard</string>
+    <string name="touchpad_bar_explanation">Use this bar to adjust multiplier for Touchpad.</string>
+    <string name="slide_bar_for_adjusting_touchpad_multiplier">Slide bar for adjusting Touchpad Multiplier</string>
+    <string name="touchpadMultiplier">Use this bar to adjust touchpad multiplier</string>
 </resources>

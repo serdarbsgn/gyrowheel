@@ -2,6 +2,7 @@ package com.serdarbsgn.gyrowheel;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,7 +41,9 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
     private BluetoothConn bluetoothConn;
     int colorPrimary = 0;
     int alpha = 0, red = 0, green = 0, blue = 0;
-
+    private float touchpadMultiplier = 1f;
+    private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
+    private static final String KEY_TOUCHPAD_MULTIPLIER = "TOUCHPAD_MULTIPLIER";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,9 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     protected void setListeners(){
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        touchpadMultiplier = sharedPreferences.getInt(KEY_TOUCHPAD_MULTIPLIER,20)/20f;
+
         final EditText keyboardInput = findViewById(R.id.keyboardView);
         keyboardInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -163,8 +169,6 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 return true; // To consume the event
             }
         });
-
-
         rightClickButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -183,7 +187,6 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 return true; // To consume the event
             }
         });
-
         View touchPad = findViewById(R.id.touchPadView);
         touchPad.setOnTouchListener(new View.OnTouchListener() {
             private float startX, startY;
@@ -202,8 +205,8 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                         float diffY = currentY - startY;
                         mouseX = (int) diffX;
                         mouseY = (int) diffY;
-                        mouseCoordinates[0] = mouseX;
-                        mouseCoordinates[1] = mouseY;
+                        mouseCoordinates[0] = (int) (mouseX*touchpadMultiplier);
+                        mouseCoordinates[1] = (int) (mouseY*touchpadMultiplier);
                         changed=true;
                         command = "";
                         keystroke = "";
@@ -221,7 +224,138 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 return true;
             }
         });
+        setMediaButtons();
     }
+    protected void setMediaButtons(){
+        View mediaNext = findViewById(R.id.mediaNext);
+        mediaNext.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        mediaNext.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        command = "m_next";
+                        changed = true;
+                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        break;
+                }
+                return true; // To consume the event
+            }
+        });
+        View mediaPrevious = findViewById(R.id.mediaPrevious);
+        mediaPrevious.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        mediaPrevious.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        command = "m_previous";
+                        changed = true;
+                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        break;
+                }
+                return true; // To consume the event
+            }
+        });
+
+        View mediaPlay = findViewById(R.id.mediaPlay);
+        mediaPlay.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        mediaPlay.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        command = "m_play";
+                        changed = true;
+                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        break;
+                }
+                return true; // To consume the event
+            }
+        });
+        View mediaVolUp = findViewById(R.id.mediaVolUp);
+        mediaVolUp.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        mediaVolUp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        command = "m_vol_up";
+                        changed = true;
+                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        break;
+                }
+                return true; // To consume the event
+            }
+        });
+        View mediaVolDown = findViewById(R.id.mediaVolDown);
+        mediaVolDown.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        mediaVolDown.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        command = "m_vol_down";
+                        changed = true;
+                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        break;
+                }
+                return true; // To consume the event
+            }
+        });
+        View mediaVolMute = findViewById(R.id.mediaVolMute);
+        mediaVolMute.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        mediaVolMute.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        command = "m_vol_mute";
+                        changed = true;
+                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        break;
+                }
+                return true; // To consume the event
+            }
+        });
+        View windows = findViewById(R.id.windows);
+        windows.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        windows.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        command = "windows";
+                        changed = true;
+                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        break;
+                }
+                return true; // To consume the event
+            }
+        });
+    }
+
     protected void setHandlerSender(){
         handler = new Handler(Looper.getMainLooper());
         dataSender = new Runnable() {
@@ -244,7 +378,9 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 mouseCoordinates[0],
                 mouseCoordinates[1],
                 (leftClick ? 1 : 0) + (rightClick ? 2 : 0));
-
+        if(!command.isEmpty()){
+            command = "";
+        }
         if (!useBluetooth) {
             socketClient.sendData(sensorData);
         } else if (bluetoothConn != null) {
@@ -266,13 +402,13 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         super.onDestroy();
         //If using Network mode, close the socket.
         if(socketAddress!=null){
-            socketClient.sendData("||0|0|00");
+            socketClient.sendData("||0|0|0");
             socketClient.close();
         }
 
         if (bluetoothConn!=null){
             //To return the state of controller to neutral on all buttons, for convenience.
-            bluetoothConn.sendData("||0|0|00".getBytes());
+            bluetoothConn.sendData("||0|0|0".getBytes());
         }
         if (handler != null && dataSender != null) {
             handler.removeCallbacks(dataSender);

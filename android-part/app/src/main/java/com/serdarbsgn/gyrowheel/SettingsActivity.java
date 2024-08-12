@@ -16,6 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String KEY_SMOOTH_MULTIPLIER = "SMOOTH_MULTIPLIER";
     private static final String KEY_TRIGGER_MULTIPLIER = "TRIGGER_MULTIPLIER";
     private static final String KEY_USE_ANALOG_TRIGGER = "USE_ANALOG_TRIGGER";
+    private static final String KEY_TOUCHPAD_MULTIPLIER = "TOUCHPAD_MULTIPLIER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,31 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 saveMultiplier(KEY_TRIGGER_MULTIPLIER,seekBarTrigger.getProgress());
+            }
+        });
+
+
+        SeekBar seekBarTouchpad = findViewById(R.id.seekBarTouchpadMultiplier);
+        seekBarTouchpad.setMin(1);
+        seekBarTouchpad.setMax(100);
+        seekBarTouchpad.setProgress(20);
+        int savedTouchpadMultiplier = sharedPreferences.getInt(KEY_TOUCHPAD_MULTIPLIER, seekBarTouchpad.getProgress());
+        seekBarTouchpad.setProgress(savedTouchpadMultiplier);
+
+        TextView textViewToucpad = findViewById(R.id.seekBarTouchpadMultiplierText);
+        textViewToucpad.setText(String.valueOf(seekBarTouchpad.getProgress()));
+
+        seekBarTouchpad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textViewToucpad.setText(String.valueOf(progress));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                saveMultiplier(KEY_TOUCHPAD_MULTIPLIER,seekBarTouchpad.getProgress());
             }
         });
 

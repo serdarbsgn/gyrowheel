@@ -54,7 +54,11 @@
     <string name="seekBarSensorMultiplierExplanationDescription">Sensör Çarpanını ayarlamak için kaydırma çubuğu</string>
     <string name="usage_guide">Kullanma kılavuzu</string>
     <string name="touchpad">Dokunmatik Yüzey</string>
-    <string name="keyboard_mouse"><![CDATA[Klavye&Fare]]></string>
+    <string name="keyboard_mouse">Klavye ve Fare</string>
     <string name="left_click">Sol Tık</string>
     <string name="right_click">Sağ Tık</string>
+    <string name="open_close_keyboard">Klavyeyi Aç/Kapa</string>
+    <string name="touchpad_bar_explanation">Dokunmatik Yüzey için çarpanı ayarlamak amacıyla bu çubuğu kullanın.</string>
+    <string name="slide_bar_for_adjusting_touchpad_multiplier">Dokunmatik Yüzey Çarpanını ayarlamak için kaydırma çubuğu</string>
+    <string name="touchpadMultiplier">Dokunmatik Yüzey çarpan değerini ayarlayın:</string>
 </resources>
