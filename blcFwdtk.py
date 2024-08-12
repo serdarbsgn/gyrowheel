@@ -4,7 +4,8 @@ import queue
 import vgamepad as vg
 from simulate_gamepad import simulate_gamepad
 import tkinter as tk
-
+from simulate_keyboard_mouse import simulate_km
+from simulate_keyboard_mouse import *
 gamepad = None
 running = False
 baud_rate = None
@@ -13,7 +14,12 @@ input_queue = None
 listener_thread = None
 processor_thread = None
 root = None
-
+keyboard = None
+mouse = None
+previous_button_state = {
+    'left': False,
+    'right': False
+}
 def serial_listener():
     global listener_thread,processor_thread,com_port,running
     while running:
@@ -39,8 +45,16 @@ def serial_listener():
                             elif l_inputs == 4:  # GyroWheel Mode
                                 input_dict = {"SR": inputs[0], "SP": inputs[1], "LT": inputs[2], "RT": inputs[3]}
                                 input_queue.put((input_dict, False))  # False indicates GyroWheel mode
-                        except Exception as e:
-                            print(f"Error processing data: {data}")
+                        except:
+                            try:
+                                inputs = data.decode().split("|")
+                                if len(inputs)>5:
+                                    inputs = [inputs[0],inputs[1]+"|"+inputs[2],int(inputs[3]),int(inputs[4]),int(inputs[5])]
+                                else:
+                                    inputs = [inputs[0],inputs[1],int(inputs[2]),int(inputs[3]),int(inputs[4])]
+                                simulate_km(inputs,previous_button_state,keyboard,mouse)
+                            except:
+                                pass
         except serial.SerialException as e:
             if 'FileNotFoundError' in str(e) or 'could not open port' in str(e):
                 stop_method(2)
@@ -114,7 +128,9 @@ def create_gui(fail=0):
             root.nametowidget("status_label").config(text="The specified COM port may not exist...")
 
 def main():
-    global gamepad,running,baud_rate,com_port,input_queue
+    global gamepad,running,baud_rate,com_port,input_queue,keyboard,mouse
+    keyboard = pyk.Controller()
+    mouse = pym.Controller()
     gamepad = vg.VX360Gamepad()
     running = False
     baud_rate = 115200

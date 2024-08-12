@@ -18,6 +18,7 @@ def on_start_button_click():
 def main():
     global root,program_var
     root = tk.Tk()
+    root.minsize(330, 200)
     root.title("Select a Connection Method")
 
     program_var = tk.StringVar(value="udpConntk")

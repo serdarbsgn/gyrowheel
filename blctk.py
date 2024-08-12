@@ -6,6 +6,8 @@ import subprocess
 import re
 import vgamepad as vg
 from simulate_gamepad import simulate_gamepad
+from simulate_keyboard_mouse import simulate_km
+from simulate_keyboard_mouse import *
 
 running = None
 adapter_addr = None
@@ -14,7 +16,12 @@ buf_size = None
 input_queue = None
 gamepad = None
 root = None
-
+keyboard = None
+mouse = None
+previous_button_state = {
+    'left': False,
+    'right': False
+}
 def setup_bluetooth_adapter():
     result = subprocess.run(["ipconfig", "/all"], capture_output=True)
     result_string = result.stdout.decode(errors="ignore")
@@ -102,8 +109,16 @@ def serial_listener():
                         elif l_inputs == 4:  # GyroWheel Mode
                             input_dict = {"SR": inputs[0], "SP": inputs[1], "LT": inputs[2], "RT": inputs[3]}
                             input_queue.put((input_dict, False))
-                    except Exception as e:
-                        pass
+                    except:
+                        try:
+                            inputs = data.decode().split("|")
+                            if len(inputs)>5:
+                                inputs = [inputs[0],inputs[1]+"|"+inputs[2],int(inputs[3]),int(inputs[4]),int(inputs[5])]
+                            else:
+                                inputs = [inputs[0],inputs[1],int(inputs[2]),int(inputs[3]),int(inputs[4])]
+                            simulate_km(inputs,previous_button_state,keyboard,mouse)
+                        except Exception as e:
+                            print(e)
                 else:
                     waitfor -= 1
                     if waitfor < 0:
@@ -157,14 +172,16 @@ def create_gui():
     root.mainloop()
 
 def main():
-    global running,adapter_addr,port,input_queue,gamepad,buf_size
+    global running,adapter_addr,port,input_queue,gamepad,buf_size,keyboard,mouse
+    gamepad = vg.VX360Gamepad()
+    keyboard = pyk.Controller()
+    mouse = pym.Controller()
     running = False
     adapter_addr = ""
     port = 10
     buf_size = 64
     input_queue = queue.Queue(maxsize=2)
-    gamepad = vg.VX360Gamepad()
     create_gui()
-
+    
 if __name__ == '__main__':
     main()

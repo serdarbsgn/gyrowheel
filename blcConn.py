@@ -5,6 +5,8 @@ import vgamepad as vg
 import subprocess
 import re
 from simulate_gamepad import simulate_gamepad
+from simulate_keyboard_mouse import simulate_km
+from simulate_keyboard_mouse import *
 
 result = subprocess.run(["ipconfig","/all"],capture_output=True)
 result_string = result.stdout.decode(errors="ignore")
@@ -37,44 +39,7 @@ else:
         except Exception:
             print("Enter a valid address.")
 
-import pynput.keyboard as pyk
-import pynput.mouse as pym
-keyboard = pyk.Controller()
-mouse = pym.Controller()
-previous_button_state = {
-    'left': False,
-    'right': False
-}
-def simulate_km(data):
-    if data[0]:
-        if data[0] == "space":
-            keyboard.press(pyk.Key.space) 
-        elif data[0] == "backspace":
-            keyboard.press(pyk.Key.backspace) 
-        elif data[0] == "enter":
-            keyboard.press(pyk.Key.enter) 
-    if data[1]:
-        keyboard.type(data[1])
-    if data[2] != 0 and data[3]!= 0:
-        mouse.move(data[2],data[3])
 
-    status = int(data[4])
-
-    right_pressed = bool(status & 2)
-    if right_pressed != previous_button_state['right']:
-        if right_pressed:
-            mouse.press(pym.Button.right)
-        else:
-            mouse.release(pym.Button.right)
-        previous_button_state['right'] = right_pressed
-
-    left_pressed = bool(status & 1)
-    if left_pressed != previous_button_state['left']:
-        if left_pressed:
-            mouse.press(pym.Button.left)
-        else:
-            mouse.release(pym.Button.left)
-        previous_button_state['left'] = left_pressed
         
 def serial_listener():
     while True:
@@ -146,7 +111,12 @@ port = 10
 buf_size = 64
 waitfor = 100
 input_queue = queue.Queue(maxsize=2)
-
+keyboard = pyk.Controller()
+mouse = pym.Controller()
+previous_button_state = {
+    'left': False,
+    'right': False
+}
 listener_thread = threading.Thread(target=serial_listener, daemon=True)
 processor_thread = threading.Thread(target=processor, daemon=True)
 listener_thread.start()

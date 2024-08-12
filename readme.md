@@ -87,6 +87,7 @@ This project uses the following libraries:
 
 - **vgamepad**: Licensed under the MIT License. See [LICENSES/vgamepad-LICENSE](LICENSES/vgamepad-LICENSE).
 - **pyserial**: Licensed under the BSD License. See [LICENSES/pyserial-LICENSE](LICENSES/pyserial-LICENSE).
+- **pynput**: Licensed under the LGPLv3 License. See [LICENSES/pynput-LICENSE](LICENSES/pynput-LICENSE).
 
 Also using this driver:
 

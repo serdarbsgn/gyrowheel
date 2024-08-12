@@ -3,9 +3,15 @@ import threading
 import queue
 import vgamepad as vg
 from simulate_gamepad import simulate_gamepad 
-
+from simulate_keyboard_mouse import simulate_km
+from simulate_keyboard_mouse import *
 gamepad = vg.VX360Gamepad()
-
+keyboard = pyk.Controller()
+mouse = pym.Controller()
+previous_button_state = {
+    'left': False,
+    'right': False
+}
 # Serial port configuration
 
 baud_rate = 115200
@@ -48,7 +54,15 @@ def serial_listener():
                                 input_dict = {"SR": inputs[0], "SP": inputs[1], "LT": inputs[2], "RT": inputs[3]}
                                 input_queue.put((input_dict, False))  # False indicates GyroWheel mode
                         except Exception as e:
-                            print(f"Error processing data: {data}")
+                            try:
+                                inputs = data.decode().split("|")
+                                if len(inputs)>5:
+                                    inputs = [inputs[0],inputs[1]+"|"+inputs[2],int(inputs[3]),int(inputs[4]),int(inputs[5])]
+                                else:
+                                    inputs = [inputs[0],inputs[1],int(inputs[2]),int(inputs[3]),int(inputs[4])]
+                                simulate_km(inputs,previous_button_state,keyboard,mouse)
+                            except Exception as e:
+                                pass
 
         except serial.SerialException as e:
             print(f"Serial port error: {e}")

@@ -3,7 +3,8 @@ import vgamepad as vg
 import socket
 from simulate_gamepad import simulate_gamepad
 import tkinter as tk
-
+from simulate_keyboard_mouse import simulate_km
+from simulate_keyboard_mouse import *
 
 IP = None
 root = None
@@ -13,7 +14,12 @@ udp_socket = None
 running = None
 processor_thread = None
 gamepad = None
-
+keyboard = None
+mouse = None
+previous_button_state = {
+    'left': False,
+    'right': False
+}
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.settimeout(0)
@@ -59,7 +65,15 @@ def processor():
                 input_dict = {"SR": inputs[0], "SP": inputs[1], "LT": inputs[2], "RT": inputs[3]}
                 simulate_gamepad(gamepad,input_dict, False)
         except:
-            pass
+            try:
+                inputs = data.decode().split("|")
+                if len(inputs)>5:
+                    inputs = [inputs[0],inputs[1]+"|"+inputs[2],int(inputs[3]),int(inputs[4]),int(inputs[5])]
+                else:
+                    inputs = [inputs[0],inputs[1],int(inputs[2]),int(inputs[3]),int(inputs[4])]
+                simulate_km(inputs,previous_button_state,keyboard,mouse)
+            except:
+                pass
 
 def create_gui():
     global root
@@ -77,8 +91,10 @@ def create_gui():
 
 
 def main():
-    global IP,HOST,PORT,running,gamepad
+    global IP,HOST,PORT,running,gamepad,keyboard,mouse
     gamepad = vg.VX360Gamepad()
+    keyboard = pyk.Controller()
+    mouse = pym.Controller()
     IP = get_ip()
     HOST = '0.0.0.0'
     PORT = 12345
