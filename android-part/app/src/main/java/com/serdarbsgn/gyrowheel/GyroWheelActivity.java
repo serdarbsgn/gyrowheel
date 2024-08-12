@@ -14,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +51,7 @@ public class GyroWheelActivity extends AppCompatActivity {
     private boolean useAnalogTrigger = false;
     int colorPrimary = 0;
     int alpha = 0, red = 0, green = 0, blue = 0;
+    private final int grayColor = Color.parseColor("#D3D3D3");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -212,21 +212,6 @@ public class GyroWheelActivity extends AppCompatActivity {
         switchA = findViewById(R.id.switchA);
         switchB = findViewById(R.id.switchB);
 
-        switchA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonA.setEnabled(!isChecked); // Disable buttonA if switchA is checked
-                isButtonAPressed = isChecked ? 1:0;
-            }
-        });
-
-        switchB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonB.setEnabled(!isChecked); // Disable buttonB if switchB is checked
-                isButtonBPressed = isChecked ? 1:0;
-            }
-        });
 
         if (useAnalogTrigger) {
             findViewById(R.id.buttonB).setOnTouchListener(new View.OnTouchListener() {
@@ -281,11 +266,21 @@ public class GyroWheelActivity extends AppCompatActivity {
             });
             switchA.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 buttonA.setEnabled(!isChecked); // Disable buttonA if switchA is checked
+                if(isChecked){
+                    buttonA.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                }else{
+                    buttonA.setBackgroundColor(colorPrimary);
+                }
                 isButtonAPressed = isChecked ? 255:0;
             });
 
             switchB.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 buttonB.setEnabled(!isChecked); // Disable buttonB if switchB is checked
+                if(isChecked){
+                    buttonB.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+                }else{
+                    buttonB.setBackgroundColor(colorPrimary);
+                }
                 isButtonBPressed = isChecked ? 255:0;
             });
         }
@@ -319,7 +314,25 @@ public class GyroWheelActivity extends AppCompatActivity {
                 return true; // To consume the event
             });
         }
+        switchA.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            buttonA.setEnabled(!isChecked); // Disable buttonA if switchA is checked
+            if(isChecked){
+                buttonA.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+            }else{
+                buttonA.setBackgroundColor(colorPrimary);
+            }
+            isButtonAPressed = isChecked ? 1:0;
+        });
 
+        switchB.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            buttonB.setEnabled(!isChecked); // Disable buttonB if switchB is checked
+            if(isChecked){
+                buttonB.setBackgroundColor(Color.argb(alpha,255,255-red+green,blue));
+            }else{
+                buttonB.setBackgroundColor(colorPrimary);
+            }
+            isButtonBPressed = isChecked ? 1:0;
+        });
     }
 
     protected void onPause() {

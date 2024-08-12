@@ -46,6 +46,13 @@
         android:text="@string/bluetooth_all_buttons" />
 
     <Button
+        android:id="@+id/bluetoothKeyboardMouse"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:text="@string/keyboard_mouse" />
+
+    <Button
         android:id="@+id/bluetoothShowComputers"
         android:layout_width="match_parent"
         android:layout_height="70dp"

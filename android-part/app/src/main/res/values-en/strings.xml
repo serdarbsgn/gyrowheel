@@ -53,4 +53,8 @@
     <string name="seekBarTouchMultiplierExplanationDescription">Slide bar for adjusting Touch Multiplier</string>
     <string name="seekBarSensorMultiplierExplanationDescription">Slide bar for adjusting Sensor Multiplier</string>
     <string name="usage_guide">HOW TO USE</string>
+    <string name="touchpad">Touchpad</string>
+    <string name="keyboard_mouse"><![CDATA[Keyboard&Mouse]]></string>
+    <string name="left_click">Left Click</string>
+    <string name="right_click">Right Click</string>
 </resources>

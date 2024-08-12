@@ -37,6 +37,45 @@ else:
         except Exception:
             print("Enter a valid address.")
 
+import pynput.keyboard as pyk
+import pynput.mouse as pym
+keyboard = pyk.Controller()
+mouse = pym.Controller()
+previous_button_state = {
+    'left': False,
+    'right': False
+}
+def simulate_km(data):
+    if data[0]:
+        if data[0] == "space":
+            keyboard.press(pyk.Key.space) 
+        elif data[0] == "backspace":
+            keyboard.press(pyk.Key.backspace) 
+        elif data[0] == "enter":
+            keyboard.press(pyk.Key.enter) 
+    if data[1]:
+        keyboard.type(data[1])
+    if data[2] != 0 and data[3]!= 0:
+        mouse.move(data[2],data[3])
+
+    status = int(data[4])
+
+    right_pressed = bool(status & 2)
+    if right_pressed != previous_button_state['right']:
+        if right_pressed:
+            mouse.press(pym.Button.right)
+        else:
+            mouse.release(pym.Button.right)
+        previous_button_state['right'] = right_pressed
+
+    left_pressed = bool(status & 1)
+    if left_pressed != previous_button_state['left']:
+        if left_pressed:
+            mouse.press(pym.Button.left)
+        else:
+            mouse.release(pym.Button.left)
+        previous_button_state['left'] = left_pressed
+        
 def serial_listener():
     while True:
         s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
@@ -66,7 +105,15 @@ def serial_listener():
                             input_dict = {"SR": inputs[0], "SP": inputs[1], "LT": inputs[2], "RT": inputs[3]}
                             input_queue.put((input_dict, False))
                     except Exception as e:
-                        pass
+                        try:
+                            inputs = data.decode().split("|")
+                            if len(inputs)>5:
+                                inputs = [inputs[0],inputs[1]+"|"+inputs[2],int(inputs[3]),int(inputs[4]),int(inputs[5])]
+                            else:
+                                inputs = [inputs[0],inputs[1],int(inputs[2]),int(inputs[3]),int(inputs[4])]
+                            simulate_km(inputs)
+                        except Exception as e:
+                            pass
                         #print(f"Error processing input: {e}")
                 else:
                     #Trying to connect from phone while already connected causes to get empty data

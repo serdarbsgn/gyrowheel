@@ -30,6 +30,12 @@
         android:layout_height="70dp"
         android:layout_weight="1"
         android:text="@string/network_udp_all_buttons" />
+    <Button
+        android:id="@+id/networkUdpKeyboardMouse"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:text="Keyboard Mouse" />
 
     <Space
         android:layout_width="match_parent"

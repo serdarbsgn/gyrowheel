@@ -88,8 +88,15 @@ public class BluetoothActivity extends AppCompatActivity {
             intent.putExtra("CUSTOM_LAYOUT", useEditedLayout);
             startActivity(intent);
         });
+        Button buttonBtKM = findViewById(R.id.bluetoothKeyboardMouse);
+        buttonBtKM.setOnClickListener(v -> {
+            Intent intent = new Intent(BluetoothActivity.this, KeyboardAndMouseActivity.class);
+            intent.putExtra("USE_BLUETOOTH", true);
+            startActivity(intent);
+        });
         buttonBtGW.setEnabled(false);
         buttonBtGP.setEnabled(false);
+        buttonBtKM.setEnabled(false);
 
         findViewById(R.id.bluetoothShowComputers).setOnClickListener(v -> {
             requestBluetoothPermissions(null,"Scan");
@@ -120,6 +127,7 @@ public class BluetoothActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 findViewById(R.id.bluetooth).setEnabled(true);
                 findViewById(R.id.bluetoothAllButtons).setEnabled(true);
+                findViewById(R.id.bluetoothKeyboardMouse).setEnabled(true);
             });
         }).start();
         Toast.makeText(this, getString(R.string.button_available_after_conn), Toast.LENGTH_SHORT).show();

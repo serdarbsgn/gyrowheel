@@ -49,6 +49,15 @@ public class NetworkActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button buttonNetworkUdpKM = findViewById(R.id.networkUdpKeyboardMouse);
+        buttonNetworkUdpKM.setOnClickListener(v -> {
+            String ipAddress = editTextSocketIp.getText().toString();
+            saveIpAddress(ipAddress);
+            Intent intent = new Intent(NetworkActivity.this, KeyboardAndMouseActivity.class);
+            intent.putExtra("SOCKET_IP", ipAddress);
+            startActivity(intent);
+        });
+
         Button edit = findViewById(R.id.editLayout);
         edit.setOnClickListener(v -> {
             Intent intent = new Intent(NetworkActivity.this, EditableActivity.class);

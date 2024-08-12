@@ -3,3 +3,4 @@ venv
 /__pycache__
 /ViGemClient.dll
 /version.rc
+/build

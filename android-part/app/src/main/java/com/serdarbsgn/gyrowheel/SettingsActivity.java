@@ -116,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                saveMultiplier(KEY_TRIGGER_MULTIPLIER,seekBarSmooth.getProgress());
+                saveMultiplier(KEY_TRIGGER_MULTIPLIER,seekBarTrigger.getProgress());
             }
         });
 
