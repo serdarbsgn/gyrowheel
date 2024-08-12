@@ -4,8 +4,8 @@ Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](readme-tr.md
 
 If you prefer to avoid dealing with Python installation and technical details, you can use the executable files I prepared:
 
-- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x64.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/d6a5f5f7fa43c6245c6cde0be18843b4d2265081da902dac429cf76cf0185ecb/detection)
-- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x86.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/93cc8c66ca8d2cbb2f09b740dd4444f0430863cb134706647a75bc95a4c2592e/detection)
+- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/3f5b625ce5cdf53fb7c905bc04810f00b96005d5a7061ea4bdd689643560a39a)
+- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/65dc6a34d6815b8eb1a851f393d27207e9305f43c0b6d2cfecb2e819f42ce674)
 
 You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)
 
@@ -63,6 +63,8 @@ When using Gamepad mode, you can edit the button layout using the "EDIT LAYOUT" 
 
 The "Forwarded Socket" switch connects using Android’s built-in high-level connect function. In Windows, search for "Other Bluetooth Options," navigate to the COM tab, and add an incoming COM port. Enter the COM port value assigned by Windows (default is COM10). Follow the same steps to select "Start Bluetooth Classic App with Forwarded Port" on your computer.
 
+Keyboard and Mouse mode is newly added, I'll tinker around and improve it further soon.    
+    
 Your computer should now receive inputs and simulate a controller in your games.
 
 Use the edit layout button at the bottom of the screen to drag and drop buttons to your desired locations, ~~even outside the screen if you don’t want to use them~~. Toggle the switch next to the edit button to use your custom layout in gamepad mode.

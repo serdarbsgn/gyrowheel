@@ -4,8 +4,8 @@ For English documentation, please see [readme.md](readme.md).
 
 Python kurulumu ve teknik detaylarla uğraşmak istemiyorsanız, hazırladığım çalıştırılabilir dosyaları kullanabilirsiniz:
 
-- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x64.exe)[Virustotal Linki](https://www.virustotal.com/gui/url/d6a5f5f7fa43c6245c6cde0be18843b4d2265081da902dac429cf76cf0185ecb/detection)
-- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListener_x86.exe)[Virustotal Linki](https://www.virustotal.com/gui/url/93cc8c66ca8d2cbb2f09b740dd4444f0430863cb134706647a75bc95a4c2592e/detection)
+- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)[Virustotal Linki](https://www.virustotal.com/gui/url/3f5b625ce5cdf53fb7c905bc04810f00b96005d5a7061ea4bdd689643560a39a)
+- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)[Virustotal Linki](https://www.virustotal.com/gui/url/65dc6a34d6815b8eb1a851f393d27207e9305f43c0b6d2cfecb2e819f42ce674)
 
 [ViGEm Bus Driver](https://vigembusdriver.com/download/)'ı da indirip yüklemeniz gerekecek. Bilgisayarınız için doğru mimarideki çalıştırılabilir dosyayı kullanın. (Birisi çalışmazsa, diğerini deneyin. ViGEm Bus Driver'ı yüklediğinizden emin olun.)
 
@@ -63,6 +63,8 @@ Gamepad modunu kullanırken, "TUŞ DÜZENİNİ AYARLA" düğmesini kullanarak bu
 
 "Bağlantı Noktası Yönlendirme" anahtarı, Android'in yerleşik yüksek seviyeli bağlantı işlevini kullanarak bağlanır. Windows'ta "Diğer Bluetooth Ayarları" araması yapın, COM sekmesine gidin ve gelen bir COM portu ekleyin. Windows'un atadığı COM portu değerini girin (varsayılan COM10'dur). Bilgisayarınızda "Start Bluetooth Classic App with Forwarded Port" seçeneğini seçmek için aynı adımları takip edin.
 
+Klavye ve Fare modu yeni eklendi, yakında üzerinde çalışıp daha da geliştireceğim.    
+    
 Bilgisayarınız artık girişleri almalı ve oyunlarınızda bir denetleyici simüle etmelidir.
 
 Ekranın altındaki düzen düğmesini kullanarak butonları istediğiniz yerlere sürükleyip bırakabilir, ~~hatta ekranın dışında bile yerleştirebilirsiniz~~. Kendi düzeninizi gamepad modunda kullanmak için düzen düğmesinin yanındaki anahtarı etkinleştirin.
