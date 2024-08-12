@@ -4,8 +4,8 @@ Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](readme-tr.md
 
 If you prefer to avoid dealing with Python installation and technical details, you can use the executable files I prepared:
 
-- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/3f5b625ce5cdf53fb7c905bc04810f00b96005d5a7061ea4bdd689643560a39a)
-- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/65dc6a34d6815b8eb1a851f393d27207e9305f43c0b6d2cfecb2e819f42ce674)
+- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/fe86b3f8f99be5c24d0e37fccf8e03e89ae39cb6e0b88d737b38541d0ef0ed9c)
+- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)     -[Virustotal Link](https://www.virustotal.com/gui/url/64d2b243de5fdd899eb8f07c2ed794d40619f606673488ffe2d20d066ea94d8f)
 
 You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)
 
