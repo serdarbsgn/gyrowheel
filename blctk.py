@@ -79,6 +79,7 @@ def setup_bluetooth_adapter():
         address_button = tk.Button(root, text="Confirm", command=enter_address)
         address_button.pack(pady=15)
     root.nametowidget("setup_button").destroy()
+    root.nametowidget("start_button").pack(pady=10)
     
 def serial_listener():
     root.nametowidget("status_label").config(text=f'Listener started,waiting connection.')
@@ -155,24 +156,25 @@ def start_script():
 # Tkinter GUI
 def create_gui():
     global root
-
-    root = tk.Tk()
-    root.minsize(300, 100)
-    root.title("GW Bluetooth Control")
+    if root is None:
+        root = tk.Tk()
+    if root:
+        root.minsize(300, 100)
+        root.title("GW Bluetooth Control")
 
     setup_button = tk.Button(root, text="Setup Bluetooth Adapter", command=setup_bluetooth_adapter,name="setup_button")
     setup_button.pack(pady=10)
 
     start_button = tk.Button(root, text="Start", command=start_script,name="start_button")
-    start_button.pack(pady=10)
 
     status_label = tk.Label(root, text="Status: Stopped",name="status_label",font=(15))
     status_label.pack(pady=10)
 
-    root.mainloop()
 
-def main():
-    global running,adapter_addr,port,input_queue,gamepad,buf_size,keyboard,mouse
+def main(parent_root = None):
+    global running,adapter_addr,port,input_queue,gamepad,buf_size,keyboard,mouse,root
+    if parent_root:
+        root = parent_root
     gamepad = vg.VX360Gamepad()
     keyboard = pyk.Controller()
     mouse = pym.Controller()
@@ -182,6 +184,7 @@ def main():
     buf_size = 64
     input_queue = queue.Queue(maxsize=2)
     create_gui()
-    
+    if not parent_root:
+        root.mainloop()
 if __name__ == '__main__':
-    main()
+    main(None)

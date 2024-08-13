@@ -16,10 +16,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class KeyboardAndMouseActivity extends AppCompatActivity {
     public int mouseX,mouseY;
@@ -31,7 +34,10 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
     public boolean rightClick = false;
     public boolean leftClick = false;
     public boolean changed = false;
-
+    public boolean ctrlPressed = false;
+    public boolean altPressed = false;
+    public boolean windowsPressed = false;
+    public boolean shiftPressed = false;
     private Handler handler;
     private Runnable dataSender;
 
@@ -121,7 +127,6 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_DEL) { // Handle Backspace key
                         command = "backspace";
-                        System.out.println("Backspace");
                         changed=true;
                         return true;
                     }
@@ -226,134 +231,124 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         });
         setMediaButtons();
     }
+    //lets reduce the boilerplate, for my sanity.
     protected void setMediaButtons(){
-        View mediaNext = findViewById(R.id.mediaNext);
-        mediaNext.setBackgroundColor(Color.argb(alpha, red, green, blue));
-        mediaNext.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        command = "m_next";
-                        changed = true;
-                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
-                        break;
-                }
-                return true; // To consume the event
-            }
-        });
-        View mediaPrevious = findViewById(R.id.mediaPrevious);
-        mediaPrevious.setBackgroundColor(Color.argb(alpha, red, green, blue));
-        mediaPrevious.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        command = "m_previous";
-                        changed = true;
-                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
-                        break;
-                }
-                return true; // To consume the event
-            }
-        });
+        HashMap<Integer, String> viewCommandMap = getIntegerStringHashMap();
 
-        View mediaPlay = findViewById(R.id.mediaPlay);
-        mediaPlay.setBackgroundColor(Color.argb(alpha, red, green, blue));
-        mediaPlay.setOnTouchListener(new View.OnTouchListener() {
+
+        // Set up touch listeners using the map
+        for (Map.Entry<Integer, String> entry : viewCommandMap.entrySet()) {
+            final View view = findViewById(entry.getKey());
+            final String commandValue = entry.getValue();
+
+            view.setBackgroundColor(Color.argb(alpha, red, green, blue));
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            command = commandValue;
+                            changed = true;
+                            v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            v.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                            break;
+                    }
+                    return true;
+                }
+            });
+        }
+        final View ctrl = findViewById(R.id.ctrl);
+        ctrl.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        ctrl.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        command = "m_play";
+                        ctrlPressed = true;
                         changed = true;
                         v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
                         break;
                     case MotionEvent.ACTION_UP:
+                        ctrlPressed = false;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
-                return true; // To consume the event
+                return true;
             }
         });
-        View mediaVolUp = findViewById(R.id.mediaVolUp);
-        mediaVolUp.setBackgroundColor(Color.argb(alpha, red, green, blue));
-        mediaVolUp.setOnTouchListener(new View.OnTouchListener() {
+        final View alt = findViewById(R.id.alt);
+        alt.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        alt.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        command = "m_vol_up";
+                        altPressed = true;
                         changed = true;
                         v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
                         break;
                     case MotionEvent.ACTION_UP:
+                        altPressed = false;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
-                return true; // To consume the event
+                return true;
             }
         });
-        View mediaVolDown = findViewById(R.id.mediaVolDown);
-        mediaVolDown.setBackgroundColor(Color.argb(alpha, red, green, blue));
-        mediaVolDown.setOnTouchListener(new View.OnTouchListener() {
+        final View shift = findViewById(R.id.shift);
+        shift.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        shift.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        command = "m_vol_down";
+                        shiftPressed = true;
                         changed = true;
                         v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
                         break;
                     case MotionEvent.ACTION_UP:
+                        shiftPressed = false;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
-                return true; // To consume the event
+                return true;
             }
         });
-        View mediaVolMute = findViewById(R.id.mediaVolMute);
-        mediaVolMute.setBackgroundColor(Color.argb(alpha, red, green, blue));
-        mediaVolMute.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        command = "m_vol_mute";
-                        changed = true;
-                        v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        v.setBackgroundColor(Color.argb(alpha, red, green, blue));
-                        break;
-                }
-                return true; // To consume the event
-            }
-        });
-        View windows = findViewById(R.id.windows);
+        final View windows = findViewById(R.id.windows);
         windows.setBackgroundColor(Color.argb(alpha, red, green, blue));
         windows.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        command = "windows";
+                        windowsPressed = true;
                         changed = true;
                         v.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
                         break;
                     case MotionEvent.ACTION_UP:
+                        windowsPressed = false;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
-                return true; // To consume the event
+                return true;
             }
         });
+    }
+
+    private static @NonNull HashMap<Integer, String> getIntegerStringHashMap() {
+        HashMap<Integer, String> viewCommandMap = new HashMap<>();
+        viewCommandMap.put(R.id.mediaNext, "m_next");
+        viewCommandMap.put(R.id.mediaPrevious, "m_previous");
+        viewCommandMap.put(R.id.mediaPlay, "m_play");
+        viewCommandMap.put(R.id.mediaVolUp, "m_vol_up");
+        viewCommandMap.put(R.id.mediaVolDown, "m_vol_down");
+        viewCommandMap.put(R.id.mediaVolMute, "m_vol_mute");
+        viewCommandMap.put(R.id.caps_lock, "caps");
+        viewCommandMap.put(R.id.tab, "tab");
+        viewCommandMap.put(R.id.escape, "esc");
+        return viewCommandMap;
     }
 
     protected void setHandlerSender(){
@@ -371,6 +366,18 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         handler.post(dataSender);
     }
     private void sendData(){
+        if(windowsPressed){
+            command = "w_"+command;
+        }
+        if(shiftPressed){
+            command = "s_"+command;
+        }
+        if(altPressed){
+            command = "a_"+command;
+        }
+        if(ctrlPressed){
+            command = "c_"+command;
+        }
         String sensorData = String.format(Locale.US,
                 "%s|%s|%d|%d|%d",
                 command,
@@ -380,6 +387,9 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 (leftClick ? 1 : 0) + (rightClick ? 2 : 0));
         if(!command.isEmpty()){
             command = "";
+        }
+        if(!keystroke.isEmpty()){
+            keystroke = "";
         }
         if (!useBluetooth) {
             socketClient.sendData(sensorData);
@@ -405,7 +415,6 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
             socketClient.sendData("||0|0|0");
             socketClient.close();
         }
-
         if (bluetoothConn!=null){
             //To return the state of controller to neutral on all buttons, for convenience.
             bluetoothConn.sendData("||0|0|0".getBytes());

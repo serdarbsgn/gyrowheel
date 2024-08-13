@@ -77,11 +77,11 @@ def processor():
 
 def create_gui():
     global root
-    if not root:
+    if root is None:
         root = tk.Tk()
+    if root:
         root.minsize(300, 100)
         root.title("GW Network Control")
-
     start_button = tk.Button(root, text="Start", command=start_server,name="start_button")
     start_button.pack(pady=10)
 
@@ -90,8 +90,10 @@ def create_gui():
 
 
 
-def main():
-    global IP,HOST,PORT,running,gamepad,keyboard,mouse
+def main(parent_root = None):
+    global IP,HOST,PORT,running,gamepad,keyboard,mouse,root
+    if parent_root:
+        root = parent_root
     gamepad = vg.VX360Gamepad()
     keyboard = pyk.Controller()
     mouse = pym.Controller()
@@ -100,9 +102,10 @@ def main():
     PORT = 12345
     running = False
     create_gui()
-    root.mainloop()
+    if not parent_root:
+        root.mainloop()
 if __name__ == '__main__':
-    main()
+    main(None)
     
 
 

@@ -1,32 +1,55 @@
 import pynput.keyboard as pyk
 import pynput.mouse as pym
 def simulate_km(data,previous_button_state,keyboard,mouse):
-    def press_release(keycode):
-        keyboard.press(keycode)
-        keyboard.release(keycode)
-    if data[0]:
-        if data[0] == "space":
-            press_release(pyk.Key.space)
-        elif data[0] == "backspace":
-            press_release(pyk.Key.backspace) 
-        elif data[0] == "enter":
-            press_release(pyk.Key.enter)
-        elif data[0] == "m_next":
-            press_release(pyk.Key.media_next),
-        elif data[0] == "m_previous":
-            press_release(pyk.Key.media_previous)
-        elif data[0] == "m_play":
-            press_release(pyk.Key.media_play_pause)
-        elif data[0] == "m_vol_down":
-            press_release(pyk.Key.media_volume_down)
-        elif data[0] == "m_vol_up":
-            press_release(pyk.Key.media_volume_up)
-        elif data[0] == "m_vol_mute":
-            press_release(pyk.Key.media_volume_mute)
-        elif data[0] == "windows":
-            press_release(pyk.Key.cmd)
+    def handle_press(keycode):
+        if keycode == "":
+            return
+        elif keycode.startswith("c_"):
+            keyboard.press(pyk.Key.ctrl)
+            handle_press(keycode[2:])
+            keyboard.release(pyk.Key.ctrl)
+        elif keycode.startswith("a_"):
+            keyboard.press(pyk.Key.alt)
+            handle_press(keycode[2:])
+            keyboard.release(pyk.Key.alt)
+        elif keycode.startswith("s_"):
+            keyboard.press(pyk.Key.shift)
+            handle_press(keycode[2:])
+            keyboard.release(pyk.Key.shift)
+        elif keycode.startswith("w_"):
+            keyboard.press(pyk.Key.cmd)     
+            handle_press(keycode[2:])
+            keyboard.release(pyk.Key.cmd)
+        elif keycode == "space":
+            keyboard.tap(pyk.Key.space)
+        elif keycode == "backspace":
+            keyboard.tap(pyk.Key.backspace) 
+        elif keycode == "enter":
+            keyboard.tap(pyk.Key.enter)
+        elif keycode == "m_next":
+            keyboard.tap(pyk.Key.media_next),
+        elif keycode == "m_previous":
+            keyboard.tap(pyk.Key.media_previous)
+        elif keycode == "m_play":
+            keyboard.tap(pyk.Key.media_play_pause)
+        elif keycode == "m_vol_down":
+            keyboard.tap(pyk.Key.media_volume_down)
+        elif keycode == "m_vol_up":
+            keyboard.tap(pyk.Key.media_volume_up)
+        elif keycode == "m_vol_mute":
+            keyboard.tap(pyk.Key.media_volume_mute)
+        elif keycode == "caps":
+            keyboard.tap(pyk.Key.caps_lock)
+        elif keycode == "tab":
+            keyboard.tap(pyk.Key.tab)
+        elif keycode == "esc":
+            keyboard.tap(pyk.Key.esc)
+
+    handle_press(data[0])
+
     if data[1]:
         keyboard.type(data[1])
+
     if data[2] != 0 and data[3]!= 0:
         mouse.move(data[2],data[3])
 

@@ -108,6 +108,7 @@ def create_gui(fail=0):
     global root
     if root is None:
         root = tk.Tk()
+    if root:
         root.minsize(300, 100)
         root.title("GW Bluetooth Port Forward Control")
 
@@ -127,8 +128,10 @@ def create_gui(fail=0):
         if fail > 1:
             root.nametowidget("status_label").config(text="The specified COM port may not exist...")
 
-def main():
-    global gamepad,running,baud_rate,com_port,input_queue,keyboard,mouse
+def main(parent_root = None):
+    global gamepad,running,baud_rate,com_port,input_queue,keyboard,mouse,root
+    if parent_root:
+        root = parent_root
     keyboard = pyk.Controller()
     mouse = pym.Controller()
     gamepad = vg.VX360Gamepad()
@@ -137,7 +140,8 @@ def main():
     com_port = 'COM10'
     input_queue = queue.Queue(maxsize=2)
     create_gui()
-    root.mainloop()
+    if not parent_root:
+        root.mainloop()
 if __name__ == '__main__':
-    main()
+    main(None)
 

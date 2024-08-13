@@ -3,18 +3,20 @@ import blcFwdtk,blctk,udpConntk
 root = None
 program_var = None
 
+def clear_window(window):
+    for widget in window.winfo_children():
+        widget.destroy()
+
 def on_start_button_click():
     selected_program = program_var.get()
+    clear_window(root)
     if selected_program == "udpConntk":
-        root.destroy()
-        udpConntk.main()
+        udpConntk.main(root)
     elif selected_program == "blctk":
-        root.destroy()
-        blctk.main()
+        blctk.main(root)
     else:
-        root.destroy()
-        blcFwdtk.main()
-
+        blcFwdtk.main(root)
+                                                                    
 def main():
     global root,program_var
     root = tk.Tk()

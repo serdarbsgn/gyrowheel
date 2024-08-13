@@ -81,4 +81,9 @@
     <string name="touchpad_bar_explanation">Adjust the value for Touchpad multiplier:</string>
     <string name="slide_bar_for_adjusting_touchpad_multiplier">Slide bar for adjusting Touchpad Multiplier</string>
     <string name="touchpadMultiplier">Use this bar to adjust touchpad multiplier</string>
+    <string name="ctrl" translatable="false">Ctrl</string>
+    <string name="alt" translatable="false">Alt</string>
+    <string name="caps" translatable="false">Caps Lock</string>
+    <string name="esc" translatable="false">Esc</string>
+    <string name="shift" translatable="false">SHIFT</string>
 </resources>
