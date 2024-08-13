@@ -89,6 +89,7 @@ Bu proje aşağıdaki kütüphaneleri kullanmaktadır:
 
 - **vgamepad**: MIT Lisansı altında lisanslanmıştır. Ayrıntılar için [LICENSES/vgamepad-LICENSE](LICENSES/vgamepad-LICENSE) dosyasına bakın.
 - **pyserial**: BSD Lisansı altında lisanslanmıştır. Ayrıntılar için [LICENSES/pyserial-LICENSE](LICENSES/pyserial-LICENSE) dosyasına bakın.
+- **pynput**: LGPLv3 Lisansı altında lisanslanmıştır. Ayrıntılar için [LICENSES/pynput-LICENSE](LICENSES/pynput-LICENSE) dosyasına bakın.
 
 Ayrıca bu sürücüyü kullanmaktadır:
 
