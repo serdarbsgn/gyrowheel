@@ -29,16 +29,18 @@
 
             <SeekBar
                 android:id="@+id/seekBarSensorMultiplier"
-                android:layout_width="344dp"
-                android:layout_height="52dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
                 android:contentDescription="@string/seekBarSensorMultiplierExplanationDescription" />
 
             <TextView
                 android:id="@+id/seekBarSensorMultiplierText"
-                android:layout_width="49dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="1"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 />
 
         </LinearLayout>
@@ -69,16 +71,18 @@
 
             <SeekBar
                 android:id="@+id/seekBarTouchMultiplier"
-                android:layout_width="344dp"
-                android:layout_height="52dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
                 android:contentDescription="@string/seekBarTouchMultiplierExplanationDescription" />
 
             <TextView
                 android:id="@+id/seekBarTouchMultiplierText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="1"
-                android:textSize="30dp" />
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -110,16 +114,18 @@
 
             <SeekBar
                 android:id="@+id/seekBarSmoothMultiplier"
-                android:layout_width="344dp"
-                android:layout_height="52dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
                 android:contentDescription="@string/seekBarSmoothMultiplierExplanationDescription" />
 
             <TextView
                 android:id="@+id/seekBarSmoothMultiplierText"
-                android:layout_width="49dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="1"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 />
 
         </LinearLayout>
@@ -160,16 +166,18 @@
 
             <SeekBar
                 android:id="@+id/seekBarTriggerMultiplier"
-                android:layout_width="344dp"
-                android:layout_height="52dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
                 android:contentDescription="@string/seekBarTriggerMultiplierExplanationDescription" />
 
             <TextView
                 android:id="@+id/seekBarTriggerMultiplierText"
-                android:layout_width="49dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="1"
-                android:textSize="30dp" />
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -199,16 +207,18 @@
 
             <SeekBar
                 android:id="@+id/seekBarTouchpadMultiplier"
-                android:layout_width="344dp"
-                android:layout_height="52dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
                 android:contentDescription="@string/slide_bar_for_adjusting_touchpad_multiplier" />
 
             <TextView
                 android:id="@+id/seekBarTouchpadMultiplierText"
-                android:layout_width="49dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="1"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 />
 
         </LinearLayout>

@@ -206,15 +206,11 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_MOVE:
                         float currentX = event.getX();
                         float currentY = event.getY();
-                        float diffX = currentX - startX;
-                        float diffY = currentY - startY;
-                        mouseX = (int) diffX;
-                        mouseY = (int) diffY;
+                        mouseX = (int) (currentX - startX);
+                        mouseY = (int) (currentY - startY);
                         mouseCoordinates[0] = (int) (mouseX*touchpadMultiplier);
                         mouseCoordinates[1] = (int) (mouseY*touchpadMultiplier);
                         changed=true;
-                        command = "";
-                        keystroke = "";
                         startX = currentX;
                         startY = currentY;
                         break;
@@ -348,19 +344,30 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         viewCommandMap.put(R.id.caps_lock, "caps");
         viewCommandMap.put(R.id.tab, "tab");
         viewCommandMap.put(R.id.escape, "esc");
+        viewCommandMap.put(R.id.del, "del");
+        viewCommandMap.put(R.id.up_arrow, "ar_up");
+        viewCommandMap.put(R.id.down_arrow, "ar_down");
+        viewCommandMap.put(R.id.left_arrow, "ar_left");
+        viewCommandMap.put(R.id.right_arrow, "ar_right");
         return viewCommandMap;
     }
 
     protected void setHandlerSender(){
         handler = new Handler(Looper.getMainLooper());
+        final int[] idleCount = {0};
         dataSender = new Runnable() {
             @Override
             public void run() {
                 if(changed){
                     sendData();
                     changed = false;
-                }
-                handler.postDelayed(this, 5); // 5 milliseconds delay}
+                    idleCount[0]=0;
+                    handler.postDelayed(this, 0);
+                }else if(idleCount[0] < 150){
+                    handler.postDelayed(this, idleCount[0]++);
+                }else{
+                    handler.postDelayed(this, 2L *idleCount[0]);
+                }//conserve some cpu usage by reducing the poll rate.
             }
         };
         handler.post(dataSender);

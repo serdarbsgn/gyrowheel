@@ -28,7 +28,7 @@
     <string name="sensorMultiplierExplanation">Be aware that not using default multiplier(25) might result in analog stick to reach highest value sooner or not being able to reach highest value at all. Small movements can be interpreted as a lot, or it can\'t be registered at all.</string>
     <string name="sensorMultiplier">Adjust the value for sensor multiplier:</string>
     <string name="touchMultiplier">Adjust the value for touch multiplier:</string>
-    <string name="seekBarTouchMultiplierExplanation">Be aware that not using default multiplier(25) might result in analog stick to reach highest value sooner or not being able to reach highest value at all. Small movements can be interpreted as a lot, or it can\'t be registered at all.</string>
+    <string name="seekBarTouchMultiplierExplanation">" Be aware that not using default multiplier(25) might result in analog stick to reach highest value sooner or not being able to reach highest value at all. Small movements can be interpreted as a lot, or it can't be registered at all."</string>
     <string name="seekBarSmoothMultiplierExplanation">Lowering this will result in smoother output but will make the output delayed. Conversely, making this higher will result in faster output but it will have more jankiness. This setting will only matter if your device lacks precise sensors.</string>
     <string name="smoothMultiplier">Adjust the value for smoothing multiplier:</string>
     <string name="no_rotation_sensor">This mode relies solely on Rotation sensors which your device doesn\'t have any suitable</string>
@@ -46,11 +46,11 @@
     <string name="ad_not_ready">Ad is not ready yet, please press the button again.</string>
     <string name="ad_loading">Ad is still loading,press the button again after a while.</string>
     <string name="triggerMultiplier">Adjust the value for trigger touch multiplier:</string>
-    <string name="seekBarTriggerMultiplierExplanation">Use this bar to adjust multiplier for trigger buttons. This is only useful when the switch above is turned on</string>
+    <string name="seekBarTriggerMultiplierExplanation">" Use this bar to adjust multiplier for trigger buttons. This is only useful when the switch above is turned on"</string>
     <string name="switchAnalogTrigger">Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
     <string name="seekBarTriggerMultiplierExplanationDescription">Slide bar for adjusting Trigger Multiplier</string>
     <string name="seekBarSmoothMultiplierExplanationDescription">Slide bar for adjusting Smoothening Multiplier</string>
-    <string name="seekBarTouchMultiplierExplanationDescription">Slide bar for adjusting Touch Multiplier</string>
+    <string name="seekBarTouchMultiplierExplanationDescription">" Slide bar for adjusting Touch Multiplier"</string>
     <string name="seekBarSensorMultiplierExplanationDescription">Slide bar for adjusting Sensor Multiplier</string>
     <string name="usage_guide">HOW TO USE</string>
     <string name="touchpad">Touchpad</string>

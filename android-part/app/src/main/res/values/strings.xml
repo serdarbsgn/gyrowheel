@@ -45,11 +45,11 @@
     <string name="use_network">Use Network</string>
     <string name="use_bluetooth">Use Bluetooth</string>
     <string name="settings">SETTINGS</string>
-    <string name="sensorMultiplierExplanation">Be aware that not using default multiplier(25) might result in analog stick to reach highest value sooner or not being able to reach highest value at all. Small movements can be interpreted as a lot, or it can\'t be registered at all.</string>
+    <string name="sensorMultiplierExplanation"> Be aware that not using default multiplier(25) might result in analog stick to reach highest value sooner or not being able to reach highest value at all. Small movements can be interpreted as a lot, or it can\'t be registered at all.</string>
     <string name="sensorMultiplier">Adjust the value for sensor multiplier:</string>
     <string name="touchMultiplier">Adjust the value for touch multiplier:</string>
     <string name="seekBarTouchMultiplierExplanation">Be aware that not using default multiplier(25) might result in analog stick to reach highest value sooner or not being able to reach highest value at all. Small movements can be interpreted as a lot, or it can\'t be registered at all.</string>
-    <string name="seekBarSmoothMultiplierExplanation">Smoothing factor(Lower is smoother but delayed, higher is jankier but faster.)</string>
+    <string name="seekBarSmoothMultiplierExplanation">  Smoothing factor(Lower is smoother but delayed, higher is jankier but faster.)</string>
     <string name="triggerMultiplier">Adjust the value for trigger touch multiplier:</string>
     <string name="seekBarTriggerMultiplierExplanation">Use this bar to adjust multiplier for trigger buttons. This is only useful when the switch above is turned on</string>
     <string name="smoothMultiplier">Adjust the value for smoothing multiplier:</string>
@@ -67,7 +67,7 @@
     <string name="thank_you">Thank you for your support!</string>
     <string name="ad_not_ready">Ad is not ready yet, please press the button again.</string>
     <string name="ad_loading">Ad is still loading,press the button again after a while.</string>
-    <string name="switchAnalogTrigger">Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
+    <string name="switchAnalogTrigger"> Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
     <string name="seekBarTriggerMultiplierExplanationDescription">Slide bar for adjusting Trigger Multiplier</string>
     <string name="seekBarSmoothMultiplierExplanationDescription">Slide bar for adjusting Smoothening Multiplier</string>
     <string name="seekBarTouchMultiplierExplanationDescription">Slide bar for adjusting Touch Multiplier</string>
@@ -86,4 +86,10 @@
     <string name="caps" translatable="false">Caps Lock</string>
     <string name="esc" translatable="false">Esc</string>
     <string name="shift" translatable="false">SHIFT</string>
+    <string name="keyboard_field">Keyboard Field</string>
+    <string name="up_arrow">Up</string>
+    <string name="del">Del</string>
+    <string name="down_arrow">Down</string>
+    <string name="right_arrow">Right</string>
+    <string name="left_arrow">Left</string>
 </resources>

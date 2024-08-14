@@ -203,7 +203,7 @@ public class EditableActivity extends AppCompatActivity {
 
         buttons.put(R.id.rightAnalog, new ArrayList<>(Arrays.asList(width * 4 / 6, height * 7 / 12, 125)));
         buttons.put(R.id.leftAnalog, new ArrayList<>(Arrays.asList(width  / 12, height * 7 / 12, 200)));
-        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(width * 2 / 6, height * 4 / 6, 177)));
+        buttons.put(R.id.switchSensor, new ArrayList<>(Arrays.asList(width * 2 / 6, height * 4 / 6, 180)));
 
         return buttons;
     }

@@ -7,9 +7,8 @@
     <Button
         android:id="@+id/buttonA"
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="6"
         android:text="@string/brakeText"
         android:textAllCaps="false"
         android:textSize="20sp" />
@@ -17,23 +16,23 @@
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchA"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="@string/toggle_brake_buttonText" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchB"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="@string/toggle_accelerate_buttonText" />
 
     <Button
         android:id="@+id/buttonB"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:layout_weight="6"
         android:text="@string/accelerateText"
         android:textAllCaps="false"
         android:textSize="20sp" />
-
 </LinearLayout>

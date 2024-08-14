@@ -42,16 +42,25 @@ def simulate_km(data,previous_button_state,keyboard,mouse):
             keyboard.tap(pyk.Key.caps_lock)
         elif keycode == "tab":
             keyboard.tap(pyk.Key.tab)
+        elif keycode == "del":
+            keyboard.tap(pyk.Key.delete)
         elif keycode == "esc":
             keyboard.tap(pyk.Key.esc)
+        elif keycode == "ar_up":
+            keyboard.tap(pyk.Key.up)
+        elif keycode == "ar_down":
+            keyboard.tap(pyk.Key.down)
+        elif keycode == "ar_left":
+            keyboard.tap(pyk.Key.left)
+        elif keycode == "ar_right":
+            keyboard.tap(pyk.Key.right)
 
+    if data[2] != 0 and data[3]!= 0:
+        mouse.move(data[2],data[3])
     handle_press(data[0])
 
     if data[1]:
         keyboard.type(data[1])
-
-    if data[2] != 0 and data[3]!= 0:
-        mouse.move(data[2],data[3])
 
     status = int(data[4])
 
