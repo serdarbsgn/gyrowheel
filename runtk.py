@@ -22,6 +22,7 @@ def main():
     root = tk.Tk()
     root.minsize(330, 200)
     root.title("Select a Connection Method")
+
     program_var = tk.StringVar(value="udpConntk")
 
     tk.Label(root, text="Select a program to run:").pack(pady=10)
