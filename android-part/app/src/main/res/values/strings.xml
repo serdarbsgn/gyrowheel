@@ -30,11 +30,11 @@
     <string name="buttonADR" translatable="false">˅˃</string>
     <string name="buttonAD" translatable="false">˅</string>
     <string name="bluetooth_connection">GyroWheel Mode</string>
-    <string name="enter_bluetooth_mac_adress">Enter Bluetooth Mac Adress</string>
+    <string name="enter_bluetooth_mac_address">Enter Bluetooth Mac Address</string>
     <string name="e8_48_b8_c8_20_00" translatable="false">E8:48:B8:C8:20:00</string>
     <string name="search_computers_on_bluetooth">Search Computers on Bluetooth</string>
     <string name="bluetooth_all_buttons">Gamepad Mode</string>
-    <string name="connect_to_mac_adress">Connect to MAC adress</string>
+    <string name="connect_to_mac_address">Connect to MAC address</string>
     <string name="forwarded_socket">Forwarded Socket</string>
     <string name="disable_sensor">Disable Sensor</string>
     <string name="edit_layout">EDIT Layout</string>
@@ -66,7 +66,7 @@
     <string name="use_edit_first">Use Edit Layout button to set a layout first.</string>
     <string name="thank_you">Thank you for your support!</string>
     <string name="ad_not_ready">Ad is not ready yet, please press the button again.</string>
-    <string name="ad_loading">Ad is still loading,press the button again after a while.</string>
+    <string name="ad_loading">Ads only start to load when pressed. Press again in a bit.</string>
     <string name="switchAnalogTrigger"> Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
     <string name="seekBarTriggerMultiplierExplanationDescription">Slide bar for adjusting Trigger Multiplier</string>
     <string name="seekBarSmoothMultiplierExplanationDescription">Slide bar for adjusting Smoothening Multiplier</string>
@@ -86,10 +86,24 @@
     <string name="caps" translatable="false">Caps Lock</string>
     <string name="esc" translatable="false">Esc</string>
     <string name="shift" translatable="false">SHIFT</string>
-    <string name="keyboard_field">Keyboard Field</string>
-    <string name="up_arrow">Up</string>
-    <string name="del">Del</string>
-    <string name="down_arrow">Down</string>
-    <string name="right_arrow">Right</string>
-    <string name="left_arrow">Left</string>
+    <string name="keyboard_field" translatable="false">Keyboard Field</string>
+    <string name="up_arrow" translatable="false">Up</string>
+    <string name="del" translatable="false">Del</string>
+    <string name="down_arrow" translatable="false">Down</string>
+    <string name="right_arrow" translatable="false">Right</string>
+    <string name="left_arrow" translatable="false"> Left</string>
+    <string name="windows" translatable="false">Windows</string>
+    <string name="tab" translatable="false">tab</string>
+    <string name="volume_down" translatable="false">volume down</string>
+    <string name="volume_mute" translatable="false">volume mute</string>
+    <string name="volume_up" translatable="false">volume up</string>
+    <string name="media_next" translatable="false">next media</string>
+    <string name="media_play" translatable="false">play media</string>
+    <string name="media_previous" translatable="false">previous media</string>
+    <string name="please_enable_bluetooth">Please Enable Bluetooth First</string>
+    <string name="permission_declined">Permissions not granted</string>
+    <string name="about_ads_title">about ads title</string>
+    <string name="about_ads_message">about ads message</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="ad_ready">ad ready</string>
 </resources>

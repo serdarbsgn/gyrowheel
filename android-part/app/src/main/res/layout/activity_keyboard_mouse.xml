@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
+    android:minWidth="350dp"
     android:orientation="vertical">
 
     <ImageView
@@ -53,8 +53,11 @@
         android:id="@+id/keyboardView"
         android:layout_width="1dp"
         android:layout_height="1dp"
+        android:layout_margin="2dp"
+        android:hint="@string/keyboard_field"
+        android:importantForAutofill="no"
         android:inputType="textMultiLine"
-        android:contentDescription="@string/keyboard_field"
+        android:marqueeRepeatLimit="marquee_forever"
         android:visibility="visible" />
 
     <LinearLayout
@@ -64,26 +67,29 @@
 
         <ImageView
             android:id="@+id/mediaPrevious"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/media_previous"
             app:srcCompat="@android:drawable/ic_media_previous" />
 
         <ImageView
             android:id="@+id/mediaPlay"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/media_play"
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageView
             android:id="@+id/mediaNext"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/media_next"
             app:srcCompat="@android:drawable/ic_media_next" />
     </LinearLayout>
 
@@ -93,7 +99,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1">
@@ -117,18 +123,20 @@
 
         <ImageView
             android:id="@+id/mediaVolMute"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/volume_mute"
             app:srcCompat="@android:drawable/ic_lock_silent_mode" />
 
         <ImageView
             android:id="@+id/mediaVolUp"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/volume_up"
             app:srcCompat="@android:drawable/btn_plus" />
 
     </LinearLayout>
@@ -139,7 +147,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1">
@@ -163,18 +171,20 @@
 
         <ImageView
             android:id="@+id/tab"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/tab"
             app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
 
         <ImageView
             android:id="@+id/mediaVolDown"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/volume_down"
             app:srcCompat="@android:drawable/btn_minus" />
 
     </LinearLayout>
@@ -185,7 +195,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1">
@@ -209,14 +219,15 @@
 
         <ImageView
             android:id="@+id/windows"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1"
+            android:contentDescription="@string/windows"
             app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_weight="1">
@@ -258,7 +269,7 @@
                 android:contentDescription="@string/caps" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="8dp"
@@ -320,8 +331,8 @@
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:contentDescription="@string/left_arrow"
-            app:srcCompat="@android:drawable/ic_media_play"
-            android:rotation="180"/>
+            android:rotation="180"
+            app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageView
             android:id="@+id/down_arrow"
@@ -333,13 +344,13 @@
             app:srcCompat="@android:drawable/stat_sys_download" />
 
         <ImageView
-                android:id="@+id/right_arrow"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/right_arrow"
-                app:srcCompat="@android:drawable/ic_media_play"/>
+            android:id="@+id/right_arrow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/right_arrow"
+            app:srcCompat="@android:drawable/ic_media_play" />
 
     </LinearLayout>
 

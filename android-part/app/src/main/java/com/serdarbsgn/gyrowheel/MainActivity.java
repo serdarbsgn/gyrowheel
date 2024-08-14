@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
@@ -16,7 +17,7 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 public class MainActivity extends AppCompatActivity {
-
+    private boolean shown = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +67,16 @@ public class MainActivity extends AppCompatActivity {
                     loadRewardedAd();
                 });
             } else {
-                Toast.makeText(MainActivity.this, getString(R.string.ad_not_ready), Toast.LENGTH_SHORT).show();
                 loadRewardedAd();
             }
+        });
+        Button buttonAboutSupport = findViewById(R.id.about_ads);
+        buttonAboutSupport.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.about_ads_title))
+                    .setMessage(getString(R.string.about_ads_message))
+                    .setPositiveButton(getString(R.string.ok), (dialog, which) -> dialog.dismiss())
+                    .show();
         });
     }
 
@@ -83,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdLoaded(@NonNull RewardedAd ad) {
                 GlobalSettings.getInstance().setRewardedAd(ad);
+                if(!shown) {
+                    Toast.makeText(MainActivity.this, getString(R.string.ad_ready), Toast.LENGTH_SHORT).show();
+                    shown = true;
+                }
                 GlobalSettings.getInstance().setLoadingAd(false);
             }
 

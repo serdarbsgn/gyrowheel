@@ -14,7 +14,7 @@
         android:id="@+id/editTextBluetoothMAC"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:hint="@string/enter_bluetooth_mac_adress"
+        android:hint="@string/enter_bluetooth_mac_address"
         android:inputType="text"
         android:text="@string/e8_48_b8_c8_20_00" />
 
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_weight="1"
-        android:text="@string/connect_to_mac_adress" />
+        android:text="@string/connect_to_mac_address" />
 
     <Switch
         android:id="@+id/switchForwardedSocket"

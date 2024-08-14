@@ -21,11 +21,13 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @SuppressLint("MissingPermission")
 public class BluetoothActivity extends AppCompatActivity {
@@ -40,7 +42,7 @@ public class BluetoothActivity extends AppCompatActivity {
     private Boolean useEditedLayout = false;
     private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
     private static final String KEY_MAC_ADDRESS = "MAC_ADDRESS";
-
+    private String tempMacAddress,tempType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +112,9 @@ public class BluetoothActivity extends AppCompatActivity {
 
     private void initializeBluetoothConnection(String macAddress) {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(!bluetoothAdapter.isEnabled()){
+            Toast.makeText(this, getString(R.string.please_enable_bluetooth), Toast.LENGTH_SHORT).show();
+        }
         if (bluetoothAdapter.isDiscovering()) {
             bluetoothAdapter.cancelDiscovery();
         }
@@ -134,6 +139,8 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     private void requestBluetoothPermissions(String macAddress, String type) {
+        tempMacAddress = macAddress;
+        tempType = type;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
@@ -142,9 +149,8 @@ public class BluetoothActivity extends AppCompatActivity {
                         android.Manifest.permission.BLUETOOTH_CONNECT,
                         android.Manifest.permission.BLUETOOTH_SCAN
                 }, REQUEST_PERMISSION_BT_CONNECT);
-                Toast.makeText(this,  getString(R.string.click_after_perm), Toast.LENGTH_SHORT).show();
             } else {
-                handleBluetoothAction(macAddress, type);
+                handleBluetoothAction(tempMacAddress, tempType);
             }
         } else {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED ||
@@ -156,9 +162,42 @@ public class BluetoothActivity extends AppCompatActivity {
                         android.Manifest.permission.BLUETOOTH,
                         android.Manifest.permission.BLUETOOTH_ADMIN
                 }, REQUEST_PERMISSION_BT);
-                Toast.makeText(this, getString(R.string.click_after_perm), Toast.LENGTH_SHORT).show();
             } else {
-                handleBluetoothAction(macAddress, type);
+                handleBluetoothAction(tempMacAddress, tempType);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_BT_CONNECT) {
+            boolean allPermissionsGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allPermissionsGranted = false;
+                    break;
+                }
+            }
+
+            if (allPermissionsGranted) {
+                handleBluetoothAction(tempMacAddress, tempType);
+            } else {
+                Toast.makeText(this, getString(R.string.permission_declined), Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQUEST_PERMISSION_BT) {
+            boolean allPermissionsGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allPermissionsGranted = false;
+                    break;
+                }
+            }
+
+            if (allPermissionsGranted) {
+                handleBluetoothAction(tempMacAddress, tempType);
+            } else {
+                Toast.makeText(this, getString(R.string.permission_declined), Toast.LENGTH_SHORT).show();
             }
         }
     }

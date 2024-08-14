@@ -10,10 +10,10 @@
     <string name="network_udp_all_buttons">Gamepad Mode</string>
     <string name="network_udp">GyroWheel Mode</string>
     <string name="enter_ip_address">Enter IP Address</string>
-    <string name="enter_bluetooth_mac_adress">Enter Bluetooth Mac Adress</string>
+    <string name="enter_bluetooth_mac_address">Enter Bluetooth Mac Adress</string>
     <string name="search_computers_on_bluetooth">Search Computers on Bluetooth</string>
     <string name="bluetooth_all_buttons">Gamepad Mode</string>
-    <string name="connect_to_mac_adress">Connect to MAC adress</string>
+    <string name="connect_to_mac_address">Connect to MAC adress</string>
     <string name="forwarded_socket">Forwarded Socket</string>
     <string name="disable_sensor">Disable Sensor</string>
     <string name="bluetooth_connection">GyroWheel Mode</string>
@@ -44,7 +44,7 @@
     <string name="use_edit_first">Use Edit Layout button to set a layout first.</string>
     <string name="thank_you">Thank you for your support!</string>
     <string name="ad_not_ready">Ad is not ready yet, please press the button again.</string>
-    <string name="ad_loading">Ad is still loading,press the button again after a while.</string>
+    <string name="ad_loading">Ads only start to load when pressed. Press again in a bit.</string>
     <string name="triggerMultiplier">Adjust the value for trigger touch multiplier:</string>
     <string name="seekBarTriggerMultiplierExplanation">" Use this bar to adjust multiplier for trigger buttons. This is only useful when the switch above is turned on"</string>
     <string name="switchAnalogTrigger">Enable this to make your gamepad triggers analog, and pull down on them to adjust input.</string>
@@ -61,4 +61,9 @@
     <string name="touchpad_bar_explanation">Use this bar to adjust multiplier for Touchpad.</string>
     <string name="slide_bar_for_adjusting_touchpad_multiplier">Slide bar for adjusting Touchpad Multiplier</string>
     <string name="touchpadMultiplier">Use this bar to adjust touchpad multiplier</string>
+    <string name="please_enable_bluetooth">Please Enable Bluetooth First</string>
+    <string name="permission_declined">Permissions not granted</string>
+    <string name="about_ads_title">About Ads</string>
+    <string name="about_ads_message">Ads start loading only when you press the button to see it.\n This design choice avoids preloading ads, which can use unnecessary resources.\n Press the button again shortly if you wish to support.\n Thanks!</string>
+    <string name="ad_ready">Ad Ready</string>
 </resources>

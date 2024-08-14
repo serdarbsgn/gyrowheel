@@ -104,18 +104,14 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 after = editable.toString();
                 if (before.length() > after.length()){
                     command = "backspace";
-                    keystroke = "";
                 } else if (before.length() < after.length()) {
                     String temp = after.substring(before.length());
                     if(temp.equals("\n")){
                         command = "enter";
-                        keystroke = "";
                     }else if (temp.equals(" ")) {
                         command = "space";
-                        keystroke = "";
                     }else{
                         keystroke = temp;
-                        command = "";
                     }
                 }
                 changed=true;
@@ -392,12 +388,8 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 mouseCoordinates[0],
                 mouseCoordinates[1],
                 (leftClick ? 1 : 0) + (rightClick ? 2 : 0));
-        if(!command.isEmpty()){
-            command = "";
-        }
-        if(!keystroke.isEmpty()){
-            keystroke = "";
-        }
+        command = "";
+        keystroke = "";
         if (!useBluetooth) {
             socketClient.sendData(sensorData);
         } else if (bluetoothConn != null) {

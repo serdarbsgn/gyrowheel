@@ -10,10 +10,10 @@
     <string name="network_udp_all_buttons">Oyun Kolu Modu</string>
     <string name="network_udp">GyroWheel Modu</string>
     <string name="enter_ip_address">IP adresi gir</string>
-    <string name="enter_bluetooth_mac_adress">Bluetooth Mac adresi gir</string>
+    <string name="enter_bluetooth_mac_address">Bluetooth Mac adresi gir</string>
     <string name="search_computers_on_bluetooth">Bluetooth\'lu bilgisayarları ara</string>
     <string name="bluetooth_all_buttons">Oyun Kolu Modu</string>
-    <string name="connect_to_mac_adress">MAC adresine bağlan</string>
+    <string name="connect_to_mac_address">MAC adresine bağlan</string>
     <string name="forwarded_socket">Bağlantı Noktası Yönlendirme</string>
     <string name="disable_sensor">Sensörü Kapat</string>
     <string name="bluetooth_connection">GyroWheel Modu</string>
@@ -44,7 +44,7 @@
     <string name="use_edit_first">Öncelikle bir düzen ayarlamak için Tuş Düzenini Ayarla düğmesini kullanın.</string>
     <string name="thank_you">Desteğin için teşekkürler!</string>
     <string name="ad_not_ready">Reklam henüz hazır değil,birazdan tekrar deneyin.</string>
-    <string name="ad_loading">Reklam hala yükleniyor, bir süre sonra tekrar butona basın.</string>
+    <string name="ad_loading">Reklam sadece bastığınızda yüklenir. Birazdan tekrar basın.</string>
     <string name="triggerMultiplier">Tetik çarpan değerini ayarlayın:</string>
     <string name="seekBarTriggerMultiplierExplanation">Tetik butonları için çarpanı ayarlamak amacıyla bu çubuğu kullanın.Bu yalnızca yukarıdaki anahtar açık olduğunda işe yarar.</string>
     <string name="switchAnalogTrigger">Oyun kolu tetikleyicilerinizi analog yapmak için bunu etkinleştirin ve girişi ayarlamak için bunları aşağı doğru çekin.</string>
@@ -61,4 +61,9 @@
     <string name="touchpad_bar_explanation">Dokunmatik Yüzey için çarpanı ayarlamak amacıyla bu çubuğu kullanın.</string>
     <string name="slide_bar_for_adjusting_touchpad_multiplier">Dokunmatik Yüzey Çarpanını ayarlamak için kaydırma çubuğu</string>
     <string name="touchpadMultiplier">Dokunmatik Yüzey çarpan değerini ayarlayın:</string>
+    <string name="please_enable_bluetooth">Lütfen Önce Bluetooth\'u Açın</string>
+    <string name="permission_declined">İzinler verilmedi</string>
+    <string name="about_ads_title">Reklamlar Hakkında</string>
+    <string name="about_ads_message">Reklamlar yalnızca görmek için düğmeye bastığınızda yüklenmeye başlar.\n Bu tasarım seçimi, reklamların önceden yüklenip gereksiz kaynak kullanmasını önlemek içindir.\n Destek olmak isterseniz, düğmeye kısa bir süre sonra tekrar basın.\n Teşekkürler!</string>
+    <string name="ad_ready">Reklam Hazır</string>
 </resources>
