@@ -10,30 +10,30 @@ If you prefer to avoid dealing with Python installation and technical details, y
 Apparently some of the antiviruses(probably ml algorithms) flag above exe's as malicious, it's entirely up to you that you don't use them, see the method ii below.    
 PLEASE USE THE METHOD II IF YOU WISH TO NOT USE THE EXECUTABLES.    
 
-You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)    
+You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)      
 
 
 ![Run .exe](readme-photos/runexe.png "Run .exe")
 
-Use the correct Run .exe to select run options.
+Use the correct Run .exe to select run options.    
 
 ## Installation Method II
 
-If you have Python 3 installed, [install Python here](https://www.python.org/downloads/), then use `install.bat` to install the necessary libraries. Install the APK on your phone, then connect your computer and phone to the same network. (This is not necessary for Bluetooth mode.)
+If you have Python 3 installed, [install Python here](https://www.python.org/downloads/), then use `install.bat` to install the necessary libraries. Install the APK on your phone, then connect your computer and phone to the same network. (This is not necessary for Bluetooth mode.)    
 
 ![Run .bat](readme-photos/run-bat.png "Run .bat")
 
-Use `run.bat` to select run options.
+Use `run.bat` to select run options.    
 
 ## Network Mode Connection
 
 ![UDP Mode EXE](readme-photos/run-udp-mode-exe.png "UDP Mode EXE")
 
-To use Network/UDP mode, write the IP displayed on your computer to your phone. For example, `192.168.1.42:12345`.
+To use Network/UDP mode, write the IP displayed on your computer to your phone. For example, `192.168.1.42:12345`.    
 
 ![UDP Mode](readme-photos/run-udp-mode.png "UDP Mode")
 
-To use Network/UDP mode, write the IP displayed on your terminal to your phone. For example, `192.168.1.42:12345`.
+To use Network/UDP mode, write the IP displayed on your terminal to your phone. For example, `192.168.1.42:12345`.    
 
 <img src="readme-photos/udp-mode-enter-en.png" alt="Enter IP on Phone" width="350"/>
 
@@ -45,11 +45,11 @@ Select the "USE NETWORK" option and enter `192.168.1.42` into the first text fie
 
 ![Bluetooth Listening](readme-photos/bluetooth-listening.png "Bluetooth Listening")
 
-The application attempts to find and display your computer's Bluetooth MAC address for easy entry in the phone app. If it fails to detect or finds multiple addresses, you may need to enter or select the correct address manually.
+The application attempts to find and display your computer's Bluetooth MAC address for easy entry in the phone app. If it fails to detect or finds multiple addresses, you may need to enter or select the correct address manually.    
 
 <img src="readme-photos/bluetooth-mode-en.png" alt="Bluetooth Mode" width="350"/>
 
-To use Bluetooth mode, ensure Bluetooth permissions are granted and that you have a Bluetooth-enabled computer. Enter your PC’s MAC address (you can use the "SHOW BLUETOOTH COMPUTERS" button to get nearby MAC addresses). Use the "CONNECT TO MAC ADDRESS" button to initiate the connection while the script is active on your computer.
+To use Bluetooth mode, ensure Bluetooth permissions are granted and that you have a Bluetooth-enabled computer. Enter your PC’s MAC address (you can use the "SHOW BLUETOOTH COMPUTERS" button to get nearby MAC addresses). Use the "CONNECT TO MAC ADDRESS" button to initiate the connection while the script is active on your computer.    
 <img src="readme-photos/bluetooth-mode-connected-en.png" alt="Bluetooth Mode Connected" width="350"/>
 
 Once connected, the GYROWHEEL MODE and GAMEPAD MODE buttons will light up for use.

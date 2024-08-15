@@ -10,35 +10,35 @@ Python kurulumu ve teknik detaylarla uğraşmak istemiyorsanız, hazırladığı
 Görünüşe göre bazı antivirüsler (muhtemelen ml algoritmaları) yukarıdaki exe'leri kötü amaçlı olarak işaretliyor, bunları kullanmamak tamamen size kalmış, istemiyorsanız aşağıdaki kurulum ii'ye bakın.    
 YÜRÜTÜLEBİLİR DOSYALARI KULLANMAK İSTEMİYORSANIZ LÜTFEN KURULUM II'Yİ KULLANIN.    
     
-[ViGEm Bus Driver](https://vigembusdriver.com/download/)'ı da indirip yüklemeniz gerekecek. Bilgisayarınız için doğru mimarideki çalıştırılabilir dosyayı kullanın. (Birisi çalışmazsa, diğerini deneyin. ViGEm Bus Driver'ı yüklediğinizden emin olun.)
+[ViGEm Bus Driver](https://vigembusdriver.com/download/)'ı da indirip yüklemeniz gerekecek. Bilgisayarınız için doğru mimarideki çalıştırılabilir dosyayı kullanın. (Birisi çalışmazsa, diğerini deneyin. ViGEm Bus Driver'ı yüklediğinizden emin olun.)    
 
 Çalıştırılabilir dosyaları kullanmak istemiyorsanız, aşağıya bakın.    
 
 ![Run .exe](readme-photos/runexe.png "Run .exe")
 
-Doğru çalıştırılabilir dosyayı kullanarak çalıştırma seçeneklerini seçin.
+Doğru çalıştırılabilir dosyayı kullanarak çalıştırma seçeneklerini seçin.    
 
 ## Kurulum II
 
-Python 3 yüklüyse, [Python'u buradan yükleyin](https://www.python.org/downloads/), ardından gerekli kütüphaneleri yüklemek için `install.bat` dosyasını kullanın. APK'yı telefonunuza yükleyin, ardından bilgisayarınızı ve telefonunuzu aynı ağa bağlayın. (Bluetooth modu için bu gerekli değildir.)
+Python 3 yüklüyse, [Python'u buradan yükleyin](https://www.python.org/downloads/), ardından gerekli kütüphaneleri yüklemek için `install.bat` dosyasını kullanın. APK'yı telefonunuza yükleyin, ardından bilgisayarınızı ve telefonunuzu aynı ağa bağlayın. (Bluetooth modu için bu gerekli değildir.)    
 
 ![Run .bat](readme-photos/run-bat.png "Run .bat")
 
-Çalıştırma seçeneklerini seçmek için `run.bat` dosyasını kullanın.
+Çalıştırma seçeneklerini seçmek için `run.bat` dosyasını kullanın.    
 
 ## Ağ Modu Bağlantısı
 
 ![UDP Mode EXE](readme-photos/run-udp-mode-exe.png "UDP Mode EXE")
 
-Ağ/UDP modunu kullanmak için, bilgisayarınızda görüntülenen IP'yi telefonunuza yazın. Örneğin, `192.168.1.42:12345`.
+Ağ/UDP modunu kullanmak için, bilgisayarınızda görüntülenen IP'yi telefonunuza yazın. Örneğin, `192.168.1.42:12345`.     
 
 ![UDP Mode](readme-photos/run-udp-mode.png "UDP Mode")
 
-Ağ/UDP modunu kullanmak için, terminalde görüntülenen IP'yi telefonunuza yazın. Örneğin, `192.168.1.42:12345`.
+Ağ/UDP modunu kullanmak için, terminalde görüntülenen IP'yi telefonunuza yazın. Örneğin, `192.168.1.42:12345`.    
 
 <img src="readme-photos/udp-mode-enter-tr.png" alt="Android'inize IP yi girin" width="350"/>
 
-"AĞ'I KULLAN" seçeneğini seçin ve `192.168.1.42`'yi ilk metin alanına girin. IP'yi doğru bir şekilde girdikten sonra, GyroWheel Modu veya Oyun Kolu Modu'nu kullanın.
+"AĞ'I KULLAN" seçeneğini seçin ve `192.168.1.42`'yi ilk metin alanına girin. IP'yi doğru bir şekilde girdikten sonra, GyroWheel Modu veya Oyun Kolu Modu'nu kullanın.    
 
 ## Bluetooth Modu Bağlantısı
 
@@ -46,14 +46,14 @@ Ağ/UDP modunu kullanmak için, terminalde görüntülenen IP'yi telefonunuza ya
 
 ![Bluetooth Listening](readme-photos/bluetooth-listening.png "Bluetooth Listening")
 
-Uygulama, bilgisayarınızın Bluetooth MAC adresini bulup telefon uygulamasına kolayca girmek için görüntülemeyi dener. Eğer adresi algılayamazsa veya birden fazla adres bulursa, doğru adresi manuel olarak girmeniz veya seçmeniz gerekebilir.
+Uygulama, bilgisayarınızın Bluetooth MAC adresini bulup telefon uygulamasına kolayca girmek için görüntülemeyi dener. Eğer adresi algılayamazsa veya birden fazla adres bulursa, doğru adresi manuel olarak girmeniz veya seçmeniz gerekebilir.    
 
 <img src="readme-photos/bluetooth-mode-tr.png" alt="Bluetooth Modu" width="350"/>
 
-Bluetooth modunu kullanmak için, Bluetooth izinlerinin verildiğinden ve Bluetooth destekli bir bilgisayarınız olduğundan emin olun. Bilgisayarınızın MAC adresini girin (yakınlardaki MAC adreslerini almak için "BLUETOOTH'LU BİLGİSAYARLARI ARA" düğmesini kullanabilirsiniz). Bağlantıyı başlatmak için bilgisayarınızda program aktifken "MAC ADRESİNE BAĞLAN" düğmesini kullanın.
+Bluetooth modunu kullanmak için, Bluetooth izinlerinin verildiğinden ve Bluetooth destekli bir bilgisayarınız olduğundan emin olun. Bilgisayarınızın MAC adresini girin (yakınlardaki MAC adreslerini almak için "BLUETOOTH'LU BİLGİSAYARLARI ARA" düğmesini kullanabilirsiniz). Bağlantıyı başlatmak için bilgisayarınızda program aktifken "MAC ADRESİNE BAĞLAN" düğmesini kullanın.    
 
 <img src="readme-photos/bluetooth-mode-connected-tr.png" alt="Bluetooth Modu Bağlandı" width="350"/>
-Bağlandıktan sonra, GYROWHEEL MODU, OYUN KOLU MODU ve Klavye Fare modu düğmeleri kullanıma açılacaktır.
+Bağlandıktan sonra, GYROWHEEL MODU, OYUN KOLU MODU ve Klavye Fare modu düğmeleri kullanıma açılacaktır.    
 
 ## Ek Bilgiler
 
