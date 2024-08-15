@@ -231,8 +231,24 @@
 
         <Space
             android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchKeyboardVolumeButtons"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="@string/switchKeyboardVolumeButtonsText" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+        <Spinner
+            android:id="@+id/spinnerVolumeButtonModes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/volume_button_modes" />
+
+        <Space
+            android:layout_width="match_parent"
             android:layout_height="80dp" />
-
-
     </LinearLayout>
 </ScrollView>

@@ -10,7 +10,8 @@ keyboard = pyk.Controller()
 mouse = pym.Controller()
 previous_button_state = {
     'left': False,
-    'right': False
+    'right': False,
+    'command':''
 }
 # Serial port configuration
 

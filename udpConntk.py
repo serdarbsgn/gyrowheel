@@ -18,7 +18,8 @@ keyboard = None
 mouse = None
 previous_button_state = {
     'left': False,
-    'right': False
+    'right': False,
+    'command':''
 }
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

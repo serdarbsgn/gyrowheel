@@ -106,4 +106,10 @@
     <string name="about_ads_message">about ads message</string>
     <string name="ok" translatable="false">OK</string>
     <string name="ad_ready">ad ready</string>
+    <string name="switchKeyboardVolumeButtonsText">Tick to override volume buttons to do something else</string>
+    <string-array name="volume_button_modes">
+        <item>Volume Control</item>
+        <item>Next Track</item>
+        <item>Mouse Click</item>
+    </string-array>
 </resources>

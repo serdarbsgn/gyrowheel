@@ -50,6 +50,10 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
     private float touchpadMultiplier = 1f;
     private static final String PREFS_NAME = "com.serdarbsgn.gyrowheel.PREFS";
     private static final String KEY_TOUCHPAD_MULTIPLIER = "TOUCHPAD_MULTIPLIER";
+    private static final String KEY_OVERRIDE_VOLUME_BUTTONS = "OVERRIDE_VOLUME_BUTTONS";
+    private static final String KEY_VOLUME_BUTTONS_MODE = "VOLUME_BUTTONS_MODE";
+    private boolean overrideVolumeKeys = false;
+    private int volumeKeyMode = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,11 +86,73 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         bluetoothConn = BluetoothConn.getInstance();
     }
 
+        @Override
+        public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(!overrideVolumeKeys){
+            return super.onKeyDown(keyCode,event);
+        }
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                switch (volumeKeyMode){
+                    case 0:
+                        command = "m_vol_up";
+                        break;
+                    case 1:
+                        command = "m_next";
+                        break;
+                    case 2:
+                        leftClick = true;
+                        break;
+                }
+                changed = true;
+                return true;
+
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                switch (volumeKeyMode){
+                    case 0:
+                        command = "m_vol_down";
+                        break;
+                    case 1:
+                        command = "m_previous";
+                        break;
+                    case 2:
+                        rightClick = true;
+                        break;
+                }
+                changed = true;
+                return true;
+            default:
+                return super.onKeyDown(keyCode, event);
+        }
+
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(!overrideVolumeKeys){
+            return super.onKeyUp(keyCode,event);
+        }
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if(volumeKeyMode==2){
+                    leftClick = false;
+                }
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if(volumeKeyMode==2){
+                    rightClick = false;
+                }
+                changed = true;
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
+    }
     @SuppressLint("ClickableViewAccessibility")
     protected void setListeners(){
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         touchpadMultiplier = sharedPreferences.getInt(KEY_TOUCHPAD_MULTIPLIER,20)/20f;
-
+        overrideVolumeKeys = sharedPreferences.getBoolean(KEY_OVERRIDE_VOLUME_BUTTONS,false);
+        volumeKeyMode = sharedPreferences.getInt(KEY_VOLUME_BUTTONS_MODE,0);
         final EditText keyboardInput = findViewById(R.id.keyboardView);
         keyboardInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -264,6 +330,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         ctrlPressed = false;
+                        changed = true;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
@@ -283,6 +350,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         altPressed = false;
+                        changed = true;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
@@ -302,6 +370,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         shiftPressed = false;
+                        changed = true;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
@@ -321,6 +390,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         windowsPressed = false;
+                        changed = true;
                         v.setBackgroundColor(Color.argb(alpha, red, green, blue));
                         break;
                 }
@@ -388,6 +458,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 mouseCoordinates[0],
                 mouseCoordinates[1],
                 (leftClick ? 1 : 0) + (rightClick ? 2 : 0));
+        System.out.println(command);
         command = "";
         keystroke = "";
         if (!useBluetooth) {
@@ -396,6 +467,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
             bluetoothConn.sendData(sensorData.getBytes());
         }
     }
+
     protected void onPause() {
         super.onPause();
         finish();

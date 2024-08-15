@@ -20,7 +20,8 @@ keyboard = None
 mouse = None
 previous_button_state = {
     'left': False,
-    'right': False
+    'right': False,
+    'command':''
 }
 def setup_bluetooth_adapter():
     result = subprocess.run(["ipconfig", "/all"], capture_output=True)

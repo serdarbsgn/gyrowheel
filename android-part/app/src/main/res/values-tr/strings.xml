@@ -20,7 +20,7 @@
     <string name="edit_layout">Tuş Düzenini Ayarla</string>
     <string name="use_custom_layout">Özel Düzeni Kullan</string>
     <string name="privacy_policy">Gizlilik Politikası</string>
-    <string name="see_ad_amp_support_me">Reklam izle ve destek ol</string>
+    <string name="see_ad_amp_support_me">Reklam izle/destek ol</string>
     <string name="show_bluetooth_computers">Bluetooth\'lu bilgisayarları ara</string>
     <string name="use_network">Ağ\'ı kullan</string>
     <string name="use_bluetooth">Bluetooth\'u kullan</string>
@@ -66,4 +66,10 @@
     <string name="about_ads_title">Reklamlar Hakkında</string>
     <string name="about_ads_message">Reklamlar yalnızca görmek için düğmeye bastığınızda yüklenmeye başlar.\n Bu tasarım seçimi, reklamların önceden yüklenip gereksiz kaynak kullanmasını önlemek içindir.\n Destek olmak isterseniz, düğmeye kısa bir süre sonra tekrar basın.\n Teşekkürler!</string>
     <string name="ad_ready">Reklam Hazır</string>
+    <string name="switchKeyboardVolumeButtonsText">Fiziksel Ses tuşlarının işlevini değiştirmek için bunu açın</string>
+    <string-array name="volume_button_modes">
+        <item>Ses Kontrolü(Bilgisayarda)</item>
+        <item>Sonraki/Önceki Parça</item>
+        <item>Fare Sol/Sağ Tıklaması</item>
+    </string-array>
 </resources>

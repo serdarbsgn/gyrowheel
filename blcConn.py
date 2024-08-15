@@ -115,7 +115,8 @@ keyboard = pyk.Controller()
 mouse = pym.Controller()
 previous_button_state = {
     'left': False,
-    'right': False
+    'right': False,
+    'command':''
 }
 listener_thread = threading.Thread(target=serial_listener, daemon=True)
 processor_thread = threading.Thread(target=processor, daemon=True)

@@ -1,33 +1,29 @@
 import pynput.keyboard as pyk
 import pynput.mouse as pym
 def simulate_km(data,previous_button_state,keyboard,mouse):
-    def handle_press(keycode):
+    def handle_press(keycode,original_keycode = None):
         if keycode == "":
-            return
+            pass
         elif keycode.startswith("c_"):
             keyboard.press(pyk.Key.ctrl)
-            handle_press(keycode[2:])
-            keyboard.release(pyk.Key.ctrl)
+            handle_press(keycode[2:],original_keycode)
         elif keycode.startswith("a_"):
             keyboard.press(pyk.Key.alt)
-            handle_press(keycode[2:])
-            keyboard.release(pyk.Key.alt)
+            handle_press(keycode[2:],original_keycode)
         elif keycode.startswith("s_"):
             keyboard.press(pyk.Key.shift)
-            handle_press(keycode[2:])
-            keyboard.release(pyk.Key.shift)
+            handle_press(keycode[2:],original_keycode)
         elif keycode.startswith("w_"):
-            keyboard.press(pyk.Key.cmd)     
-            handle_press(keycode[2:])
-            keyboard.release(pyk.Key.cmd)
+            keyboard.press(pyk.Key.cmd)
+            handle_press(keycode[2:],original_keycode)
         elif keycode == "space":
             keyboard.tap(pyk.Key.space)
         elif keycode == "backspace":
-            keyboard.tap(pyk.Key.backspace) 
+            keyboard.tap(pyk.Key.backspace)
         elif keycode == "enter":
             keyboard.tap(pyk.Key.enter)
         elif keycode == "m_next":
-            keyboard.tap(pyk.Key.media_next),
+            keyboard.tap(pyk.Key.media_next)
         elif keycode == "m_previous":
             keyboard.tap(pyk.Key.media_previous)
         elif keycode == "m_play":
@@ -54,10 +50,21 @@ def simulate_km(data,previous_button_state,keyboard,mouse):
             keyboard.tap(pyk.Key.left)
         elif keycode == "ar_right":
             keyboard.tap(pyk.Key.right)
+        if keycode != original_keycode:
+            return
+        if "c_" in previous_button_state["command"] and "c_" not in keycode:
+            keyboard.release(pyk.Key.ctrl)
+        if "a_" in previous_button_state["command"] and "a_" not in keycode:
+            keyboard.release(pyk.Key.alt)
+        if "s_" in previous_button_state["command"] and "s_" not in keycode:
+            keyboard.release(pyk.Key.shift)
+        if "w_" in previous_button_state["command"] and "w_" not in keycode:
+            keyboard.release(pyk.Key.cmd)
+        previous_button_state["command"] = keycode
 
     if data[2] != 0 and data[3]!= 0:
         mouse.move(data[2],data[3])
-    handle_press(data[0])
+    handle_press(data[0],data[0])
 
     if data[1]:
         keyboard.type(data[1])

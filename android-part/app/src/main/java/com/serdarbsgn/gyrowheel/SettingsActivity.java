@@ -3,7 +3,11 @@ package com.serdarbsgn.gyrowheel;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +21,8 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String KEY_TRIGGER_MULTIPLIER = "TRIGGER_MULTIPLIER";
     private static final String KEY_USE_ANALOG_TRIGGER = "USE_ANALOG_TRIGGER";
     private static final String KEY_TOUCHPAD_MULTIPLIER = "TOUCHPAD_MULTIPLIER";
+    private static final String KEY_OVERRIDE_VOLUME_BUTTONS = "OVERRIDE_VOLUME_BUTTONS";
+    private static final String KEY_VOLUME_BUTTONS_MODE = "VOLUME_BUTTONS_MODE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +153,39 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         boolean savedAnalogSwitch = sharedPreferences.getBoolean(KEY_USE_ANALOG_TRIGGER, false);
+        seekBarTrigger.setEnabled(savedAnalogSwitch);
         SwitchCompat switchAnalogTrigger = findViewById(R.id.switchAnalogTrigger);
         switchAnalogTrigger.setChecked(savedAnalogSwitch);
-        switchAnalogTrigger.setOnCheckedChangeListener((buttonView, isChecked) -> saveSwitch(KEY_USE_ANALOG_TRIGGER,isChecked));
+        switchAnalogTrigger.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            saveSwitch(KEY_USE_ANALOG_TRIGGER, isChecked);
+            seekBarTrigger.setEnabled(isChecked);
+        });
+
+
+        int savedVolumeButtonMode = sharedPreferences.getInt(KEY_VOLUME_BUTTONS_MODE,0);
+        Spinner spinnerVolumeButtonModes = findViewById(R.id.spinnerVolumeButtonModes);
+        spinnerVolumeButtonModes.setSelection(savedVolumeButtonMode);
+        spinnerVolumeButtonModes.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                saveMultiplier(KEY_VOLUME_BUTTONS_MODE,position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        boolean savedVolumeButtonOverride = sharedPreferences.getBoolean(KEY_OVERRIDE_VOLUME_BUTTONS, false);
+        spinnerVolumeButtonModes.setEnabled(savedVolumeButtonOverride);
+        SwitchCompat switchVolumeButton = findViewById(R.id.switchKeyboardVolumeButtons);
+        switchVolumeButton.setChecked(savedVolumeButtonOverride);
+        switchVolumeButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            saveSwitch(KEY_OVERRIDE_VOLUME_BUTTONS, isChecked);
+            spinnerVolumeButtonModes.setEnabled(isChecked);
+        });
     }
 
     private void saveMultiplier(String key,int sensorMultiplier) {

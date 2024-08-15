@@ -18,7 +18,8 @@ keyboard = None
 mouse = None
 previous_button_state = {
     'left': False,
-    'right': False
+    'right': False,
+    'command':''
 }
 def serial_listener():
     global listener_thread,processor_thread,com_port,running
