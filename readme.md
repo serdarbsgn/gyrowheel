@@ -4,12 +4,14 @@ Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](readme-tr.md
 
 If you prefer to avoid dealing with Python installation and technical details, you can use the executable files I prepared:
 
-- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Virustotal Link](https://www.virustotal.com/gui/url/fe86b3f8f99be5c24d0e37fccf8e03e89ae39cb6e0b88d737b38541d0ef0ed9c)
-- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Virustotal Link](https://www.virustotal.com/gui/url/64d2b243de5fdd899eb8f07c2ed794d40619f606673488ffe2d20d066ea94d8f)
+- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/CED422EF6A694ABE5F112FC066A7D8A29A8CFADB2E05F1CA30AF1B38F8DC00FA)   -[Virustotal Link](https://www.virustotal.com/gui/file/ced422ef6a694abe5f112fc066a7d8a29a8cfadb2e05f1ca30af1b38f8dc00fa)
+- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/27C65ECA11356002933C02BEABF773D6619424B0560B845F2484259F68792A21)   -[Virustotal Link](https://www.virustotal.com/gui/file/27c65eca11356002933c02beabf773d6619424b0560b845f2484259f68792a21)
 
-You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)
+Apparently some of the antiviruses(probably ml algorithms) flag above exe's as malicious, it's entirely up to you that you don't use them, see the method ii below.    
+PLEASE USE THE METHOD II IF YOU WISH TO NOT USE THE EXECUTABLES.    
 
-If you prefer not to use executable files, read below.
+You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)    
+
 
 ![Run .exe](readme-photos/runexe.png "Run .exe")
 
