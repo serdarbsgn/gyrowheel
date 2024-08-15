@@ -36,7 +36,7 @@ Ağ/UDP modunu kullanmak için, bilgisayarınızda görüntülenen IP'yi telefon
 
 Ağ/UDP modunu kullanmak için, terminalde görüntülenen IP'yi telefonunuza yazın. Örneğin, `192.168.1.42:12345`.
 
-![Enter IP on Phone](readme-photos/udp-mode-enter-ip.png "Enter IP on Phone")
+<img src="readme-photos/udp-mode-enter-tr.png" alt="Android'inize IP yi girin" width="350"/>
 
 "AĞ'I KULLAN" seçeneğini seçin ve `192.168.1.42`'yi ilk metin alanına girin. IP'yi doğru bir şekilde girdikten sonra, GyroWheel Modu veya Oyun Kolu Modu'nu kullanın.
 
@@ -48,17 +48,16 @@ Ağ/UDP modunu kullanmak için, terminalde görüntülenen IP'yi telefonunuza ya
 
 Uygulama, bilgisayarınızın Bluetooth MAC adresini bulup telefon uygulamasına kolayca girmek için görüntülemeyi dener. Eğer adresi algılayamazsa veya birden fazla adres bulursa, doğru adresi manuel olarak girmeniz veya seçmeniz gerekebilir.
 
-![Bluetooth Mode](readme-photos/bluetooth-mode.png "Bluetooth Mode")
+<img src="readme-photos/bluetooth-mode-tr.png" alt="Bluetooth Modu" width="350"/>
 
 Bluetooth modunu kullanmak için, Bluetooth izinlerinin verildiğinden ve Bluetooth destekli bir bilgisayarınız olduğundan emin olun. Bilgisayarınızın MAC adresini girin (yakınlardaki MAC adreslerini almak için "BLUETOOTH'LU BİLGİSAYARLARI ARA" düğmesini kullanabilirsiniz). Bağlantıyı başlatmak için bilgisayarınızda program aktifken "MAC ADRESİNE BAĞLAN" düğmesini kullanın.
 
-![Bluetooth Mode Connected](readme-photos/bluetooth-mode-connected.png "Bluetooth Mode Connected")
-
-Bağlandıktan sonra, GYROWHEEL MODU ve OYUN KOLU MODU düğmeleri kullanıma açılacaktır.
+<img src="readme-photos/bluetooth-mode-connected-tr.png" alt="Bluetooth Modu Bağlandı" width="350"/>
+Bağlandıktan sonra, GYROWHEEL MODU, OYUN KOLU MODU ve Klavye Fare modu düğmeleri kullanıma açılacaktır.
 
 ## Ek Bilgiler
 
-![Settings](readme-photos/settings.png "Settings")
+<img src="readme-photos/settings-tr.png" alt="Ayarlar" width="350"/>
 
 Hassasiyet çarpanlarını ve düşük geçiş filtre kaydırıcılarını ayarlayabilir veya tetikleyicileri (LT, RT) analog yapabilirsiniz. Bu, düğmeye basmanın yerine parmağınızı aşağıya doğru hareket ettirmeyi içerir.
 

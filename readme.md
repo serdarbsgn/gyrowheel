@@ -35,7 +35,7 @@ To use Network/UDP mode, write the IP displayed on your computer to your phone. 
 
 To use Network/UDP mode, write the IP displayed on your terminal to your phone. For example, `192.168.1.42:12345`.
 
-![Enter IP on Phone](readme-photos/udp-mode-enter-ip.png "Enter IP on Phone")
+<img src="readme-photos/udp-mode-enter-en.png" alt="Enter IP on Phone" width="350"/>
 
 Select the "USE NETWORK" option and enter `192.168.1.42` into the first text field. After correctly entering the IP displayed on your PC, use GyroWheel Mode or Gamepad Mode.
 
@@ -47,17 +47,16 @@ Select the "USE NETWORK" option and enter `192.168.1.42` into the first text fie
 
 The application attempts to find and display your computer's Bluetooth MAC address for easy entry in the phone app. If it fails to detect or finds multiple addresses, you may need to enter or select the correct address manually.
 
-![Bluetooth Mode](readme-photos/bluetooth-mode.png "Bluetooth Mode")
+<img src="readme-photos/bluetooth-mode-en.png" alt="Bluetooth Mode" width="350"/>
 
 To use Bluetooth mode, ensure Bluetooth permissions are granted and that you have a Bluetooth-enabled computer. Enter your PC’s MAC address (you can use the "SHOW BLUETOOTH COMPUTERS" button to get nearby MAC addresses). Use the "CONNECT TO MAC ADDRESS" button to initiate the connection while the script is active on your computer.
-
-![Bluetooth Mode Connected](readme-photos/bluetooth-mode-connected.png "Bluetooth Mode Connected")
+<img src="readme-photos/bluetooth-mode-connected-en.png" alt="Bluetooth Mode Connected" width="350"/>
 
 Once connected, the GYROWHEEL MODE and GAMEPAD MODE buttons will light up for use.
 
 ## Additional Info
 
-![Settings](readme-photos/settings.png "Settings")
+<img src="readme-photos/settings-en.png" alt="Settings" width="350"/>
 
 You can adjust sensitivity multipliers and low-pass filter sliders, or make triggers (LT, RT) analog. This involves pressing and moving your finger down rather than simply pressing the button.
 
