@@ -4,8 +4,8 @@ Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](readme-tr.md
 
 If you prefer to avoid dealing with Python installation and technical details, you can use the executable files I prepared:
 
-- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/CED422EF6A694ABE5F112FC066A7D8A29A8CFADB2E05F1CA30AF1B38F8DC00FA)   -[Virustotal Link](https://www.virustotal.com/gui/file/ced422ef6a694abe5f112fc066a7d8a29a8cfadb2e05f1ca30af1b38f8dc00fa)
-- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/27C65ECA11356002933C02BEABF773D6619424B0560B845F2484259F68792A21)   -[Virustotal Link](https://www.virustotal.com/gui/file/27c65eca11356002933c02beabf773d6619424b0560b845f2484259f68792a21)
+- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe) -[Virustotal Link](https://www.virustotal.com/gui/file/e5f16ca84caddb9c1fb40990c041a8577f5425c8e0b9b3009b4f293341c54f44)
+- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/dd0e9e2e9922176a2ab68816a44b9fe07153406efebe373cdacb1334d8619eb0)
 
 Apparently some of the antiviruses(probably ml algorithms & lack of signature) flag above exe's as malicious, it's entirely up to you that you don't use them, see the method ii below.    
 PLEASE USE THE METHOD II IF YOU WISH TO NOT USE THE EXECUTABLES.    

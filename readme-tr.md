@@ -4,10 +4,10 @@ For English documentation, please see [readme.md](readme.md).
 
 Python kurulumu ve teknik detaylarla uğraşmak istemiyorsanız, hazırladığım çalıştırılabilir dosyaları kullanabilirsiniz:
 
-- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/CED422EF6A694ABE5F112FC066A7D8A29A8CFADB2E05F1CA30AF1B38F8DC00FA)   -[Virustotal Link](https://www.virustotal.com/gui/file/ced422ef6a694abe5f112fc066a7d8a29a8cfadb2e05f1ca30af1b38f8dc00fa)    
-- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/27C65ECA11356002933C02BEABF773D6619424B0560B845F2484259F68792A21)   -[Virustotal Link](https://www.virustotal.com/gui/file/27c65eca11356002933c02beabf773d6619424b0560b845f2484259f68792a21)    
+- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/e5f16ca84caddb9c1fb40990c041a8577f5425c8e0b9b3009b4f293341c54f44)    
+- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/dd0e9e2e9922176a2ab68816a44b9fe07153406efebe373cdacb1334d8619eb0)    
     
-Görünüşe göre bazı antivirüsler (muhtemelen ml algoritmaları) yukarıdaki exe'leri kötü amaçlı olarak işaretliyor, bunları kullanmamak tamamen size kalmış, istemiyorsanız aşağıdaki kurulum ii'ye bakın.    
+Görünüşe göre bazı antivirüsler (muhtemelen ml algoritmaları & imza eksikliği) yukarıdaki exe'leri kötü amaçlı olarak işaretliyor, bunları kullanmamak tamamen size kalmış, istemiyorsanız aşağıdaki kurulum ii'ye bakın.    
 YÜRÜTÜLEBİLİR DOSYALARI KULLANMAK İSTEMİYORSANIZ LÜTFEN KURULUM II'Yİ KULLANIN.    
     
 [ViGEm Bus Driver](https://vigembusdriver.com/download/)'ı da indirip yüklemeniz gerekecek. Bilgisayarınız için doğru mimarideki çalıştırılabilir dosyayı kullanın. (Birisi çalışmazsa, diğerini deneyin. ViGEm Bus Driver'ı yüklediğinizden emin olun.)    
