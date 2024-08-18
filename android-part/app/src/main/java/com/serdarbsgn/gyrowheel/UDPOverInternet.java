@@ -38,7 +38,6 @@ public class UDPOverInternet {
         byte[] dataBytes = data.getBytes();
         handler.post(() -> {
             try {
-
                 DatagramPacket packet = new DatagramPacket(dataBytes, dataBytes.length, serverAddress, serverPort);
                 udpSocket.send(packet);
             } catch (Exception ignored) {

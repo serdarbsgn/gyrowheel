@@ -18,11 +18,7 @@ gamepad = None
 root = None
 keyboard = None
 mouse = None
-previous_button_state = {
-    'left': False,
-    'right': False,
-    'command':''
-}
+previous_button_state = get_prev_button_state_default()
 def setup_bluetooth_adapter():
     result = subprocess.run(["ipconfig", "/all"], capture_output=True)
     result_string = result.stdout.decode(errors="ignore")

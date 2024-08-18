@@ -27,7 +27,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @SuppressLint("MissingPermission")
 public class BluetoothActivity extends AppCompatActivity {

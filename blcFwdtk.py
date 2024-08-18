@@ -16,11 +16,7 @@ processor_thread = None
 root = None
 keyboard = None
 mouse = None
-previous_button_state = {
-    'left': False,
-    'right': False,
-    'command':''
-}
+previous_button_state = get_prev_button_state_default()
 def serial_listener():
     global listener_thread,processor_thread,com_port,running
     while running:

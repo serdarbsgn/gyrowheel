@@ -31,7 +31,7 @@
                 android:id="@+id/seekBarSensorMultiplier"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:contentDescription="@string/seekBarSensorMultiplierExplanationDescription" />
 
             <TextView
@@ -73,7 +73,7 @@
                 android:id="@+id/seekBarTouchMultiplier"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:contentDescription="@string/seekBarTouchMultiplierExplanationDescription" />
 
             <TextView
@@ -116,7 +116,7 @@
                 android:id="@+id/seekBarSmoothMultiplier"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:contentDescription="@string/seekBarSmoothMultiplierExplanationDescription" />
 
             <TextView
@@ -168,7 +168,7 @@
                 android:id="@+id/seekBarTriggerMultiplier"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:contentDescription="@string/seekBarTriggerMultiplierExplanationDescription" />
 
             <TextView
@@ -209,7 +209,7 @@
                 android:id="@+id/seekBarTouchpadMultiplier"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="6"
                 android:contentDescription="@string/slide_bar_for_adjusting_touchpad_multiplier" />
 
             <TextView
@@ -244,7 +244,7 @@
         <Spinner
             android:id="@+id/spinnerVolumeButtonModes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:entries="@array/volume_button_modes" />
 
         <Space

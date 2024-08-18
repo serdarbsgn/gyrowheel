@@ -38,6 +38,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
     public boolean altPressed = false;
     public boolean windowsPressed = false;
     public boolean shiftPressed = false;
+    public int twoFingerGesture = 0;
     private Handler handler;
     private Runnable dataSender;
 
@@ -86,8 +87,8 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         bluetoothConn = BluetoothConn.getInstance();
     }
 
-        @Override
-        public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(!overrideVolumeKeys){
             return super.onKeyDown(keyCode,event);
         }
@@ -257,32 +258,133 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         View touchPad = findViewById(R.id.touchPadView);
         touchPad.setOnTouchListener(new View.OnTouchListener() {
             private float startX, startY;
+            private float pinchX,pinchY;
+            private float ptr0X,ptr0Y,ptr1X,ptr1Y;
+            private int mode = 0;
+            private long startTime = 0; // for preventing possibly unwanted middle clicks.
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        startX = event.getX();
-                        startY = event.getY();
-                        break;
+                int pointerCount = event.getPointerCount();
+                if (pointerCount == 1) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            startX = event.getX();
+                            startY = event.getY();
+                            break;
 
-                    case MotionEvent.ACTION_MOVE:
-                        float currentX = event.getX();
-                        float currentY = event.getY();
-                        mouseX = (int) (currentX - startX);
-                        mouseY = (int) (currentY - startY);
-                        mouseCoordinates[0] = (int) (mouseX*touchpadMultiplier);
-                        mouseCoordinates[1] = (int) (mouseY*touchpadMultiplier);
-                        changed=true;
-                        startX = currentX;
-                        startY = currentY;
-                        break;
+                        case MotionEvent.ACTION_MOVE:
+                            float currentX = event.getX();
+                            float currentY = event.getY();
+                            mouseX = (int) (currentX - startX);
+                            mouseY = (int) (currentY - startY);
+                            mouseCoordinates[0] = (int) (mouseX*touchpadMultiplier);
+                            mouseCoordinates[1] = (int) (mouseY*touchpadMultiplier);
+                            changed=true;
+                            startX = currentX;
+                            startY = currentY;
+                            break;
 
-                    case MotionEvent.ACTION_UP:
-                        mouseCoordinates[0] = 0;
-                        mouseCoordinates[1] = 0;
-                        mouseX = 0;
-                        mouseY = 0;
-                        break;
+                        case MotionEvent.ACTION_UP:
+                            mouseCoordinates[0] = 0;
+                            mouseCoordinates[1] = 0;
+                            mouseX = 0;
+                            mouseY = 0;
+                            break;
+                    }
+                }else if (pointerCount == 2) { // Two-finger touch
+                    switch (event.getActionMasked()) {
+                        case MotionEvent.ACTION_POINTER_DOWN:
+                            // Record the initial positions of both fingers
+                            ptr0X = event.getX(0);
+                            ptr0Y = event.getY(0);
+                            ptr1X = event.getX(1);
+                            ptr1Y = event.getY(1);
+
+                            // Calculate the initial pinch distance
+                            pinchX = Math.abs(ptr1X - ptr0X);
+                            pinchY = Math.abs(ptr1Y - ptr0Y);
+                            twoFingerGesture = 0;
+                            startTime = System.currentTimeMillis();
+                            break;
+
+                        case MotionEvent.ACTION_MOVE:
+                            float newPtr0X = event.getX(0);
+                            float newPtr0Y = event.getY(0);
+                            float newPtr1X = event.getX(1);
+                            float newPtr1Y = event.getY(1);
+
+                            float newPinchX = Math.abs(newPtr1X - newPtr0X);
+                            float newPinchY = Math.abs(newPtr1Y - newPtr0Y);
+
+                            float ptr0Ydiff = newPtr0Y - ptr0Y;
+                            float ptr1Ydiff = newPtr1Y - ptr1Y;
+                            float pinchXdiff = newPinchX - pinchX;
+                            float pinchYdiff = newPinchY - pinchY;
+                            //0 for no gesture, 4 for zoom in, 8 for zoom out, 16 for scroll up, 32 for down, 64 for middle click
+                            switch (mode) {
+                                case 0:
+                                    if (Math.abs(pinchXdiff) > Math.abs(pinchYdiff)) {
+                                        if (pinchXdiff > 10) {
+                                            mode = 1;
+                                            twoFingerGesture = 4;
+                                        } else if (pinchXdiff < -10) {
+                                            mode = 1;
+                                            twoFingerGesture = 8;
+                                        }
+                                    } else {
+                                        if (ptr0Ydiff > 4 && ptr1Ydiff > 4) {
+                                            mode = 2;
+                                            twoFingerGesture = 16;
+                                        } else if (ptr0Ydiff < -3 && ptr1Ydiff < -3) {
+                                            mode = 2;
+                                            twoFingerGesture = 32;
+                                        }
+                                    }
+                                    break;
+
+                                case 1:
+                                    if (pinchXdiff > 50/touchpadMultiplier) {
+                                        twoFingerGesture = 4;
+                                    } else if (pinchXdiff < -50/touchpadMultiplier) {
+                                        twoFingerGesture = 8;
+                                    }
+                                    break;
+
+                                case 2:
+                                    if (ptr0Ydiff > 3 && ptr1Ydiff > 3) {
+                                        twoFingerGesture = 16;
+                                    } else if (ptr0Ydiff < -3 && ptr1Ydiff < -3) {
+                                        twoFingerGesture = 32;
+                                    }
+                                    break;
+                            }
+                            if(twoFingerGesture>0){
+                            ptr0X = newPtr0X;
+                            ptr0Y = newPtr0Y;
+                            ptr1X = newPtr1X;
+                            ptr1Y = newPtr1Y;
+                            pinchX = newPinchX;
+                            pinchY = newPinchY;
+                            changed = true;
+                            }
+                            break;
+
+                        case MotionEvent.ACTION_POINTER_UP:
+                            if(twoFingerGesture == 0 && mode == 0){
+                                long elapsedTime = System.currentTimeMillis() - startTime;
+                                if(elapsedTime < 1000){
+                                    twoFingerGesture = 64;
+                                }
+                                else{
+                                    twoFingerGesture = 0;
+                                }
+                            }else{
+                                twoFingerGesture = 0;
+                            }
+                            changed = true;
+                            mode = 0;
+                            break;
+                    }
                 }
                 return true;
             }
@@ -457,9 +559,9 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 keystroke,
                 mouseCoordinates[0],
                 mouseCoordinates[1],
-                (leftClick ? 1 : 0) + (rightClick ? 2 : 0));
-        System.out.println(command);
+                (leftClick ? 1 : 0) + (rightClick ? 2 : 0) + twoFingerGesture);
         command = "";
+        twoFingerGesture = 0;
         keystroke = "";
         if (!useBluetooth) {
             socketClient.sendData(sensorData);

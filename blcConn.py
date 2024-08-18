@@ -76,7 +76,7 @@ def serial_listener():
                                 inputs = [inputs[0],inputs[1]+"|"+inputs[2],int(inputs[3]),int(inputs[4]),int(inputs[5])]
                             else:
                                 inputs = [inputs[0],inputs[1],int(inputs[2]),int(inputs[3]),int(inputs[4])]
-                            simulate_km(inputs)
+                            simulate_km(inputs,previous_button_state,keyboard,mouse)
                         except Exception as e:
                             pass
                         #print(f"Error processing input: {e}")
@@ -113,11 +113,7 @@ waitfor = 100
 input_queue = queue.Queue(maxsize=2)
 keyboard = pyk.Controller()
 mouse = pym.Controller()
-previous_button_state = {
-    'left': False,
-    'right': False,
-    'command':''
-}
+previous_button_state = get_prev_button_state_default()
 listener_thread = threading.Thread(target=serial_listener, daemon=True)
 processor_thread = threading.Thread(target=processor, daemon=True)
 listener_thread.start()

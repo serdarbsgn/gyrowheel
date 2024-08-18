@@ -7,7 +7,7 @@ If you prefer to avoid dealing with Python installation and technical details, y
 - [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/CED422EF6A694ABE5F112FC066A7D8A29A8CFADB2E05F1CA30AF1B38F8DC00FA)   -[Virustotal Link](https://www.virustotal.com/gui/file/ced422ef6a694abe5f112fc066a7d8a29a8cfadb2e05f1ca30af1b38f8dc00fa)
 - [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Kaspersky Link](https://opentip.kaspersky.com/27C65ECA11356002933C02BEABF773D6619424B0560B845F2484259F68792A21)   -[Virustotal Link](https://www.virustotal.com/gui/file/27c65eca11356002933c02beabf773d6619424b0560b845f2484259f68792a21)
 
-Apparently some of the antiviruses(probably ml algorithms) flag above exe's as malicious, it's entirely up to you that you don't use them, see the method ii below.    
+Apparently some of the antiviruses(probably ml algorithms & lack of signature) flag above exe's as malicious, it's entirely up to you that you don't use them, see the method ii below.    
 PLEASE USE THE METHOD II IF YOU WISH TO NOT USE THE EXECUTABLES.    
 
 You still need to download and install the [ViGEm Bus Driver](https://vigembusdriver.com/download/). Use the correct architecture executable file for your computer. (If one doesn't work, try the other. Be sure to install the ViGEm Bus Driver.)      
@@ -37,7 +37,7 @@ To use Network/UDP mode, write the IP displayed on your terminal to your phone. 
 
 <img src="readme-photos/udp-mode-enter-en.png" alt="Enter IP on Phone" width="350"/>
 
-Select the "USE NETWORK" option and enter `192.168.1.42` into the first text field. After correctly entering the IP displayed on your PC, use GyroWheel Mode or Gamepad Mode.
+Select the "USE NETWORK" option and enter `192.168.1.42` into the first text field. After correctly entering the IP displayed on your PC, use GyroWheel Mode, Gamepad Mode or Keyboard&Mouse mode.
 
 ## Bluetooth Mode Connection
 
@@ -50,9 +50,10 @@ The application attempts to find and display your computer's Bluetooth MAC addre
 <img src="readme-photos/bluetooth-mode-en.png" alt="Bluetooth Mode" width="350"/>
 
 To use Bluetooth mode, ensure Bluetooth permissions are granted and that you have a Bluetooth-enabled computer. Enter your PC’s MAC address (you can use the "SHOW BLUETOOTH COMPUTERS" button to get nearby MAC addresses). Use the "CONNECT TO MAC ADDRESS" button to initiate the connection while the script is active on your computer.    
+
 <img src="readme-photos/bluetooth-mode-connected-en.png" alt="Bluetooth Mode Connected" width="350"/>
 
-Once connected, the GYROWHEEL MODE and GAMEPAD MODE buttons will light up for use.
+Once connected, the GYROWHEEL MODE, GAMEPAD MODE and Keyboard&Mouse Mode buttons will light up for use.
 
 ## Additional Info
 
@@ -74,7 +75,7 @@ I removed several other connection methods due to their complexity and slowness.
 
 ## GyroWheel
 
-Virtual Gamepad for Windows using an Android device
+Virtual Gamepad for Windows using an Android device and Keyboard&Mouse controller    
 
 ### License
 

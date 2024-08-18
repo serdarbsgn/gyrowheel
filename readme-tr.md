@@ -38,7 +38,7 @@ Ağ/UDP modunu kullanmak için, terminalde görüntülenen IP'yi telefonunuza ya
 
 <img src="readme-photos/udp-mode-enter-tr.png" alt="Android'inize IP yi girin" width="350"/>
 
-"AĞ'I KULLAN" seçeneğini seçin ve `192.168.1.42`'yi ilk metin alanına girin. IP'yi doğru bir şekilde girdikten sonra, GyroWheel Modu veya Oyun Kolu Modu'nu kullanın.    
+"AĞ'I KULLAN" seçeneğini seçin ve `192.168.1.42`'yi ilk metin alanına girin. IP'yi doğru bir şekilde girdikten sonra, GyroWheel Modu, Oyun Kolu Modu'nu veya Klavye&Fare modunu kullanın.    
 
 ## Bluetooth Modu Bağlantısı
 
@@ -53,7 +53,7 @@ Uygulama, bilgisayarınızın Bluetooth MAC adresini bulup telefon uygulamasına
 Bluetooth modunu kullanmak için, Bluetooth izinlerinin verildiğinden ve Bluetooth destekli bir bilgisayarınız olduğundan emin olun. Bilgisayarınızın MAC adresini girin (yakınlardaki MAC adreslerini almak için "BLUETOOTH'LU BİLGİSAYARLARI ARA" düğmesini kullanabilirsiniz). Bağlantıyı başlatmak için bilgisayarınızda program aktifken "MAC ADRESİNE BAĞLAN" düğmesini kullanın.    
 
 <img src="readme-photos/bluetooth-mode-connected-tr.png" alt="Bluetooth Modu Bağlandı" width="350"/>
-Bağlandıktan sonra, GYROWHEEL MODU, OYUN KOLU MODU ve Klavye Fare modu düğmeleri kullanıma açılacaktır.    
+Bağlandıktan sonra, GYROWHEEL MODU, OYUN KOLU MODU ve Klavye&Fare Modu düğmeleri kullanıma açılacaktır.    
 
 ## Ek Bilgiler
 
@@ -75,7 +75,7 @@ Diğer bağlantı yöntemlerini karmaşıklıkları ve yavaşlıkları nedeniyle
 
 ## GyroWheel
 
-Android cihaz ile Windows için Sanal Oyun Kumandası
+Android cihaz ile Windows için Sanal Oyun Kumandası ve Klavye Fare denetimcisi    
 
 ### Lisans
 

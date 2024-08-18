@@ -70,7 +70,6 @@ def simulate_km(data,previous_button_state,keyboard,mouse):
         keyboard.type(data[1])
 
     status = int(data[4])
-
     right_pressed = bool(status & 2)
     if right_pressed != previous_button_state['right']:
         if right_pressed:
@@ -86,3 +85,40 @@ def simulate_km(data,previous_button_state,keyboard,mouse):
         else:
             mouse.release(pym.Button.left)
         previous_button_state['left'] = left_pressed
+
+    zoom_in = bool(status & 4)
+    zoom_out = bool(status & 8)
+
+    if zoom_in:
+        if not previous_button_state["zooming"]:
+            keyboard.press(pyk.Key.ctrl)
+            previous_button_state["zooming"] = True
+        mouse.scroll(0, 1)
+    elif zoom_out:
+        if not previous_button_state["zooming"]:
+            keyboard.press(pyk.Key.ctrl)
+            previous_button_state["zooming"] = True
+        mouse.scroll(0, -1)
+    else:
+        if previous_button_state["zooming"]:
+            keyboard.release(pyk.Key.ctrl)
+            previous_button_state["zooming"] = False
+
+    scroll_up = bool(status & 16)
+    scroll_down = bool(status & 32)
+    if scroll_up:
+        mouse.scroll(0, 1)
+    elif scroll_down:
+        mouse.scroll(0, -1)
+
+    middle_click = bool(status & 64)
+    if middle_click:
+        mouse.click(pym.Button.middle)
+
+def get_prev_button_state_default():
+    return {
+        'left': False,
+        'right': False,
+        'zooming':False,
+        'command':''
+    }

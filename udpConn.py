@@ -8,11 +8,7 @@ from simulate_keyboard_mouse import simulate_km
 
 keyboard = pyk.Controller()
 mouse = pym.Controller()
-previous_button_state = {
-    'left': False,
-    'right': False,
-    'command':''
-}
+previous_button_state = get_prev_button_state_default()
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
