@@ -107,9 +107,12 @@
     <string name="ok" translatable="false">OK</string>
     <string name="ad_ready">ad ready</string>
     <string name="switchKeyboardVolumeButtonsText">Tick to override volume buttons to do something else</string>
+    <string name="function_keys">Function Keys</string>
+    <string name="f" translatable="false">F</string>
     <string-array name="volume_button_modes">
         <item>Volume Control</item>
         <item>Next Track</item>
         <item>Mouse Click</item>
+        <item>Mouse Scroll</item>
     </string-array>
 </resources>

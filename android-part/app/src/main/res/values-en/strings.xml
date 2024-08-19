@@ -71,5 +71,7 @@
         <item>Volume Control</item>
         <item>Next/Previous Track</item>
         <item>Mouse Left/Right Click</item>
+        <item>Scroll Up/Down</item>
     </string-array>
+    <string name="function_keys">Function Keys</string>
 </resources>

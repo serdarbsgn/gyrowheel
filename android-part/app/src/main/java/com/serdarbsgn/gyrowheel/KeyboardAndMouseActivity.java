@@ -55,6 +55,8 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
     private static final String KEY_VOLUME_BUTTONS_MODE = "VOLUME_BUTTONS_MODE";
     private boolean overrideVolumeKeys = false;
     private int volumeKeyMode = 0;
+    private float density = 1f;
+    float leftCenterX,leftCenterY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
         red = Color.red(colorPrimary);
         green = Color.green(colorPrimary);
         blue = Color.blue(colorPrimary);
+        density = this.getResources().getDisplayMetrics().density;
         socketAddress = getIntent().getStringExtra("SOCKET_IP");
         useBluetooth = getIntent().getBooleanExtra("USE_BLUETOOTH",false);
         if (!useBluetooth) {
@@ -104,6 +107,9 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                     case 2:
                         leftClick = true;
                         break;
+                    case 3:
+                        twoFingerGesture = 16;
+                        break;
                 }
                 changed = true;
                 return true;
@@ -118,6 +124,9 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                         break;
                     case 2:
                         rightClick = true;
+                        break;
+                    case 3:
+                        twoFingerGesture = 32;
                         break;
                 }
                 changed = true;
@@ -217,6 +226,7 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         Button leftClickButton = findViewById(R.id.leftClick);
         Button rightClickButton = findViewById(R.id.rightClick);
         leftClickButton.setOnTouchListener(new View.OnTouchListener() {
@@ -262,10 +272,16 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
             private float ptr0X,ptr0Y,ptr1X,ptr1Y;
             private int mode = 0;
             private long startTime = 0; // for preventing possibly unwanted middle clicks.
+            private boolean twoToOne = false; // transition between one and two finger movements without jittery mouse movement.
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int pointerCount = event.getPointerCount();
                 if (pointerCount == 1) {
+                    if(twoToOne){
+                        startX = event.getX();
+                        startY = event.getY();
+                        twoToOne = false;
+                    }
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             startX = event.getX();
@@ -383,10 +399,87 @@ public class KeyboardAndMouseActivity extends AppCompatActivity {
                             }
                             changed = true;
                             mode = 0;
+                            twoToOne = true;
+                            mouseCoordinates[0] = 0;
+                            mouseCoordinates[1] = 0;
                             break;
                     }
                 }
                 return true;
+            }
+        });
+        View functionView = findViewById(R.id.function_keys);
+        View functionKnob = findViewById(R.id.f_knob);
+        functionKnob.setVisibility(View.INVISIBLE);
+        functionKnob.setScaleX(0.6f);
+        functionKnob.setScaleY(0.6f);
+        functionView.setVisibility(View.INVISIBLE);
+        View functionButton = findViewById(R.id.f_keys);
+        functionButton.setBackgroundColor(Color.argb(alpha, red, green, blue));
+        functionButton.setOnTouchListener(new View.OnTouchListener() {
+            private boolean open = false;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    open = !open;
+                    if(open){
+                        functionButton.setBackgroundColor(Color.argb(alpha, 255, 255 - red + green, blue));
+                        touchPad.setVisibility(View.INVISIBLE);
+                        functionView.setVisibility(View.VISIBLE);
+                        functionKnob.setVisibility(View.VISIBLE);
+                    }else{
+                        functionButton.setBackgroundColor(Color.argb(alpha, red, green, blue));
+                        touchPad.setVisibility(View.VISIBLE);
+                        functionView.setVisibility(View.INVISIBLE);
+                        functionKnob.setVisibility(View.INVISIBLE);
+                    }
+                }
+                return true;
+            }
+        });
+        functionView.setOnTouchListener(new View.OnTouchListener() {
+            private float startX, startY,innerX,innerY;// To store initial touch coordinates
+            private final float boundingBoxRadius = density*140;
+            private int distance;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startX = event.getX(); // Record initial X coordinate
+                        startY = event.getY(); // Record initial Y coordinate
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float currentX = event.getX();
+                        float currentY = event.getY();
+                        // Calculate the difference from start position
+                        float dx = (currentX - startX);
+                        float dy = (currentY - startY);
+                        distance = (int) Math.sqrt(dx * dx + dy * dy);
+                        if (distance > boundingBoxRadius) {
+                            float scale = boundingBoxRadius / distance;
+                            innerX = dx * scale;
+                            innerY = dy * scale;
+                        } else {
+                            innerX = dx;
+                            innerY = dy;
+                        }
+                        functionKnob.setX(innerX);
+                        functionKnob.setY(innerY);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if(distance>density*45){
+                            float angleRadians = (float) Math.atan2((int) innerY, (int) innerX);
+                            float angleDegrees = ((float) Math.toDegrees(angleRadians))%360;
+                            int fkey = ((Math.round(angleDegrees/30)%12)+15)%12;
+                            if(fkey == 0){fkey=12;}
+                            command = "f_"+fkey;
+                            changed = true;
+                        }
+                        functionKnob.setX(leftCenterX);
+                        functionKnob.setY(leftCenterY);
+                        break;
+                }
+                return true; // Consume the touch event
             }
         });
         setMediaButtons();

@@ -71,5 +71,7 @@
         <item>Ses Kontrolü(Bilgisayarda)</item>
         <item>Sonraki/Önceki Parça</item>
         <item>Fare Sol/Sağ Tıklaması</item>
+        <item>Yukarı/Aşağı Kaydır</item>
     </string-array>
+    <string name="function_keys">Fonksiyon Tuşları</string>
 </resources>
