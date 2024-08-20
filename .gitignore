@@ -4,3 +4,4 @@ venv
 /ViGemClient.dll
 /version.rc
 /build
+/dist
