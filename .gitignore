@@ -1,7 +1,0 @@
-venv
-/app/__pycache__
-/__pycache__
-/ViGemClient.dll
-/version.rc
-/build
-/dist
