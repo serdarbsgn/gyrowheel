@@ -4,8 +4,8 @@ For English documentation, please see [readme.md](readme.md).
 
 Python kurulumu ve teknik detaylarla uğraşmak istemiyorsanız, hazırladığım çalıştırılabilir dosyaları kullanabilirsiniz:
 
-- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/e5f16ca84caddb9c1fb40990c041a8577f5425c8e0b9b3009b4f293341c54f44)    
-- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/dd0e9e2e9922176a2ab68816a44b9fe07153406efebe373cdacb1334d8619eb0)    
+- [x64 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/exe-files/dist/GWListenerX64.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/e5f16ca84caddb9c1fb40990c041a8577f5425c8e0b9b3009b4f293341c54f44)    
+- [x86 çalıştırılabilir dosyasını indir](https://github.com/serdarbsgn/gyrowheel/raw/exe-files/dist/GWListenerX86.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/dd0e9e2e9922176a2ab68816a44b9fe07153406efebe373cdacb1334d8619eb0)    
     
 Görünüşe göre bazı antivirüsler (muhtemelen ml algoritmaları & imza eksikliği) yukarıdaki exe'leri kötü amaçlı olarak işaretliyor, bunları kullanmamak tamamen size kalmış, istemiyorsanız aşağıdaki kurulum ii'ye bakın.    
 YÜRÜTÜLEBİLİR DOSYALARI KULLANMAK İSTEMİYORSANIZ LÜTFEN KURULUM II'Yİ KULLANIN.    

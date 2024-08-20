@@ -4,8 +4,8 @@ Türkçe dökümantasyon için lütfen buraya bakın [readme-tr.md](readme-tr.md
 
 If you prefer to avoid dealing with Python installation and technical details, you can use the executable files I prepared:
 
-- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX64.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/e5f16ca84caddb9c1fb40990c041a8577f5425c8e0b9b3009b4f293341c54f44)
-- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/main/dist/GWListenerX86.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/dd0e9e2e9922176a2ab68816a44b9fe07153406efebe373cdacb1334d8619eb0)
+- [Download the x64 executable](https://github.com/serdarbsgn/gyrowheel/raw/exe-files/dist/GWListenerX64.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/e5f16ca84caddb9c1fb40990c041a8577f5425c8e0b9b3009b4f293341c54f44)
+- [Download the x86 executable](https://github.com/serdarbsgn/gyrowheel/raw/exe-files/dist/GWListenerX86.exe)   -[Virustotal Link](https://www.virustotal.com/gui/file/dd0e9e2e9922176a2ab68816a44b9fe07153406efebe373cdacb1334d8619eb0)
 
 Apparently some of the antiviruses(probably ml algorithms & lack of signature) flag above exe's as malicious, it's entirely up to you that you don't use them, see the method ii below.    
 PLEASE USE THE METHOD II IF YOU WISH TO NOT USE THE EXECUTABLES.    
