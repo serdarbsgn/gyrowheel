@@ -1,7 +1,7 @@
 import pynput.keyboard as pyk
 import pynput.mouse as pym
 fkeys = {"f_1":pyk.Key.f1,"f_2":pyk.Key.f2,"f_3":pyk.Key.f3,"f_4":pyk.Key.f4,"f_5":pyk.Key.f5,"f_6":pyk.Key.f6,
-         "f_7":pyk.Key.f7,"f_8":pyk.Key.f8,"f_9":pyk.Key.f9,"f_10":pyk.Key.f10,"f_10":pyk.Key.f1,"f_11":pyk.Key.f11,"f_12":pyk.Key.f12}
+         "f_7":pyk.Key.f7,"f_8":pyk.Key.f8,"f_9":pyk.Key.f9,"f_10":pyk.Key.f10,"f_11":pyk.Key.f11,"f_12":pyk.Key.f12}
 def simulate_km(data,previous_button_state,keyboard,mouse):
     def handle_press(keycode,original_keycode = None):
         if keycode == "":
